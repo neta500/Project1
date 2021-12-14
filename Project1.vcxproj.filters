@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ServerCore">
+      <UniqueIdentifier>{970e3d90-3e62-4535-a43a-f88242251c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ServerCore\Network">
+      <UniqueIdentifier>{4e859d64-c84e-463c-815c-27e1d5f21fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestClass">
+      <UniqueIdentifier>{ef0f0b3c-37a3-49d2-a0ab-c51f162fdfcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm">
+      <UniqueIdentifier>{3614ce2b-5dd4-44b3-b44e-798f1f5c19bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Programmers">
+      <UniqueIdentifier>{c8621d2b-bb1f-4994-9606-8a47523a485a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\LeetCode">
+      <UniqueIdentifier>{955e5946-1f1c-48a5-9261-4e9239b64a41}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Acceptor.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="IoContext.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IoContext.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Acceptor.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>ServerCore\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\EmplaceBack.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\Optional.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\TestClass.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\FullSearch_42840.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\hash_42576.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\hash_42577.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\Sorting_42746.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\Sorting_42747.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\Sorting_42748.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\704_BinarySearch.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\283_MoveZeros.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\724_FindPivotIndex.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\FullSearch_42839.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\hash_42578.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\75_SortColors.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\88_MergeSortedArray.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\162_FindPeakElement.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\581_ShortestUnsortedContinuousSubArray.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\1_2sum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\74_Searcha2DMatrix.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Server.cpp">
+      <Filter>ServerCore\Network</Filter>
+    </None>
+  </ItemGroup>
+</Project>
