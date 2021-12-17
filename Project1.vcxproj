@@ -152,12 +152,15 @@
     <ClCompile Include="Session.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
     <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h" />
     <ClInclude Include="Algorithm\LeetCode\162_FindPeakElement.h" />
     <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />
+    <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h" />
     <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\1_2sum.h" />
     <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h" />
+    <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h" />
     <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h" />
     <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h" />

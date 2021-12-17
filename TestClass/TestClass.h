@@ -1,7 +1,13 @@
 #pragma once
 #include "spdlog/spdlog.h"
 
-class Cat
+class Animal
+{
+public:
+	virtual void Test() = 0;
+};
+
+class Cat : public Animal
 {
 public:
 	Cat() { spdlog::info("Cat Constructor"); }
@@ -11,8 +17,25 @@ public:
 	}
 	~Cat() { spdlog::info("~Cat Destructor"); }
 
-	Cat(const Cat& other) { spdlog::info("Cat Copy Constructor"); }
-	Cat(Cat&& other) noexcept { spdlog::info("Cat Move Constructor"); }
+	Cat(const Cat& other)
+	{
+		mAge = other.mAge;
+		spdlog::info("Cat Copy Constructor");
+	}
+	Cat(Cat&& other) noexcept { mAge = other.mAge; spdlog::info("Cat Move Constructor"); }
 
-	int mAge = 0;
+	virtual void Test() {}
+
+	int mAge = 5;
 };
+
+class Dog : public Animal
+{
+public:
+	virtual void Test() {}
+	void DogFunc() { spdlog::info("{}", mTest); }
+
+	int mTest = 3;
+};
+
+
