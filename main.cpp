@@ -3,12 +3,13 @@
 #include "TestClass/TestClass.h"
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
-#include "Algorithm/LeetCode/1209_RemoveAllAdjacentDuplicatesInString2.h"
+#include "Algorithm/LeetCode/416_PartitionEqualSubsetSum.h"
 
 int main()
 {    
     Solution solution;
-    const auto result = solution.removeDuplicates("dtpdtaaaaaaaaappppppppppppppppppppaaaaaaaaaaxxxxxxxxxxxxxxsssssssssjjjjjjjjjjjjjjjjjjjjxxxxxxxxxxxxxxxxxxxxsssssssjjjjjjjjjjjjjjjjjjjjssssxxxxxxatdwvvpctpggggggggggggggggggggajagglaaaaaaaaaaaaaaaaaaaa", 20);
-
+    
+    std::vector<int> vec{ 1,5, 11, 5 };
+    const auto result = solution.canPartition(vec);
     return 0;
 }
