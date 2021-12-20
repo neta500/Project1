@@ -9,7 +9,7 @@ int main()
 {    
     Solution solution;
     
-    std::vector<int> vec{ 1,5, 11, 5 };
+    std::vector<int> vec{ 1,5, 11, 4 };
     const auto result = solution.canPartition(vec);
     return 0;
 }
