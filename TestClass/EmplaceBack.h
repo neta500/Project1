@@ -8,6 +8,7 @@ public:
 	{
 		std::vector<Cat> catVec;
 
+		// 참고 : Cat은 int를 생성자로 받을 수 있다.
 		Cat cat1{11};
 		//catVec.push_back(cat1); // copy 1
 		//catVec.push_back(std::move(cat1)); // move 1

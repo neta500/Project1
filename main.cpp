@@ -3,13 +3,12 @@
 #include "TestClass/TestClass.h"
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
-#include "Algorithm/LeetCode/416_PartitionEqualSubsetSum.h"
+#include "Algorithm/LeetCode/51_N-Queens.h"
 
 int main()
 {    
     Solution solution;
-    
-    std::vector<int> vec{ 1,5, 11, 4 };
-    const auto result = solution.canPartition(vec);
+    std::vector<int> nums{ 2,3,6,7 };
+    const auto result = solution.solveNQueens(4);
     return 0;
 }
