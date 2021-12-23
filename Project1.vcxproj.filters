@@ -186,6 +186,24 @@
     <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\1710_MaximumUnitsOnATrunk.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\1578_MinimumTimetoMakeRopeColorful.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\763_PartitionLabels.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Server.cpp">

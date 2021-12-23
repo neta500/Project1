@@ -154,9 +154,12 @@
   <ItemGroup>
     <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
     <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h" />
+    <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h" />
     <ClInclude Include="Algorithm\LeetCode\152_MaximumProductSubArray.h" />
+    <ClInclude Include="Algorithm\LeetCode\1578_MinimumTimetoMakeRopeColorful.h" />
     <ClInclude Include="Algorithm\LeetCode\162_FindPeakElement.h" />
+    <ClInclude Include="Algorithm\LeetCode\1710_MaximumUnitsOnATrunk.h" />
     <ClInclude Include="Algorithm\LeetCode\17_PhoneNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h" />
     <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />
@@ -165,9 +168,11 @@
     <ClInclude Include="Algorithm\LeetCode\1_2sum.h" />
     <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h" />
     <ClInclude Include="Algorithm\LeetCode\322_CoinChange.h" />
+    <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h" />
     <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
     <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />
+    <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h" />
     <ClInclude Include="Algorithm\LeetCode\46_Permutations.h" />
     <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h" />
     <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h" />
@@ -184,6 +189,7 @@
     <ClInclude Include="Algorithm\LeetCode\746_MinCostClimbingStairs.h" />
     <ClInclude Include="Algorithm\LeetCode\74_Searcha2DMatrix.h" />
     <ClInclude Include="Algorithm\LeetCode\75_SortColors.h" />
+    <ClInclude Include="Algorithm\LeetCode\763_PartitionLabels.h" />
     <ClInclude Include="Algorithm\LeetCode\78_SubSet.h" />
     <ClInclude Include="Algorithm\LeetCode\79_WordSearch.h" />
     <ClInclude Include="Algorithm\LeetCode\841_KeysAndRooms.h" />
