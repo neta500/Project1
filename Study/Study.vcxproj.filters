@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Algorithm">
+      <UniqueIdentifier>{db127d74-8cb3-43b6-b8d0-e9ec8cace4f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestClass">
+      <UniqueIdentifier>{648e77fd-e564-40d1-a879-8c1d0acbab87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\LeetCode">
+      <UniqueIdentifier>{b1652a7c-86bd-40b6-9c8c-c74b4f990818}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Programmers">
+      <UniqueIdentifier>{a4895200-82d9-450f-9d86-40201a289044}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\1578_MinimumTimetoMakeRopeColorful.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\1710_MaximumUnitsOnATrunk.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\1_2sum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\5_LongestPalindromicSubString.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\17_PhoneNumber.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\46_Permutations.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\51_N-Queens.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\53_MaximumSubarray.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\64_MinimumPathSum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\70_CimbingStairs.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\74_Searcha2DMatrix.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\75_SortColors.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\78_SubSet.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\79_WordSearch.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\88_MergeSortedArray.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\152_MaximumProductSubArray.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\162_FindPeakElement.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\283_MoveZeros.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\322_CoinChange.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\581_ShortestUnsortedContinuousSubArray.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\704_BinarySearch.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\724_FindPivotIndex.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\746_MinCostClimbingStairs.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\763_PartitionLabels.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\841_KeysAndRooms.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\FullSearch_42839.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\FullSearch_42840.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\hash_42576.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\hash_42577.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\hash_42578.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\Sorting_42746.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\Sorting_42747.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Programmers\Sorting_42748.h">
+      <Filter>Algorithm\Programmers</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\EmplaceBack.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\Optional.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\TestClass.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\344_ReverseString.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+</Project>

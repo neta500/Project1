@@ -21,32 +21,32 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fe564a6d-fea4-49a6-8409-c33a15cb1e80}</ProjectGuid>
-    <RootNamespace>Project1</RootNamespace>
+    <ProjectGuid>{ebe47114-da2a-4701-bc85-40fb747937dd}</ProjectGuid>
+    <RootNamespace>ServerCore</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)ServerCoreLib\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -87,11 +87,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -101,11 +104,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -113,20 +119,18 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdPartyLib</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <TreatWarningAsError>true</TreatWarningAsError>
-      <DisableSpecificWarnings>4819;4189;4267</DisableSpecificWarnings>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Lib</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,83 +139,39 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IoContext.cpp" />
-    <ClCompile Include="Acceptor.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Session.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
-    <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h" />
-    <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h" />
-    <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h" />
-    <ClInclude Include="Algorithm\LeetCode\152_MaximumProductSubArray.h" />
-    <ClInclude Include="Algorithm\LeetCode\1578_MinimumTimetoMakeRopeColorful.h" />
-    <ClInclude Include="Algorithm\LeetCode\162_FindPeakElement.h" />
-    <ClInclude Include="Algorithm\LeetCode\1710_MaximumUnitsOnATrunk.h" />
-    <ClInclude Include="Algorithm\LeetCode\17_PhoneNumber.h" />
-    <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h" />
-    <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />
-    <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h" />
-    <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h" />
-    <ClInclude Include="Algorithm\LeetCode\1_2sum.h" />
-    <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h" />
-    <ClInclude Include="Algorithm\LeetCode\322_CoinChange.h" />
-    <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h" />
-    <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
-    <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
-    <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />
-    <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h" />
-    <ClInclude Include="Algorithm\LeetCode\46_Permutations.h" />
-    <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h" />
-    <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h" />
-    <ClInclude Include="Algorithm\LeetCode\51_N-Queens.h" />
-    <ClInclude Include="Algorithm\LeetCode\53_MaximumSubarray.h" />
-    <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h" />
-    <ClInclude Include="Algorithm\LeetCode\581_ShortestUnsortedContinuousSubArray.h" />
-    <ClInclude Include="Algorithm\LeetCode\5_LongestPalindromicSubString.h" />
-    <ClInclude Include="Algorithm\LeetCode\64_MinimumPathSum.h" />
-    <ClInclude Include="Algorithm\LeetCode\704_BinarySearch.h" />
-    <ClInclude Include="Algorithm\LeetCode\283_MoveZeros.h" />
-    <ClInclude Include="Algorithm\LeetCode\70_CimbingStairs.h" />
-    <ClInclude Include="Algorithm\LeetCode\724_FindPivotIndex.h" />
-    <ClInclude Include="Algorithm\LeetCode\746_MinCostClimbingStairs.h" />
-    <ClInclude Include="Algorithm\LeetCode\74_Searcha2DMatrix.h" />
-    <ClInclude Include="Algorithm\LeetCode\75_SortColors.h" />
-    <ClInclude Include="Algorithm\LeetCode\763_PartitionLabels.h" />
-    <ClInclude Include="Algorithm\LeetCode\78_SubSet.h" />
-    <ClInclude Include="Algorithm\LeetCode\79_WordSearch.h" />
-    <ClInclude Include="Algorithm\LeetCode\841_KeysAndRooms.h" />
-    <ClInclude Include="Algorithm\LeetCode\88_MergeSortedArray.h" />
-    <ClInclude Include="Algorithm\Programmers\FullSearch_42839.h" />
-    <ClInclude Include="Algorithm\Programmers\FullSearch_42840.h" />
-    <ClInclude Include="Algorithm\Programmers\hash_42576.h" />
-    <ClInclude Include="Algorithm\Programmers\hash_42577.h" />
-    <ClInclude Include="Algorithm\Programmers\hash_42578.h" />
-    <ClInclude Include="Algorithm\Programmers\Sorting_42746.h" />
-    <ClInclude Include="Algorithm\Programmers\Sorting_42747.h" />
-    <ClInclude Include="Algorithm\Programmers\Sorting_42748.h" />
-    <ClInclude Include="IoContext.h" />
     <ClInclude Include="Acceptor.h" />
-    <ClInclude Include="Server.h" />
+    <ClInclude Include="CorePch.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="IoContext.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Session.h" />
-    <ClInclude Include="TestClass\EmplaceBack.h" />
-    <ClInclude Include="TestClass\Optional.h" />
-    <ClInclude Include="TestClass\TestClass.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Server.cpp" />
+    <ClCompile Include="Acceptor.cpp" />
+    <ClCompile Include="CorePch.cpp" />
+    <ClCompile Include="IoContext.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ServerCore.cpp" />
+    <ClCompile Include="Session.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
