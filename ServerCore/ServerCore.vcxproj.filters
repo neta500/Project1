@@ -7,6 +7,12 @@
     <Filter Include="Pch">
       <UniqueIdentifier>{abc448f5-5809-4f8f-b2de-e70b3ea8dd72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Lock">
+      <UniqueIdentifier>{7cb5853d-f85d-429c-93f9-02b380b351a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{6949ad21-0f80-40cb-90ca-adfe144e0b9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -27,6 +33,12 @@
     <ClInclude Include="CorePch.h">
       <Filter>Pch</Filter>
     </ClInclude>
+    <ClInclude Include="SpinLock.h">
+      <Filter>Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreTls.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -46,6 +58,12 @@
     </ClCompile>
     <ClCompile Include="CorePch.cpp">
       <Filter>Pch</Filter>
+    </ClCompile>
+    <ClCompile Include="SpinLock.cpp">
+      <Filter>Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="CoreTls.cpp">
+      <Filter>Thread</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

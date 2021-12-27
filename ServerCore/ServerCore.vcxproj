@@ -157,6 +157,8 @@
     <ClInclude Include="CorePch.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IoContext.h" />
+    <ClInclude Include="CoreTls.h" />
+    <ClInclude Include="SpinLock.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Session.h" />
   </ItemGroup>
@@ -171,7 +173,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ServerCore.cpp" />
+    <ClCompile Include="CoreTls.cpp" />
     <ClCompile Include="Session.cpp" />
+    <ClCompile Include="SpinLock.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

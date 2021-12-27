@@ -7,7 +7,19 @@
 class Solution
 {
 public:
-	void moveZeroes(std::vector<int>& nums)
+	void moveZeroes_1(std::vector<int>& nums)
+	{
+		for (int lastNonZeroIndex = 0, curr = 0; curr < nums.size(); ++curr)
+		{
+			if (nums[curr] != 0)
+			{
+				std::swap(nums[lastNonZeroIndex], nums[curr]);
+				lastNonZeroIndex++;
+			}
+		}
+	}
+
+	void moveZeroes_2(std::vector<int>& nums)
 	{
 		int wIndex = 0;
 			

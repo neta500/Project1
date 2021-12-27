@@ -1,4 +1,7 @@
 #pragma once
+
+#include "CoreTls.h"
+
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -6,3 +9,5 @@
 #include <algorithm>
 #include <numeric>
 #include <memory>
+#include <atomic>
+#include <thread>
