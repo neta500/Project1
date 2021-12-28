@@ -155,6 +155,7 @@
     <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h" />
     <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />
     <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h" />
+    <ClInclude Include="Algorithm\LeetCode\26_RemoveDuplicatesefromSortedArray.h" />
     <ClInclude Include="Algorithm\LeetCode\283_MoveZeros.h" />
     <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Algorithm\LeetCode\581_ShortestUnsortedContinuousSubArray.h" />
     <ClInclude Include="Algorithm\LeetCode\5_LongestPalindromicSubString.h" />
     <ClInclude Include="Algorithm\LeetCode\64_MinimumPathSum.h" />
+    <ClInclude Include="Algorithm\LeetCode\66_PlusOne.h" />
     <ClInclude Include="Algorithm\LeetCode\704_BinarySearch.h" />
     <ClInclude Include="Algorithm\LeetCode\70_CimbingStairs.h" />
     <ClInclude Include="Algorithm\LeetCode\724_FindPivotIndex.h" />
