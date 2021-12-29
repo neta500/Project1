@@ -3,13 +3,14 @@
 #include "TestClass/TestClass.h"
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
-#include "Algorithm/LeetCode/26_RemoveDuplicatesefromSortedArray.h"
+#include "Algorithm/LeetCode/350_IntersectionofTwoArraysll.h"
 
 
 int main()
 {
     Solution solution;
-    std::vector<int> vec{ 0,0,1,1,2 };
-    const auto result = solution.removeDuplicates(vec);
+    std::vector<int> vec{ 4,9,5 };
+    std::vector<int> vec2{ 9,4,9,8,4 };
+    const auto result = solution.intersect(vec, vec2);
     return 0;
 }

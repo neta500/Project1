@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
+    <ClInclude Include="Algorithm\LeetCode\121_BestTimetoBuyandSellStock.h" />
     <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h" />
     <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Algorithm\LeetCode\322_CoinChange.h" />
     <ClInclude Include="Algorithm\LeetCode\344_ReverseString.h" />
     <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h" />
+    <ClInclude Include="Algorithm\LeetCode\350_IntersectionofTwoArraysll.h" />
     <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
     <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />
