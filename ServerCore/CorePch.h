@@ -11,3 +11,6 @@
 #include <memory>
 #include <atomic>
 #include <thread>
+#include <sysinfoapi.h>
+
+#include "spdlog/spdlog.h"

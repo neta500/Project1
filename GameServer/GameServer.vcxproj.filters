@@ -3,8 +3,25 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="BattlePassSeasonManager.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="BattlePassManager.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="BattlePassSeasonManager.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+    <ClInclude Include="BattlePassManager.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{d787185a-b8b8-4d33-8138-ee6cb4dbb251}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

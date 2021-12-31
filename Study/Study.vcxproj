@@ -152,10 +152,12 @@
     <ClInclude Include="Algorithm\LeetCode\162_FindPeakElement.h" />
     <ClInclude Include="Algorithm\LeetCode\1710_MaximumUnitsOnATrunk.h" />
     <ClInclude Include="Algorithm\LeetCode\17_PhoneNumber.h" />
+    <ClInclude Include="Algorithm\LeetCode\189_RotateArray.h" />
     <ClInclude Include="Algorithm\LeetCode\1_2sum.h" />
     <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h" />
     <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />
     <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h" />
+    <ClInclude Include="Algorithm\LeetCode\242_ValidAnagram.h" />
     <ClInclude Include="Algorithm\LeetCode\26_RemoveDuplicatesefromSortedArray.h" />
     <ClInclude Include="Algorithm\LeetCode\283_MoveZeros.h" />
     <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h" />
@@ -164,6 +166,7 @@
     <ClInclude Include="Algorithm\LeetCode\344_ReverseString.h" />
     <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h" />
     <ClInclude Include="Algorithm\LeetCode\350_IntersectionofTwoArraysll.h" />
+    <ClInclude Include="Algorithm\LeetCode\387_FirstUniqueCahracterinaString.h" />
     <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
     <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />

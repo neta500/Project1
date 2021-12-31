@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+// left, right 2pointer로 좁혀오면서 체크.
+
 class Solution {
 public:
     bool isPalindrome(std::string s) {
@@ -9,43 +11,28 @@ public:
 
         while (leftIndex < rightIndex)
         {
-            bool leftIndexUpdated = false;
-            bool rightIndexUpdated = false;
-
             auto left = s.at(leftIndex);
             auto right = s.at(rightIndex);
 
+            // 문자나 숫자가 아니면 패스
             if (0 == std::isalnum(left))
             {
                 leftIndex++; 
-                leftIndexUpdated = true;
             }
-
-            if (0 == std::isalnum(right))
+            else if (0 == std::isalnum(right))
             {
                 rightIndex--;
-                rightIndexUpdated = true;
             }
-
-            if (leftIndexUpdated == false && rightIndexUpdated == false)
+            else
             {
                 if (std::tolower(left) != std::tolower(right))
                 {
                     return false;
                 }
-                else
-                {
-                    if (false == rightIndexUpdated)
-                    {
-                        rightIndex--;
-                    }
 
-                    if (false == leftIndexUpdated)
-                    {
-                        leftIndex++;
-                    }
-                }
-            }            
+                leftIndex++;
+                rightIndex--;
+            }   
         }
 
         return true;
