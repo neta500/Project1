@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Acceptor.h" />
     <ClInclude Include="CorePch.h" />
+    <ClInclude Include="CoreUtils.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IoContext.h" />
     <ClInclude Include="CoreTls.h" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClCompile Include="Acceptor.cpp" />
     <ClCompile Include="CorePch.cpp" />
+    <ClCompile Include="CoreUtils.cpp" />
     <ClCompile Include="IoContext.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

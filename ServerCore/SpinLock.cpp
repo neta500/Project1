@@ -1,4 +1,4 @@
-#include "pch.h"
+#include "pch.h"	
 #include "SpinLock.h"
 #include "CoreTls.h"
 
@@ -12,14 +12,13 @@ void SpinLock::WriteLock()
 		return;
 	}
 
-	int spinCount = 0;
-	const auto desired = ((LThreadId << 16) & LockFlag::ReadLockFlag);
+	const auto desired = ((LThreadId << 16) & LockFlag::WriteLockFlag);
 	const auto beginTick = ::GetTickCount64();
 
 	while (true)
-	{
+	{		
 		unsigned int expected = LockFlag::Empty;
-		
+
 		for (int spinCount = 0; spinCount < MaxSpinCount; ++spinCount)
 		{
 			if (mLockFlag.compare_exchange_strong(expected, desired))
@@ -31,7 +30,7 @@ void SpinLock::WriteLock()
 
 		if (::GetTickCount64() - beginTick > LockTimeOut)
 		{
-			spdlog::error("lock timeout");
+			util::Crash("lock timeout");
 		}
 
 		std::this_thread::yield();		
@@ -40,12 +39,13 @@ void SpinLock::WriteLock()
 
 void SpinLock::WriteUnLock()
 {
-	if ((mLockFlag & LockFlag::ReadLockFlag) != 0)
+	if ((mLockFlag.load() & LockFlag::ReadLockFlag) != 0)
 	{
-		spdlog::error("invalid lock order");
+		util::Crash("invalid lock order");
 	}
 
-	if (--mWriteLockCount == 0)
+	const auto lockCount = --mWriteLockCount;
+	if (lockCount == 0)
 	{
 		mLockFlag = LockFlag::Empty;
 	}
@@ -76,7 +76,7 @@ void SpinLock::ReadLock()
 
 		if (::GetTickCount64() - beginTick > LockTimeOut)
 		{
-			spdlog::error("lock timeout");
+			util::Crash("lock timeout");
 		}
 
 		std::this_thread::yield();
@@ -87,6 +87,6 @@ void SpinLock::ReadUnLock()
 {
 	if ((mLockFlag.fetch_sub(1) & LockFlag::ReadLockFlag) == 0)
 	{
-		spdlog::error("multiple read unlock");
+		util::Crash("multiple read unlock");
 	}
 }

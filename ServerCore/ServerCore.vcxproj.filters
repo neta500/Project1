@@ -13,6 +13,9 @@
     <Filter Include="Thread">
       <UniqueIdentifier>{6949ad21-0f80-40cb-90ca-adfe144e0b9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CoreUtils">
+      <UniqueIdentifier>{351de774-4e9a-40aa-91cc-b8261f6bee51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -39,12 +42,12 @@
     <ClInclude Include="CoreTls.h">
       <Filter>Thread</Filter>
     </ClInclude>
+    <ClInclude Include="CoreUtils.h">
+      <Filter>CoreUtils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>Pch</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerCore.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
     <ClCompile Include="Session.cpp">
@@ -64,6 +67,10 @@
     </ClCompile>
     <ClCompile Include="CoreTls.cpp">
       <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerCore.cpp" />
+    <ClCompile Include="CoreUtils.cpp">
+      <Filter>CoreUtils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "CoreTls.h"
+#include "CoreUtils.h"
+#include "spdlog/spdlog.h"
 
 #include <vector>
 #include <string>
@@ -11,6 +13,7 @@
 #include <memory>
 #include <atomic>
 #include <thread>
-#include <sysinfoapi.h>
+#include <Windows.h>
+#include <queue>
+#include <chrono>
 
-#include "spdlog/spdlog.h"

@@ -24,16 +24,48 @@ public:
 
 private:
 	std::atomic<unsigned int> mLockFlag = LockFlag::Empty;
-	std::atomic<unsigned int> mWriteLockCount = 0;
+	unsigned short mWriteLockCount = 0;
 	__int64 mLockAcquiredTick = 0;
 };
 
+template <class _Lock>
 class ReadScopedLock
 {
+public:
+	explicit ReadScopedLock(_Lock& lock) : mLock(lock)
+	{
+		mLock.ReadLock();
+	}
 
+	~ReadScopedLock() noexcept
+	{
+		mLock.ReadUnLock();
+	}
+
+	ReadScopedLock(const ReadScopedLock&) = delete;
+	ReadScopedLock& operator=(const ReadScopedLock&) = delete;
+
+private:
+	_Lock& mLock;
 };
 
+template <class _Lock>
 class WriteScopedLock
 {
+public:
+	explicit WriteScopedLock(_Lock& lock) : mLock(lock)
+	{
+		mLock.WriteLock();
+	}
 
+	~WriteScopedLock() noexcept
+	{
+		mLock.WriteUnLock();
+	}
+
+	WriteScopedLock(const WriteScopedLock&) = delete;
+	WriteScopedLock& operator=(const WriteScopedLock&) = delete;
+
+private:
+	_Lock& mLock;
 };
