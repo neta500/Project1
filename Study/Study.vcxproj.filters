@@ -192,7 +192,7 @@
     <ClInclude Include="Algorithm\LeetCode\189_RotateArray.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithm\LeetCode\387_FirstUniqueCahracterinaString.h">
+    <ClInclude Include="Algorithm\LeetCode\387_FirstUniqueCharacterinaString.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
     <ClInclude Include="Algorithm\LeetCode\242_ValidAnagram.h">

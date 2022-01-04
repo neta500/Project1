@@ -7,7 +7,7 @@
 class SpinLock
 {
 	static constexpr int MaxSpinCount = 5000;
-	static constexpr int LockTimeOut = 120000;
+	static constexpr int LockTimeOut = 12000;
 
 	enum LockFlag: unsigned int
 	{
@@ -17,6 +17,9 @@ class SpinLock
 	};
 
 public:
+	SpinLock() = default;
+	~SpinLock() = default;
+
 	void WriteLock();
 	void WriteUnLock();
 	void ReadLock();
@@ -69,3 +72,7 @@ public:
 private:
 	_Lock& mLock;
 };
+
+#define USE_LOCK mutable SpinLock mLock
+#define READ_LOCK ReadScopedLock<SpinLock> readLock(mLock)
+#define WRITE_LOCK WriteScopedLock<SpinLock> writeLock(mLock)

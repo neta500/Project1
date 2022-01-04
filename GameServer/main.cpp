@@ -1,14 +1,17 @@
 #include "pch.h"
 #include <iostream>
 #include <SpinLock.h>
+#include <ThreadManager.h>
 
 class TestLock
 {
 public:
 	int Read()
 	{
-		ReadScopedLock<SpinLock> lock(mLock);
+		//ReadScopedLock<SpinLock> lock(mLock);
 		//std::scoped_lock<std::mutex> lock(mMutex);
+
+		std::shared_lock lock(mMutex);
 
 		if (mQueue.empty())
 		{
@@ -20,15 +23,18 @@ public:
 
 	void Write()
 	{
-		WriteScopedLock<SpinLock> lock(mLock);
+		//WriteScopedLock<SpinLock> lock(mLock);
 		//std::scoped_lock<std::mutex> lock(mMutex);
-		mQueue.push(std::rand() % 100);
+		std::unique_lock lock(mMutex);
+		mQueue.push(std::rand() % 100);		
 	}
 
 	void Pop()
 	{
-		WriteScopedLock<SpinLock> lock(mLock);
+		//WriteScopedLock<SpinLock> lock(mLock);
 		//std::scoped_lock<std::mutex> lock(mMutex);
+		std::unique_lock lock(mMutex);
+
 		if (mQueue.empty() == false)
 		{
 			mQueue.pop();
@@ -37,7 +43,7 @@ public:
 
 	std::queue<int> mQueue;
 	SpinLock mLock;
-	std::mutex mMutex;
+	std::shared_mutex mMutex;
 };
 
 TestLock test;
@@ -62,15 +68,17 @@ void ThreadRead()
 	}
 }
 
+void TestFunc(const std::string& str)
+{
+	spdlog::info("{}", str);
+}
+
 int main()
 {
-	std::jthread t1(ThreadWrite);
-	std::jthread t2(ThreadWrite);
-	std::jthread t3(ThreadRead);
-	std::jthread t4(ThreadRead);
-	std::jthread t5(ThreadRead);
-	std::jthread t6(ThreadRead);
-	std::jthread t7(ThreadRead);
+	spdlog::info("init spdlog");
+
+	auto current = std::chrono::system_clock::now();
+	auto current_utc = std::chrono::utc_clock::now();
 
 	return 0;
 }

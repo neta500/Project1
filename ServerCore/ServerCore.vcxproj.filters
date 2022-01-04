@@ -16,6 +16,9 @@
     <Filter Include="CoreUtils">
       <UniqueIdentifier>{351de774-4e9a-40aa-91cc-b8261f6bee51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DateTime">
+      <UniqueIdentifier>{e658f78b-eb23-43c7-a66e-2f54c2487e3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -45,6 +48,15 @@
     <ClInclude Include="CoreUtils.h">
       <Filter>CoreUtils</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadManager.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>CoreUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTime.h">
+      <Filter>DateTime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -71,6 +83,12 @@
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="CoreUtils.cpp">
       <Filter>CoreUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadManager.cpp">
+      <Filter>Thread</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTime.cpp">
+      <Filter>DateTime</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

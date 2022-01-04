@@ -18,6 +18,9 @@
     <ClInclude Include="BattlePassManager.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="BattlePassData.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
