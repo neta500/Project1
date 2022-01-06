@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm\LeetCode\104_MaxDepthofBinaryTree.h" />
     <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
     <ClInclude Include="Algorithm\LeetCode\121_BestTimetoBuyandSellStock.h" />
     <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h" />
@@ -192,6 +193,8 @@
     <ClInclude Include="Algorithm\LeetCode\79_WordSearch.h" />
     <ClInclude Include="Algorithm\LeetCode\841_KeysAndRooms.h" />
     <ClInclude Include="Algorithm\LeetCode\88_MergeSortedArray.h" />
+    <ClInclude Include="Algorithm\LeetCode\98_ValidateBinarySearchTree.h" />
+    <ClInclude Include="Algorithm\LeetCode\TreeNode.h" />
     <ClInclude Include="Algorithm\Programmers\FullSearch_42839.h" />
     <ClInclude Include="Algorithm\Programmers\FullSearch_42840.h" />
     <ClInclude Include="Algorithm\Programmers\hash_42576.h" />

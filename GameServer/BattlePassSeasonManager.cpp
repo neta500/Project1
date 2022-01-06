@@ -34,7 +34,10 @@ bool BattlePassSeasonManager::IsValidSeason(const int seasonId) const
 {
 	READ_LOCK;
 
-
+	if (mSeasonMap.contains(seasonId))
+	{
+		return true;
+	}
 
 	return false;
 }
@@ -85,6 +88,14 @@ OptionalRef<BattlePassSeasonData> BattlePassSeasonManager::GetSeasonData(const i
 
 void BattlePassSeasonManager::OnTick()
 {
+	if (IsSeasonNow())
+	{
+		if (true == CheckSeasonEnd())
+		{
+			EndBattlePassSeason();
+		}
+	}
+
 }
 
 bool BattlePassSeasonManager::LoadSeasonData()
