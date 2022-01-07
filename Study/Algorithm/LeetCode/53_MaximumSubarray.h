@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 
+// [-2,1,-3,4,-1,2,1,-5,4] -> [4,-1,2,1] maxSum = (6)
+
 class Solution {
 public:
     // iterative
@@ -16,7 +18,6 @@ public:
 
         return globalMaxSum;
     }
-
 
     // brute force
     int maxSubArray_bruteforce(std::vector<int>& nums) {

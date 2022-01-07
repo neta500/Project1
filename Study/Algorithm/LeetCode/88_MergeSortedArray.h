@@ -7,7 +7,7 @@
 class Solution {
 public:
     void merge(std::vector<int>& nums1, int m, std::vector<int>& nums2, int n) {
-        int index1 = m - 1, index2 = n - 1, index_right = nums1.size() - 1;
+        int index1 = m - 1, index2 = n - 1, index_rightof_num1 = nums1.size() - 1;
 
         if (index2 < 0)
         {
@@ -19,24 +19,25 @@ public:
             const int num1 = nums1[index1];
             const int num2 = nums2[index2];
 
+            // num1과 num2의 가장 큰 원소부터 비교해서, num1의 뒷부분(index_right)부터 채운다.
             if (num2 <= num1)
             {
-                nums1[index_right] = num1;
-                index_right--;
+                nums1[index_rightof_num1] = num1;
+                index_rightof_num1--;
                 index1--;
             }
             else
             {
-                nums1[index_right] = num2;
-                index_right--;
+                nums1[index_rightof_num1] = num2;
+                index_rightof_num1--;
                 index2--;
             }
         }
 
         while (index2 >= 0)
         {
-            nums1[index_right] = nums2[index2];
-            index_right--;
+            nums1[index_rightof_num1] = nums2[index2];
+            index_rightof_num1--;
             index2--;
         }
     }

@@ -15,6 +15,13 @@ public:
         {
             minPrice = std::min(prices[i], minPrice);
             maxProfit = std::max(prices[i] - minPrice, maxProfit);
+
+            // i = 0, minPrice 7, maxProfit 0 (7ø° ªÁº≠ 7ø° ∆ )
+            // i = 1, minPrice 1, maxProfit 0 (1ø° ªÁº≠ 1ø° ∆ )
+            // i = 2, minPrice 1, maxProfit 4 (1ø° ªÁº≠ 5ø° ∆ )
+            // i = 3, minPrice 1, maxProfit 4 (1ø° ªÁº≠ 5ø° ∆ )
+            // i = 4, minPrice 1, maxProfit 5 (1ø° ªÁº≠ 6ø° ∆ ) -> √÷¥Î ¿ÃµÊ
+            // ...
         }
 
         return maxProfit;

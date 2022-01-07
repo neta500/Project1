@@ -142,6 +142,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="102_BinaryTreeLevelOrderTraveral.h" />
+    <ClInclude Include="Algorithm\LeetCode\101_SymmetricTree.h" />
+    <ClInclude Include="Algorithm\LeetCode\102_BinaryTreeLevelOrderTraversal.h" />
     <ClInclude Include="Algorithm\LeetCode\104_MaxDepthofBinaryTree.h" />
     <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
     <ClInclude Include="Algorithm\LeetCode\121_BestTimetoBuyandSellStock.h" />
