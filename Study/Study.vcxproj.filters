@@ -216,6 +216,9 @@
     <ClInclude Include="Algorithm\LeetCode\102_BinaryTreeLevelOrderTraversal.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\198_HouseRobber.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

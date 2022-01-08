@@ -41,7 +41,7 @@ private:
 	bool LoadRewardData();
 
 	bool CheckSeasonEnd();
-	OptionalRef<BattlePassSeasonData> GetStartableSeasonData(const DateTime& currentTime) const;
+	OptionalRef<int> GetStartableSeasonId(const DateTime& currentTime) const;
 
 	void SetSeasonData(const BattlePassSeasonData& seasonData) { mCurrentSeasonData = seasonData; }
 

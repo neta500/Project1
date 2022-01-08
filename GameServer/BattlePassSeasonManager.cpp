@@ -95,7 +95,16 @@ void BattlePassSeasonManager::OnTick()
 			EndBattlePassSeason();
 		}
 	}
+	else
+	{
+		if (const auto startableSeasonId = GetStartableSeasonId(DateTime::UtcNow());
+			startableSeasonId.has_value())
+		{
+			StartBattlePassSeason(startableSeasonId.value());
+		}
+	}
 
+	// DoTimer OnTick
 }
 
 bool BattlePassSeasonManager::LoadSeasonData()
@@ -113,7 +122,7 @@ bool BattlePassSeasonManager::CheckSeasonEnd()
 	return false;
 }
 
-OptionalRef<BattlePassSeasonData> BattlePassSeasonManager::GetStartableSeasonData(const DateTime& currentTime) const
+OptionalRef<int> BattlePassSeasonManager::GetStartableSeasonId(const DateTime& currentTime) const
 {
-	return OptionalRef<BattlePassSeasonData>();
+	return OptionalRef<int>();
 }

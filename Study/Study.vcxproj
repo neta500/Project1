@@ -157,6 +157,7 @@
     <ClInclude Include="Algorithm\LeetCode\1710_MaximumUnitsOnATrunk.h" />
     <ClInclude Include="Algorithm\LeetCode\17_PhoneNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\189_RotateArray.h" />
+    <ClInclude Include="Algorithm\LeetCode\198_HouseRobber.h" />
     <ClInclude Include="Algorithm\LeetCode\1_2sum.h" />
     <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h" />
     <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />

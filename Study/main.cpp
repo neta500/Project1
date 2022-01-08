@@ -4,13 +4,13 @@
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
 #include <mutex>
-#include "Algorithm/LeetCode/387_FirstUniqueCharacterinaString.h"
+#include "Algorithm/LeetCode/198_HouseRobber.h"
 
 int main()
 {
     Solution solution;
-    std::vector<int> vec{1,2,3,4,5,6,7};
-    const auto result = solution.firstUniqChar("leetcode");
+    std::vector<int> vec{2,7,9,3,1};
+    const auto result = solution.rob(vec);
 
     return 0;
 }
