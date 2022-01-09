@@ -219,6 +219,15 @@
     <ClInclude Include="Algorithm\LeetCode\198_HouseRobber.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\11_ContainerWithMostWater.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\15_3Sum.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\22_GenerateParentheses.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
