@@ -1,15 +1,14 @@
 #pragma once
 #include "BattlePassData.h"
 #include <SpinLock.h>
+#include <Timer.h>
 
-class BattlePassSeasonManager
+class BattlePassSeasonManager : public Timer
 {
+	static constexpr int TickInterval = 1000;
 public:
-	static BattlePassSeasonManager& Get()
-	{
-		static BattlePassSeasonManager instance;
-		return instance;
-	}
+	BattlePassSeasonManager() = default;
+	~BattlePassSeasonManager() = default;
 
 	void LoadManager();
 	void StartManager();
@@ -18,10 +17,7 @@ public:
 	bool IsValidSeason(const int seasonId) const;
 
 	const BattlePassSeasonData& GetCurrentSeasonData() const { return mCurrentSeasonData; }
-
-	bool StartBattlePassSeason(const int seasonId);
-	void EndBattlePassSeason();
-
+		
 	bool InsertSeasonData(const BattlePassSeasonData& seasonData);
 	bool DeleteSeasonData(const int seasonId);
 	bool UpdateSeasonData(const int prevSeasonId, const BattlePassSeasonData& seasonData);
@@ -30,21 +26,21 @@ public:
 	bool DeleteRewardData(const std::wstring& rewardId);
 	bool UpdateRewardData(const BattlePassRewardData& rewardData);
 
-	OptionalRef<BattlePassSeasonData> GetSeasonData(const int seasonId) const;
+	OptionalRef<const BattlePassSeasonData> GetSeasonData(const int seasonId) const;
 
 private:
-	BattlePassSeasonManager() = default;
-	~BattlePassSeasonManager() = default;
-
 	void OnTick();
 	bool LoadSeasonData();
 	bool LoadRewardData();
-
+	
 	bool CheckSeasonEnd();
-	OptionalRef<int> GetStartableSeasonId(const DateTime& currentTime) const;
+	std::optional<int> GetStartableSeasonId(const DateTime& currentTime) const;
 
 	void SetSeasonData(const BattlePassSeasonData& seasonData) { mCurrentSeasonData = seasonData; }
 
+	bool StartBattlePassSeason(const int seasonId);
+	void EndBattlePassSeason();
+	
 private:
 	USE_LOCK;
 

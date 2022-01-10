@@ -21,12 +21,13 @@ void BattlePassSeasonManager::StartManager()
 {
 	if (true == mLoadSuccess)
 	{
-		// OnTick
+		OnTick();
 	}
 }
 
 bool BattlePassSeasonManager::IsSeasonNow() const
 {
+	READ_LOCK;
 	return mCurrentSeasonData.mSeasonId > 0;
 }
 
@@ -44,11 +45,26 @@ bool BattlePassSeasonManager::IsValidSeason(const int seasonId) const
 
 bool BattlePassSeasonManager::StartBattlePassSeason(const int seasonId)
 {
+	WRITE_LOCK;
+
+	if (const auto seasonData = mSeasonMap.find(seasonId);
+		seasonData != mSeasonMap.cend())
+	{
+		mCurrentSeasonData = seasonData->second;
+
+		spdlog::info("BattlePass Season Start: {} StartDate: {} EndDate: {}",
+			seasonId, mCurrentSeasonData.mBeginDate.ToString(), mCurrentSeasonData.mEndDate.ToString());
+	}
+
 	return false;
 }
 
 void BattlePassSeasonManager::EndBattlePassSeason()
 {
+	WRITE_LOCK;
+		
+	spdlog::info("BattlePass Season End: {}", mCurrentSeasonData.mSeasonId);
+	mCurrentSeasonData = BattlePassSeasonData{};
 }
 
 bool BattlePassSeasonManager::InsertSeasonData(const BattlePassSeasonData& seasonData)
@@ -81,9 +97,17 @@ bool BattlePassSeasonManager::UpdateRewardData(const BattlePassRewardData& rewar
 	return false;
 }
 
-OptionalRef<BattlePassSeasonData> BattlePassSeasonManager::GetSeasonData(const int seasonId) const
+OptionalRef<const BattlePassSeasonData> BattlePassSeasonManager::GetSeasonData(const int seasonId) const
 {
-	return OptionalRef<BattlePassSeasonData>();
+	READ_LOCK;
+
+	if (const auto& seasonData = mSeasonMap.find(seasonId);
+		seasonData != mSeasonMap.cend())
+	{
+		return std::ref(seasonData->second);
+	}
+
+	return std::nullopt;
 }
 
 void BattlePassSeasonManager::OnTick()
@@ -97,14 +121,14 @@ void BattlePassSeasonManager::OnTick()
 	}
 	else
 	{
-		if (const auto startableSeasonId = GetStartableSeasonId(DateTime::UtcNow());
+		if (const auto startableSeasonId = GetStartableSeasonId(DateTime::Now());
 			startableSeasonId.has_value())
 		{
 			StartBattlePassSeason(startableSeasonId.value());
 		}
 	}
 
-	// DoTimer OnTick
+	DoTimer(TickInterval, &BattlePassSeasonManager::OnTick);
 }
 
 bool BattlePassSeasonManager::LoadSeasonData()
@@ -119,10 +143,28 @@ bool BattlePassSeasonManager::LoadRewardData()
 
 bool BattlePassSeasonManager::CheckSeasonEnd()
 {
+	if (mCurrentSeasonData.mEndDate <= DateTime::Now())
+	{
+		return true;
+	}
+
 	return false;
 }
 
-OptionalRef<int> BattlePassSeasonManager::GetStartableSeasonId(const DateTime& currentTime) const
+std::optional<int> BattlePassSeasonManager::GetStartableSeasonId(const DateTime & currentTime) const
 {
-	return OptionalRef<int>();
+	READ_LOCK;
+
+	const auto season = std::ranges::find_if(mSeasonMap,
+		[currentTime](const auto& seasonIter)
+		{
+			return seasonIter.second.mBeginDate <= currentTime && currentTime <= seasonIter.second.mEndDate;
+		});
+
+	if (season != mSeasonMap.cend())
+	{
+		return season->second.mSeasonId;
+	}
+
+	return std::nullopt;
 }

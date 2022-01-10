@@ -171,6 +171,7 @@
     <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\28_ImplementstrStr().h" />
     <ClInclude Include="Algorithm\LeetCode\322_CoinChange.h" />
+    <ClInclude Include="Algorithm\LeetCode\33_SearchinRotatedSortedArray.h" />
     <ClInclude Include="Algorithm\LeetCode\344_ReverseString.h" />
     <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h" />
     <ClInclude Include="Algorithm\LeetCode\350_IntersectionofTwoArraysll.h" />

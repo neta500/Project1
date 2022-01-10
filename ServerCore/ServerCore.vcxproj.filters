@@ -19,6 +19,9 @@
     <Filter Include="DateTime">
       <UniqueIdentifier>{e658f78b-eb23-43c7-a66e-2f54c2487e3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Job">
+      <UniqueIdentifier>{b59418c1-604e-4c95-9a77-3628229d52f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -56,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="DateTime.h">
       <Filter>DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Job</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
