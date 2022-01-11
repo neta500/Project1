@@ -1,11 +1,12 @@
 #pragma once
-#include "BattlePassData.h"
 #include <SpinLock.h>
 #include <Timer.h>
+#include "BattlePassData.h"
 
 class BattlePassSeasonManager : public Timer
 {
 	static constexpr int TickInterval = 1000;
+
 public:
 	BattlePassSeasonManager() = default;
 	~BattlePassSeasonManager() = default;
@@ -17,16 +18,14 @@ public:
 	bool IsValidSeason(const int seasonId) const;
 
 	const BattlePassSeasonData& GetCurrentSeasonData() const { return mCurrentSeasonData; }
+	OptionalRef<const BattlePassSeasonData> GetSeasonData(const int seasonId) const;
 		
 	bool InsertSeasonData(const BattlePassSeasonData& seasonData);
 	bool DeleteSeasonData(const int seasonId);
 	bool UpdateSeasonData(const int prevSeasonId, const BattlePassSeasonData& seasonData);
 
 	bool InsertRewardData(const BattlePassRewardData& rewardData);
-	bool DeleteRewardData(const std::wstring& rewardId);
-	bool UpdateRewardData(const BattlePassRewardData& rewardData);
-
-	OptionalRef<const BattlePassSeasonData> GetSeasonData(const int seasonId) const;
+	bool DeleteRewardData(const std::string& rewardId);
 
 private:
 	void OnTick();
@@ -48,5 +47,5 @@ private:
 	BattlePassSeasonData mCurrentSeasonData;
 
 	std::unordered_map<int, BattlePassSeasonData> mSeasonMap;
-	std::unordered_map<std::wstring, BattlePassRewardData> mRewardMap;
+	std::unordered_map<std::string, BattlePassRewardData> mRewardMap;
 };

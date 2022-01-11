@@ -21,10 +21,19 @@
     <ClInclude Include="BattlePassData.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="DBCommand.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
       <UniqueIdentifier>{d787185a-b8b8-4d33-8138-ee6cb4dbb251}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{a1f109f2-e20c-4be3-a8e5-14ed06386a75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

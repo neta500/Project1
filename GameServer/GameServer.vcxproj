@@ -157,7 +157,9 @@
     <ClInclude Include="BattlePassData.h" />
     <ClInclude Include="BattlePassManager.h" />
     <ClInclude Include="BattlePassSeasonManager.h" />
+    <ClInclude Include="DBCommand.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
