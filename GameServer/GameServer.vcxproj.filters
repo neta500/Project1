@@ -6,16 +6,10 @@
     <ClCompile Include="BattlePassSeasonManager.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
-    <ClCompile Include="BattlePassManager.cpp">
-      <Filter>Contents</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="BattlePassSeasonManager.h">
-      <Filter>Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="BattlePassManager.h">
       <Filter>Contents</Filter>
     </ClInclude>
     <ClInclude Include="BattlePassData.h">

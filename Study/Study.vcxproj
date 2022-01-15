@@ -178,13 +178,16 @@
     <ClInclude Include="Algorithm\LeetCode\387_FirstUniqueCharacterinaString.h" />
     <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
+    <ClInclude Include="Algorithm\LeetCode\3_LongestSubStringWithoutRepeatingCharacters.h" />
     <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />
+    <ClInclude Include="Algorithm\LeetCode\42_TrappintRainWater.h" />
     <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h" />
     <ClInclude Include="Algorithm\LeetCode\46_Permutations.h" />
     <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h" />
     <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h" />
     <ClInclude Include="Algorithm\LeetCode\51_N-Queens.h" />
     <ClInclude Include="Algorithm\LeetCode\53_MaximumSubarray.h" />
+    <ClInclude Include="Algorithm\LeetCode\55_JumpGame.h" />
     <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h" />
     <ClInclude Include="Algorithm\LeetCode\581_ShortestUnsortedContinuousSubArray.h" />
     <ClInclude Include="Algorithm\LeetCode\5_LongestPalindromicSubString.h" />

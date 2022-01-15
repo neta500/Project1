@@ -31,11 +31,11 @@ private:
 	__int64 mLockAcquiredTick = 0;
 };
 
-template <class _Lock>
+template <class Lock>
 class ReadScopedLock
 {
 public:
-	explicit ReadScopedLock(_Lock& lock) : mLock(lock)
+	explicit ReadScopedLock(Lock& lock) : mLock(lock)
 	{
 		mLock.ReadLock();
 	}
@@ -49,14 +49,14 @@ public:
 	ReadScopedLock& operator=(const ReadScopedLock&) = delete;
 
 private:
-	_Lock& mLock;
+	Lock& mLock;
 };
 
-template <class _Lock>
+template <class Lock>
 class WriteScopedLock
 {
 public:
-	explicit WriteScopedLock(_Lock& lock) : mLock(lock)
+	explicit WriteScopedLock(Lock& lock) : mLock(lock)
 	{
 		mLock.WriteLock();
 	}
@@ -70,7 +70,7 @@ public:
 	WriteScopedLock& operator=(const WriteScopedLock&) = delete;
 
 private:
-	_Lock& mLock;
+	Lock& mLock;
 };
 
 #define USE_LOCK mutable SpinLock mLock

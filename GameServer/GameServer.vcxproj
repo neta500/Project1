@@ -146,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BattlePassManager.cpp" />
     <ClCompile Include="BattlePassSeasonManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
@@ -155,7 +154,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BattlePassData.h" />
-    <ClInclude Include="BattlePassManager.h" />
     <ClInclude Include="BattlePassSeasonManager.h" />
     <ClInclude Include="DBCommand.h" />
     <ClInclude Include="pch.h" />

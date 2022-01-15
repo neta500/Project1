@@ -34,7 +34,7 @@ class BattlePassRewardData
 {
 public:
 	std::string mRewardId{};
-	std::map<std::pair<BattlePassType, int>, BattlePassReward> mRewardMap;
+	std::unordered_map<std::pair<BattlePassType, int>, BattlePassReward> mRewardMap;
 };
 
 class BattlePassSeasonData
@@ -49,16 +49,5 @@ public:
 	DateTime mEndDate{};
 
 	std::string mRewardId{};
-};
-
-class BattlePassAccountData
-{
-public:
-	int mSeasonId = 0;
-	int mLevel = 1;
-	int mTotalExp = 1;
-	int mDailyExp = 0;
-
-	std::unordered_map<std::pair<BattlePassType, int>, BattlePassRewardState> mAccountRewardMap;
 };
 
