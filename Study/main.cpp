@@ -4,13 +4,13 @@
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
 #include <mutex>
-#include "Algorithm/LeetCode/55_JumpGame.h"
+#include "Algorithm/LeetCode/62_UniquePaths.h"
 
 int main()
 {
     Solution solution;
     std::vector<int> vec{ 2,3,1,1,4 };
-    const auto result = solution.canJump(vec);
+    const auto result = solution.uniquePaths_gamma(3,7);
 
     return 0;
 }

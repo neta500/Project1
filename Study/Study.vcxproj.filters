@@ -240,6 +240,9 @@
     <ClInclude Include="Algorithm\LeetCode\55_JumpGame.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\62_UniquePaths.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
