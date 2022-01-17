@@ -243,6 +243,9 @@
     <ClInclude Include="Algorithm\LeetCode\62_UniquePaths.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\131_PalindromePartitioning.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

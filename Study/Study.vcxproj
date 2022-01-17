@@ -150,6 +150,7 @@
     <ClInclude Include="Algorithm\LeetCode\1209_RemoveAllAdjacentDuplicatesInString2.h" />
     <ClInclude Include="Algorithm\LeetCode\121_BestTimetoBuyandSellStock.h" />
     <ClInclude Include="Algorithm\LeetCode\125_ValidPalindrome.h" />
+    <ClInclude Include="Algorithm\LeetCode\131_PalindromePartitioning.h" />
     <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h" />
     <ClInclude Include="Algorithm\LeetCode\152_MaximumProductSubArray.h" />
