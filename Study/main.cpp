@@ -12,5 +12,8 @@ int main()
     std::vector<int> vec{ 2,3,1,1,4 };
     const auto result = solution.uniquePaths_gamma(3,7);
 
+    int a = 5;
+    a /= 10;
+
     return 0;
 }
