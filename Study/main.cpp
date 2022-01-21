@@ -4,16 +4,17 @@
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
 #include <mutex>
-#include "Algorithm/LeetCode/62_UniquePaths.h"
+#include "Algorithm/Sorting/Sorting.h"
+#include "Algorithm/LeetCode/204_CountPrimes.h"
 
 int main()
 {
     Solution solution;
-    std::vector<int> vec{ 2,3,1,1,4 };
-    const auto result = solution.uniquePaths_gamma(3,7);
+    std::vector<int> vec{ 7,5,1,4,3,2,9 };
+    const auto result = solution.countPrimes(10);
+    //QuickSort(vec, 0, vec.size()-1);
 
-    int a = 5;
-    a /= 10;
+    
 
     return 0;
 }

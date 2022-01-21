@@ -249,6 +249,15 @@
     <ClInclude Include="Algorithm\LeetCode\2_AddTwoNumbers.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\Sorting\Sorting.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\14_LongestCommonPrefix.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\204_CountPrimes.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

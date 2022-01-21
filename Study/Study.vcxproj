@@ -153,6 +153,7 @@
     <ClInclude Include="Algorithm\LeetCode\131_PalindromePartitioning.h" />
     <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h" />
+    <ClInclude Include="Algorithm\LeetCode\14_LongestCommonPrefix.h" />
     <ClInclude Include="Algorithm\LeetCode\152_MaximumProductSubArray.h" />
     <ClInclude Include="Algorithm\LeetCode\1578_MinimumTimetoMakeRopeColorful.h" />
     <ClInclude Include="Algorithm\LeetCode\15_3Sum.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="Algorithm\LeetCode\198_HouseRobber.h" />
     <ClInclude Include="Algorithm\LeetCode\1_2sum.h" />
     <ClInclude Include="Algorithm\LeetCode\200_NumberOfIslands.h" />
+    <ClInclude Include="Algorithm\LeetCode\204_CountPrimes.h" />
     <ClInclude Include="Algorithm\LeetCode\209_MinimumSizeSubarraySum.h" />
     <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h" />
     <ClInclude Include="Algorithm\LeetCode\22_GenerateParentheses.h" />
@@ -217,6 +219,7 @@
     <ClInclude Include="Algorithm\Programmers\Sorting_42746.h" />
     <ClInclude Include="Algorithm\Programmers\Sorting_42747.h" />
     <ClInclude Include="Algorithm\Programmers\Sorting_42748.h" />
+    <ClInclude Include="Algorithm\Sorting\Sorting.h" />
     <ClInclude Include="TestClass\EmplaceBack.h" />
     <ClInclude Include="TestClass\Optional.h" />
     <ClInclude Include="TestClass\TestClass.h" />

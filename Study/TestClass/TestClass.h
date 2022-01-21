@@ -18,11 +18,12 @@ public:
 	~Cat() { spdlog::info("~Cat Destructor"); }
 
 	Cat(const Cat& other)
+		: mAge(other.mAge)
 	{
-		mAge = other.mAge;
 		spdlog::info("Cat Copy Constructor");
 	}
-	Cat(Cat&& other) noexcept { mAge = other.mAge; spdlog::info("Cat Move Constructor"); }
+	Cat(Cat&& other) noexcept
+		: mAge(other.mAge) { spdlog::info("Cat Move Constructor"); }
 
 	virtual void Test() {}
 
