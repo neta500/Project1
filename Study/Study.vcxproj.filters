@@ -210,9 +210,6 @@
     <ClInclude Include="Algorithm\LeetCode\101_SymmetricTree.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
-    <ClInclude Include="102_BinaryTreeLevelOrderTraveral.h">
-      <Filter>Algorithm\LeetCode</Filter>
-    </ClInclude>
     <ClInclude Include="Algorithm\LeetCode\102_BinaryTreeLevelOrderTraversal.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
@@ -256,6 +253,9 @@
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
     <ClInclude Include="Algorithm\LeetCode\204_CountPrimes.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\134_GasStation.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
   </ItemGroup>

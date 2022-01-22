@@ -59,10 +59,11 @@ int partition(std::vector<int>& vec, int left, int right)
 {
 	// pivot은 중간으로 잡아주는게 좋다.
 	int mid = (left + right) / 2;
+	int pivot = vec[mid];
+
 	// left와 pivot을 바꿔준뒤,
 	std::swap(vec[left], vec[mid]);
 
-	int pivot = vec[left];
 	int i = left; int j = right;
 
 	// left와 right를 좁혀주면서, left는 pivot보다 큰값, right는 작은값을 찾아 swap
@@ -81,6 +82,8 @@ int partition(std::vector<int>& vec, int left, int right)
 		std::swap(vec[i], vec[j]);
 	}
 
+	// 처음에 바뀌놓은 left랑 pivot 원상복귀 (위에 두번째 while문에서 i를 pivot >=까지 증가
+	// 시켰기 때문에, i랑 바꿔줘야 한다. (i랑 mid랑 다를 수 있음)	
 	vec[left] = vec[i];
 	vec[i] = pivot;
 	return i;

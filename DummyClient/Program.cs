@@ -1,2 +1,15 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using System.Text;
+
+namespace DummyClient;
+
+using System.Net.Sockets;
+using System.Net;
+
+public class Program
+{
+    public static void Main()
+    {
+        Client client = new Client();
+        client.Run();
+    }
+}
