@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -12,6 +13,7 @@ namespace DummyClient
     {
         private readonly Socket Socket;
         private readonly byte[] RecvBuffer = new byte[1024];
+        private readonly Random Random = new Random();
 
         public Client()
         {
@@ -22,10 +24,10 @@ namespace DummyClient
         {
             Socket.Connect(new IPEndPoint(IPAddress.Loopback, 712));
             Socket.BeginReceive(RecvBuffer, 0, RecvBuffer.Length, SocketFlags.None, ReceiveCallback, Socket);
-
+            
             while (true)
             {
-                var sendMsg = GetRandomString(10);
+                var sendMsg = GetRandomString(Random.Next(5, 15));
                 Socket.Send(Encoding.ASCII.GetBytes(sendMsg));
                 Thread.Sleep(100);
             }
