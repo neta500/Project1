@@ -153,6 +153,7 @@
     <ClInclude Include="Algorithm\LeetCode\134_GasStation.h" />
     <ClInclude Include="Algorithm\LeetCode\136_SingleNumber.h" />
     <ClInclude Include="Algorithm\LeetCode\139_WordBreak.h" />
+    <ClInclude Include="Algorithm\LeetCode\13_RomanToInteger.h" />
     <ClInclude Include="Algorithm\LeetCode\14_LongestCommonPrefix.h" />
     <ClInclude Include="Algorithm\LeetCode\152_MaximumProductSubArray.h" />
     <ClInclude Include="Algorithm\LeetCode\1578_MinimumTimetoMakeRopeColorful.h" />
