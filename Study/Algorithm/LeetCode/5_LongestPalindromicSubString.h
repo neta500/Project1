@@ -4,49 +4,48 @@
 // 1. 어떤 문자열이 Palindrome이다 -> 그 문자열의 내부 문자열도 Palindrome이다를 이용한 dp문제
 // P(i,j) = P(i+1, j-1) && 양옆문자가 같음
 
-// 2. 가운데 문자에서부터 양옆으로 index를 늘려가며, Palindrome인지 체크한다.
+// 2. 가운데 문자에서부터 양옆으로 index를 늘려가며, Palindrome인지 체크한다. O(n^2)
 // 여기서, 총 문자열이 홀수이면 가운데 문자가 한개, 짝수이면 가운데 문자가 두개로 시작한다.
 
 class Solution {
 public:
     std::string longestPalindrome(std::string s) {
-        int ans = 0, index = -1, len = 0;
-        for (int i = 0; i < s.size(); ++i)
+        if (s.size() < 2) return s;
+
+        const int size = s.size();
+        int start = 0; int end = 0;
+
+        int i = 0;
+
+        while (i < size)
         {
-            // 총 길이가 짝수
-            len = 2 * lengthOfPalindrome(s, i, i + 1);
-            if (ans < len)
+            int left = i; int right = i;
+
+            // 연속된 문자열이 나오는 경우 처리 ("cbbd"의 경우 left가 b(1), right가 b(2)가 됨)
+            while (right < size - 1 && s[right] == s[right + 1])
             {
-                ans = len;
-                index = i - len / 2 + 1;
+                right++;
             }
 
-            // 총 길이가 홀수
-            len = 2 * lengthOfPalindrome(s, i - 1, i + 1) + 1;
-            if (ans < len)
+            i = right + 1;
+
+            // left는 왼쪽으로, right는 오른쪽으로 넓혀가며 palindrome을 검사한다.
+            while (right < size - 1 && left > 0 && s[right + 1] == s[left - 1])
             {
-                ans = len;
-                index = i - len / 2;
+                right++;
+                left--;
+            }
+
+            // palindrome이 구해지면 max값을 비교 후 처리
+            int length = right - left + 1;
+            if (length > end)
+            {
+                end = length;
+                start = left;
             }
         }
 
-        return std::string(s.begin() + index, s.begin() + index + ans);
+        return s.substr(start, end);
     }
-
-private:
-    int lengthOfPalindrome(std::string s, int left, int right)
-    {
-        int length = 0;
-        for (auto i = left, j = right; j < s.size() && i >= 0; --i, ++j)
-        {
-            if (s.at(i) != s.at(j))
-            {
-                return length;
-            }
-
-            ++length;
-        }
-
-        return length;
-    }
+    
 };

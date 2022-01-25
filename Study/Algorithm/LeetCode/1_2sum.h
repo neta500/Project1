@@ -11,6 +11,7 @@
 class Solution {
 public:
     std::vector<int> twoSum(std::vector<int>& nums, int target) {
+        // <value, index>
         std::unordered_map<int, int> map;
 
         for (int i = 0; i < nums.size(); ++i)
@@ -22,13 +23,16 @@ public:
         {
             int num = nums[i];
             int remain = target - num;
+
+            // remain value를 key로 hash_map에서 찾는다.
             if (const auto found = map.find(remain); found != map.cend())
             {
-                int index = map[remain];
+                int index = found->second;
                 if (index == i)
                 {
                     continue;
                 }
+
                 return std::vector<int>{i, index};
             }
         }
