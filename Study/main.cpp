@@ -4,14 +4,15 @@
 #include <spdlog/spdlog.h>
 #include <boost/asio.hpp>
 #include <mutex>
-#include "Algorithm/Sorting/Sorting.h"
-#include "Algorithm/LeetCode/5_LongestPalindromicSubString.h"
+#include "Algorithm/Sorting.h"
+#include "Algorithm/LeetCode/14_LongestCommonPrefix.h"
 
 int main()
 {
     Solution solution;
-    std::vector<int> vec{ 7,5,1,4,3,2,9 };
-    const auto result = solution.longestPalindrome("cbbd");
+    std::vector<int> vec{ 7,0,1,0,3,2,0 };
+    std::vector<std::string> strVec{ "flow", "fly", "fleet" };
+    const auto result = solution.longestCommonPrefix(strVec);
     QuickSort(vec, 0, vec.size()-1);
 
     

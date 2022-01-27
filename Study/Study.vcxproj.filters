@@ -246,9 +246,6 @@
     <ClInclude Include="Algorithm\LeetCode\2_AddTwoNumbers.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
-    <ClInclude Include="Algorithm\Sorting\Sorting.h">
-      <Filter>Algorithm</Filter>
-    </ClInclude>
     <ClInclude Include="Algorithm\LeetCode\14_LongestCommonPrefix.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
@@ -260,6 +257,12 @@
     </ClInclude>
     <ClInclude Include="Algorithm\LeetCode\13_RomanToInteger.h">
       <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Graph.h">
+      <Filter>Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Algorithm\Sorting.h">
+      <Filter>Algorithm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

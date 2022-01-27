@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Algorithm\Graph.h" />
     <ClInclude Include="Algorithm\LeetCode\101_SymmetricTree.h" />
     <ClInclude Include="Algorithm\LeetCode\102_BinaryTreeLevelOrderTraversal.h" />
     <ClInclude Include="Algorithm\LeetCode\104_MaxDepthofBinaryTree.h" />
@@ -220,7 +221,7 @@
     <ClInclude Include="Algorithm\Programmers\Sorting_42746.h" />
     <ClInclude Include="Algorithm\Programmers\Sorting_42747.h" />
     <ClInclude Include="Algorithm\Programmers\Sorting_42748.h" />
-    <ClInclude Include="Algorithm\Sorting\Sorting.h" />
+    <ClInclude Include="Algorithm\Sorting.h" />
     <ClInclude Include="TestClass\EmplaceBack.h" />
     <ClInclude Include="TestClass\Optional.h" />
     <ClInclude Include="TestClass\TestClass.h" />

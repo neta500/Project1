@@ -1,6 +1,11 @@
 #pragma once
 #include <string>
 
+// 가장 긴 palindrome substring 찾기.
+// "babad" -> "aba", "cbbbd" -> "bbb"
+
+// 0. brute force 모든 경우의 수 O(n^3)
+
 // 1. 어떤 문자열이 Palindrome이다 -> 그 문자열의 내부 문자열도 Palindrome이다를 이용한 dp문제
 // P(i,j) = P(i+1, j-1) && 양옆문자가 같음
 
@@ -21,7 +26,9 @@ public:
         {
             int left = i; int right = i;
 
-            // 연속된 문자열이 나오는 경우 처리 ("cbbd"의 경우 left가 b(1), right가 b(2)가 됨)
+            // 연속된 문자열이 나오는 경우 처리
+            // "cbbd"의 경우 left가 b(1), right가 b(2)가 됨
+            // "cbbbd"의 경우 left가 b(1), right가 b(3)이 됨.
             while (right < size - 1 && s[right] == s[right + 1])
             {
                 right++;

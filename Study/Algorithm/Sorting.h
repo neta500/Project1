@@ -86,6 +86,7 @@ int partition(std::vector<int>& vec, int left, int right)
 	// ½ÃÄ×±â ¶§¹®¿¡, i¶û ¹Ù²ãÁà¾ß ÇÑ´Ù. (i¶û mid¶û ´Ù¸¦ ¼ö ÀÖÀ½)	
 	vec[left] = vec[i];
 	vec[i] = pivot;
+
 	return i;
 }
 
