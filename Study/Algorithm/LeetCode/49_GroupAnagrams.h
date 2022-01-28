@@ -14,8 +14,9 @@ public:
     std::vector<std::vector<std::string>> groupAnagrams_bycounting(std::vector<std::string>& strs)
     {
         std::unordered_map<std::string, std::vector<std::string>> map;
-        std::map<char, int> countMap;
+        std::map<char, int> countMap; // 각 string의 문자, 문자의 개수를 저장.
 
+        // string의 문자, 문자수를 countMap에 저장하는 함수.
         auto getCountKey = [&countMap](const std::string& str) -> std::string
         {
             for (const auto& c : str)
@@ -30,6 +31,8 @@ public:
                 }
             }
 
+            // 이 때 key는 map 원소의 정보이다. 예를들면
+            // a3b2c1 이런식. (aaabbbc, aabbabc ... 등의 anagram set)
             std::string key;
             for (const auto& [c, count] : countMap)
             {
@@ -46,7 +49,8 @@ public:
         for (const std::string& str : strs)
         {
             const auto key = getCountKey(str);
-            
+
+            // key (a3b2c1)를 저장한다. (anagram이니까 당연히 겹치는건 있음)
             if (const auto found = map.find(key); found != map.cend())
             {
                 found->second.emplace_back(str);
@@ -59,6 +63,7 @@ public:
             countMap.clear();
         }
 
+        // 최종결과를 vector에 정리해준다.
         std::vector<std::vector<std::string>> vec{};
 
         for (const auto& [key, str] : map)

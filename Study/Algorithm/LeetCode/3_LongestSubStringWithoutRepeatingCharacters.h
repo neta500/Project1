@@ -9,6 +9,7 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(std::string s) {
+        // 문자와 index를 저장한다.
         std::unordered_map<char, int> map;
         int startIndex = -1;
         int maxLength = 0;
