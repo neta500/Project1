@@ -264,6 +264,9 @@
     <ClInclude Include="Algorithm\Sorting.h">
       <Filter>Algorithm</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\58_LengthOfLastWord.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

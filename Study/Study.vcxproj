@@ -196,6 +196,7 @@
     <ClInclude Include="Algorithm\LeetCode\55_JumpGame.h" />
     <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h" />
     <ClInclude Include="Algorithm\LeetCode\581_ShortestUnsortedContinuousSubArray.h" />
+    <ClInclude Include="Algorithm\LeetCode\58_LengthOfLastWord.h" />
     <ClInclude Include="Algorithm\LeetCode\5_LongestPalindromicSubString.h" />
     <ClInclude Include="Algorithm\LeetCode\62_UniquePaths.h" />
     <ClInclude Include="Algorithm\LeetCode\64_MinimumPathSum.h" />
