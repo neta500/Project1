@@ -188,6 +188,7 @@
     <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />
     <ClInclude Include="Algorithm\LeetCode\42_TrappintRainWater.h" />
     <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h" />
+    <ClInclude Include="Algorithm\LeetCode\438_FindAllAnagramsinaString.h" />
     <ClInclude Include="Algorithm\LeetCode\46_Permutations.h" />
     <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h" />
     <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h" />
