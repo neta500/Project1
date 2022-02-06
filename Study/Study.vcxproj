@@ -194,6 +194,7 @@
     <ClInclude Include="Algorithm\LeetCode\48_RotateImage.h" />
     <ClInclude Include="Algorithm\LeetCode\49_GroupAnagrams.h" />
     <ClInclude Include="Algorithm\LeetCode\51_N-Queens.h" />
+    <ClInclude Include="Algorithm\LeetCode\525_ContiguousArray.h" />
     <ClInclude Include="Algorithm\LeetCode\53_MaximumSubarray.h" />
     <ClInclude Include="Algorithm\LeetCode\55_JumpGame.h" />
     <ClInclude Include="Algorithm\LeetCode\56_MergeIntervals.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Algorithm\LeetCode\763_PartitionLabels.h" />
     <ClInclude Include="Algorithm\LeetCode\78_SubSet.h" />
     <ClInclude Include="Algorithm\LeetCode\79_WordSearch.h" />
+    <ClInclude Include="Algorithm\LeetCode\80_RemoveDuplicatesfromSortedArray2.h" />
     <ClInclude Include="Algorithm\LeetCode\841_KeysAndRooms.h" />
     <ClInclude Include="Algorithm\LeetCode\88_MergeSortedArray.h" />
     <ClInclude Include="Algorithm\LeetCode\98_ValidateBinarySearchTree.h" />

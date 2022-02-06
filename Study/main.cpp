@@ -6,7 +6,7 @@
 #include <mutex>
 #include "Algorithm/Sorting.h"
 #include "Algorithm/Graph.h"
-#include "Algorithm/LeetCode/438_FindAllAnagramsinaString.h"
+#include "Algorithm/LeetCode/80_RemoveDuplicatesfromSortedArray2.h"
 
 using namespace sort;
 using namespace graph;
@@ -14,9 +14,9 @@ using namespace graph;
 int main()
 {
     Solution solution;
-    std::vector<int> vec{ 7,0,1,4,3,2,0 };
+    std::vector<int> vec{ 1,1,1,2,2,3 };
     std::vector<std::string> strVec{ "flow", "fly", "fleet" };
-    const auto result = solution.findAnagrams("cbaebabacd", "abc");
+    const auto result = solution.removeDuplicates(vec);
     QuickSort(vec, 0, vec.size()-1);
 
     bfs();
