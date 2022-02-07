@@ -182,6 +182,7 @@
     <ClInclude Include="Algorithm\LeetCode\347_TopKFrequentElements.h" />
     <ClInclude Include="Algorithm\LeetCode\350_IntersectionofTwoArraysll.h" />
     <ClInclude Include="Algorithm\LeetCode\387_FirstUniqueCharacterinaString.h" />
+    <ClInclude Include="Algorithm\LeetCode\389_FindTheDifference.h" />
     <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
     <ClInclude Include="Algorithm\LeetCode\3_LongestSubStringWithoutRepeatingCharacters.h" />
