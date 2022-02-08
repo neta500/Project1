@@ -171,6 +171,7 @@
     <ClInclude Include="Algorithm\LeetCode\20_ValidParentheses.h" />
     <ClInclude Include="Algorithm\LeetCode\22_GenerateParentheses.h" />
     <ClInclude Include="Algorithm\LeetCode\242_ValidAnagram.h" />
+    <ClInclude Include="Algorithm\LeetCode\258_AddDigits.h" />
     <ClInclude Include="Algorithm\LeetCode\26_RemoveDuplicatesefromSortedArray.h" />
     <ClInclude Include="Algorithm\LeetCode\283_MoveZeros.h" />
     <ClInclude Include="Algorithm\LeetCode\287_FindTheDuplicateNumber.h" />
