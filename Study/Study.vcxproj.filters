@@ -289,6 +289,9 @@
     <ClInclude Include="Algorithm\LeetCode\560_SubarraySumEqualsK.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="Algorithm\LeetCode\567_PermutationInString.h">
+      <Filter>Algorithm\LeetCode</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
