@@ -6,17 +6,17 @@
 class Solution {
 public:
     // DFS (recurrsion, stack)
-    int maxDepth(TreeNode* root) {
+    int maxDepth_dfs(TreeNode* root) {
         if (root == nullptr)
         {
             return 0;
         }
 
-        return std::max(maxDepth(root->left), maxDepth(root->right)) + 1;
+        return std::max(maxDepth_dfs(root->left), maxDepth_dfs(root->right)) + 1;
     }
 
     // BFS (queue)
-    int maxDepth(TreeNode* root) {
+    int maxDepth_bfs(TreeNode* root) {
         if (root == nullptr)
         {
             return 0;
@@ -30,8 +30,7 @@ public:
         while (false == queue.empty())
         {
             depth++;
-            int size = queue.size();
-            for (int i = 0; i < size; ++i)
+            for (int i = 0; i < queue.size(); ++i)
             {
                 TreeNode* front = queue.front();
                 queue.pop();

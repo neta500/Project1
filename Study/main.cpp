@@ -6,7 +6,8 @@
 #include <mutex>
 #include "Algorithm/Sorting.h"
 #include "Algorithm/Graph.h"
-#include "Algorithm/LeetCode/567_PermutationInString.h"
+#include "Algorithm/LeetCode/78_SubSet.h"
+#include <deque>
 
 using namespace sort;
 using namespace graph;
@@ -14,10 +15,9 @@ using namespace graph;
 int main()
 {
     Solution solution;
-    std::vector<int> vec{ 1,1,1,2,2,3 };
+    std::vector<int> vec{ 1,2,3 };
     std::vector<std::string> strVec{ "flow", "fly", "fleet" };
-    const auto result = solution.checkInclusion("ab",
-        "eidbaooo");
+    const auto result = solution.subsets(vec);
     QuickSort(vec, 0, vec.size()-1);
 
     bfs();
@@ -25,6 +25,14 @@ int main()
 
     const int* ptr = new int(5);
     ptr = nullptr;
+
+
+    std::vector<Cat> catVec;
+    {
+        Cat* cat = new Cat{};
+        catVec.push_back(*cat);
+        delete cat;
+    }
 
     return 0;
 }

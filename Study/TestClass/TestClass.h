@@ -4,6 +4,7 @@
 class Animal
 {
 public:
+	virtual ~Animal() = default;
 	virtual void Test() = 0;
 };
 
@@ -15,7 +16,7 @@ public:
 	{
 		spdlog::info("Cat Constructor(age:{})", age);
 	}
-	~Cat() { spdlog::info("~Cat Destructor"); }
+	~Cat() override { spdlog::info("~Cat Destructor"); }
 
 	Cat(const Cat& other)
 		: mAge(other.mAge)
