@@ -1,5 +1,4 @@
 #pragma once
-#include <map>
 #include <unordered_map>
 #include "DateTime.h"
 
@@ -33,7 +32,7 @@ public:
 class BattlePassRewardData
 {
 public:
-	std::string mRewardId{};
+	std::string mRewardId;
 	std::unordered_map<std::pair<BattlePassType, int>, BattlePassReward> mRewardMap;
 };
 
@@ -48,6 +47,6 @@ public:
 	DateTime mBeginDate{};
 	DateTime mEndDate{};
 
-	std::string mRewardId{};
+	std::string mRewardId;
 };
 
