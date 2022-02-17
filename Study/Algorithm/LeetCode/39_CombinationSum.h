@@ -1,6 +1,11 @@
 #pragma once
 #include <vector>
 
+// #backtracking
+// combination(조합)의 합이 target이 되는 경우의 수 구하기
+// [2,3,6,7] 에서, target = 7이라면
+// [2,2,3], [7] (원소 중복가능)
+
 class Solution {
     std::vector<std::vector<int>> result;
     std::vector<int> current;

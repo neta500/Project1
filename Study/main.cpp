@@ -27,12 +27,8 @@ int main()
     ptr = nullptr;
 
 
-    std::vector<Cat> catVec;
-    {
-        Cat* cat = new Cat{};
-        catVec.push_back(*cat);
-        delete cat;
-    }
+    Animal* animal = new Cat();
+    Cat* downCasted = dynamic_cast<Cat*>(animal);
 
     return 0;
 }
