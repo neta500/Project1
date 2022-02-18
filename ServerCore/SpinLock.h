@@ -1,15 +1,14 @@
 #pragma once
 
-// write -> write ( o )
-// write -> read ( o )
-// read -> write ( x )
+// recurrsive read-write spinlock
+// forbidden : read -> write lock in same thread context
 
 class SpinLock
 {
 	static constexpr int MaxSpinCount = 5000;
 	static constexpr int LockTimeOut = 12000;
 
-	enum LockFlag: unsigned int
+	enum LockFlag: uint32
 	{
 		WriteLockFlag = 0xFFFF'0000,
 		ReadLockFlag = 0x0000'FFFF,
@@ -26,9 +25,23 @@ public:
 	void ReadUnLock();
 
 private:
-	std::atomic<unsigned int> mLockFlag = LockFlag::Empty;
-	unsigned short mWriteLockCount = 0;
-	__int64 mLockAcquiredTick = 0;
+	auto GetOwnerThreadId() const
+	{
+		return (mLockFlag.load() & LockFlag::WriteLockFlag) >> 16;
+	}
+
+	bool ReadLocked() const
+	{
+		return (mLockFlag.load() & LockFlag::ReadLockFlag) != 0;
+	}
+
+	auto GetReadLockCount() const
+	{
+		return mLockFlag.load() & LockFlag::ReadLockFlag;
+	}
+	
+	std::atomic<uint32> mLockFlag = LockFlag::Empty;
+	std::atomic<uint16> mWriteLockCount = 0;
 };
 
 template <class Lock>

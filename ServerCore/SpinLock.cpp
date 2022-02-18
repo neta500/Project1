@@ -1,14 +1,12 @@
 #include "pch.h"	
 #include "SpinLock.h"
-#include "CoreTls.h"
+#include "CoreThreadLocal.h"
 
 void SpinLock::WriteLock()
 {
-	// 이미 같은 스레드가 잡고있으면 count만 올려준다.
-	const auto lockThreadId = (mLockFlag.load() & LockFlag::WriteLockFlag) >> 16;
-	if (lockThreadId == LThreadId)
+	if (GetOwnerThreadId() == LThreadId)
 	{
-		mWriteLockCount++;
+		++mWriteLockCount;
 		return;
 	}
 
@@ -19,17 +17,17 @@ void SpinLock::WriteLock()
 	{
 		for (int spinCount = 0; spinCount < MaxSpinCount; ++spinCount)
 		{
-			unsigned int expected = LockFlag::Empty;
+			uint32 expected = LockFlag::Empty;
 			if (mLockFlag.compare_exchange_strong(expected, desired))
 			{
-				mWriteLockCount++;
+				++mWriteLockCount;
 				return;
 			}
 		}
-
+				
 		if (::GetTickCount64() - beginTick > LockTimeOut)
 		{
-			util::Crash("lock timeout");
+			util::Crash("lock timeout. may be readlocked");
 		}
 
 		std::this_thread::yield();		
@@ -38,22 +36,24 @@ void SpinLock::WriteLock()
 
 void SpinLock::WriteUnLock()
 {
-	if ((mLockFlag.load() & LockFlag::ReadLockFlag) != 0)
+	if (ReadLocked())
 	{
-		util::Crash("invalid lock order");
+		util::Crash("invalid lock order (WriteUnLock on ReadLock");
 	}
 
 	if (--mWriteLockCount == 0)
 	{
 		mLockFlag.store(LockFlag::Empty);
 	}
+	else
+	{
+		util::Crash("multiple write unlock");
+	}
 }
 
 void SpinLock::ReadLock()
 {
-	// 이미 같은 스레드가 잡고있으면 count만 올려준다.
-	const auto lockThreadId = (mLockFlag.load() & LockFlag::WriteLockFlag) >> 16;
-	if (lockThreadId == LThreadId)
+	if (GetOwnerThreadId() == LThreadId)
 	{
 		mLockFlag.fetch_add(1);
 		return;
@@ -64,7 +64,7 @@ void SpinLock::ReadLock()
 	{
 		for (int spinCount = 0; spinCount < MaxSpinCount; ++spinCount)
 		{
-			unsigned int expected = mLockFlag.load() & LockFlag::ReadLockFlag;
+			uint32 expected = GetReadLockCount();
 			if (mLockFlag.compare_exchange_strong(expected, expected + 1))
 			{
 				return;
@@ -82,8 +82,10 @@ void SpinLock::ReadLock()
 
 void SpinLock::ReadUnLock()
 {
-	if ((mLockFlag.fetch_sub(1) & LockFlag::ReadLockFlag) == 0)
+	if (false == ReadLocked())
 	{
 		util::Crash("multiple read unlock");
 	}
+
+	mLockFlag.fetch_sub(1);
 }

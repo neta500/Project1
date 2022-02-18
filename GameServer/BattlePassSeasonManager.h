@@ -1,15 +1,15 @@
 #pragma once
 #include <SpinLock.h>
-#include <Timer.h>
+#include <Async.h>
 #include "BattlePassData.h"
 
-class BattlePassSeasonManager : public Timer
+class BattlePassSeasonManager : public Async
 {
 	static constexpr int TickInterval = 1000;
 
 public:
 	BattlePassSeasonManager() = default;
-	~BattlePassSeasonManager() = default;
+	~BattlePassSeasonManager() override = default;
 
 	void LoadManager();
 	void StartManager();

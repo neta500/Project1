@@ -240,6 +240,8 @@ OptionalRef<const BattlePassSeasonData> BattlePassSeasonManager::GetSeasonData(c
 
 void BattlePassSeasonManager::OnTick()
 {
+	spdlog::info("BattlePassSeasonManager::CheckInterval");
+
 	if (IsSeasonNow())
 	{
 		if (true == CheckSeasonEnd())
@@ -345,6 +347,8 @@ bool BattlePassSeasonManager::LoadRewardData()
 
 bool BattlePassSeasonManager::CheckSeasonEnd()
 {
+	READ_LOCK;
+
 	if (mCurrentSeasonData.mEndDate <= DateTime::Now())
 	{
 		return true;

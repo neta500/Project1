@@ -156,12 +156,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Acceptor.h" />
+    <ClInclude Include="Async.h" />
     <ClInclude Include="CorePch.h" />
+    <ClInclude Include="CoreTypeDefine.h" />
     <ClInclude Include="CoreUtils.h" />
     <ClInclude Include="DateTime.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IoContext.h" />
-    <ClInclude Include="CoreTls.h" />
+    <ClInclude Include="CoreThreadLocal.h" />
+    <ClInclude Include="Job.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpinLock.h" />
     <ClInclude Include="pch.h" />
@@ -182,10 +185,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ServerCore.cpp" />
-    <ClCompile Include="CoreTls.cpp" />
+    <ClCompile Include="CoreThreadLocal.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SpinLock.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

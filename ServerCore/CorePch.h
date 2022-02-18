@@ -1,7 +1,8 @@
 #pragma once
 
-#include "CoreTls.h"
+#include "CoreThreadLocal.h"
 #include "CoreUtils.h"
+#include "CoreTypeDefine.h"
 #include "spdlog/spdlog.h"
 
 #include <vector>

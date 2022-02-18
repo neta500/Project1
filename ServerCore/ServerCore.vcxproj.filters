@@ -45,7 +45,7 @@
     <ClInclude Include="SpinLock.h">
       <Filter>Lock</Filter>
     </ClInclude>
-    <ClInclude Include="CoreTls.h">
+    <ClInclude Include="CoreThreadLocal.h">
       <Filter>Thread</Filter>
     </ClInclude>
     <ClInclude Include="CoreUtils.h">
@@ -61,6 +61,15 @@
       <Filter>DateTime</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="CoreTypeDefine.h">
+      <Filter>Pch</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>Job</Filter>
+    </ClInclude>
+    <ClInclude Include="Async.h">
       <Filter>Job</Filter>
     </ClInclude>
   </ItemGroup>
@@ -83,7 +92,7 @@
     <ClCompile Include="SpinLock.cpp">
       <Filter>Lock</Filter>
     </ClCompile>
-    <ClCompile Include="CoreTls.cpp">
+    <ClCompile Include="CoreThreadLocal.cpp">
       <Filter>Thread</Filter>
     </ClCompile>
     <ClCompile Include="ServerCore.cpp" />
@@ -95,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="DateTime.cpp">
       <Filter>DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Job</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -15,7 +15,7 @@ public:
 
 	bool Fetch()
 	{
-		return true;
+		return false;
 	}
 
 	T* operator->()

@@ -29,6 +29,7 @@ int main()
 
     Animal* animal = new Cat();
     Cat* downCasted = dynamic_cast<Cat*>(animal);
+    
 
     return 0;
 }
