@@ -13,7 +13,8 @@ public:
 		{
 			(obj->*memFunc)(args...);
 		};
-		
+
+		SetCaller();
 	}
 
 	template <class T, class... Args>
@@ -23,7 +24,8 @@ public:
 		{
 			(obj.get()->*memFunc)(args...);
 		};
-		
+
+		SetCaller();
 	}
 
 	virtual ~Job() = default;
