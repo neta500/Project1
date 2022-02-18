@@ -187,6 +187,7 @@
     <ClInclude Include="Algorithm\LeetCode\394_DecodeString.h" />
     <ClInclude Include="Algorithm\LeetCode\39_CombinationSum.h" />
     <ClInclude Include="Algorithm\LeetCode\3_LongestSubStringWithoutRepeatingCharacters.h" />
+    <ClInclude Include="Algorithm\LeetCode\402_RemoveKDigits.h" />
     <ClInclude Include="Algorithm\LeetCode\416_PartitionEqualSubsetSum.h" />
     <ClInclude Include="Algorithm\LeetCode\42_TrappintRainWater.h" />
     <ClInclude Include="Algorithm\LeetCode\435_Non-overlappingIntervals.h" />
