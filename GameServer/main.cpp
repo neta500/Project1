@@ -5,6 +5,7 @@
 #include <ThreadManager.h>
 #include <shared_mutex>
 #include "BattlePassSeasonManager.h"
+#include <stack>
 
 class TestClass : public Async
 {
@@ -81,10 +82,8 @@ void TestTimer()
 		});
 }
 
-int main()
+void TestLock()
 {
-	spdlog::info("init spdlog");
-
 	// TestLock
 	auto start = std::chrono::high_resolution_clock::now();
 	auto testClass = new TestClass();
@@ -101,12 +100,18 @@ int main()
 				testClass->read();
 			});
 	}
-	
+
 	ThreadManager::GetInstance().JoinAll();
-	
+
 	auto stop = std::chrono::high_resolution_clock::now();
 	const auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start).count();
 	spdlog::info("failed: {} elapsed: {}", testClass->failed, elapsed);
+}
+
+
+int main()
+{
+	spdlog::info("init spdlog");
 
 	return 0;
 }

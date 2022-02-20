@@ -39,6 +39,11 @@ private:
 	{
 		return mLockFlag.load() & LockFlag::ReadLockFlag;
 	}
+
+	uint32 WriteLockedFlag() const
+	{
+		return LThreadId << 16 & LockFlag::WriteLockFlag;
+	}
 	
 	std::atomic<uint32> mLockFlag = LockFlag::Empty;
 	std::atomic<uint16> mWriteLockCount = 0;

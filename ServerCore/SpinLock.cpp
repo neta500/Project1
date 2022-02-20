@@ -9,8 +9,8 @@ void SpinLock::WriteLock()
 		++mWriteLockCount;
 		return;
 	}
-
-	const auto desired = LThreadId << 16 & LockFlag::WriteLockFlag;
+	
+	const auto desired = WriteLockedFlag();
 	const auto beginTick = ::GetTickCount64();
 
 	while (true)

@@ -4,25 +4,12 @@
 class Job
 {
 public:
-	Job() = default;
-
 	template <class T, class... Args>
 	Job(T* obj, void (T::* memFunc)(Args...), Args&&... args)
 	{
 		mFunc = [obj, memFunc, args...]
 		{
 			(obj->*memFunc)(args...);
-		};
-
-		SetCaller();
-	}
-
-	template <class T, class... Args>
-	Job(std::shared_ptr<T> obj, void (T::* memFunc)(Args...), Args&&... args)
-	{
-		mFunc = [obj, memFunc, args...]
-		{
-			(obj.get()->*memFunc)(args...);
 		};
 
 		SetCaller();
