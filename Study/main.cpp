@@ -6,7 +6,7 @@
 #include <mutex>
 #include "Algorithm/Sorting.h"
 #include "Algorithm/Graph.h"
-#include "Algorithm/LeetCode/78_SubSet.h"
+#include "Algorithm/LeetCode/1288_RemoveCoveredIntervals.h"
 #include <deque>
 
 using namespace sort;
@@ -15,7 +15,7 @@ using namespace graph;
 int main()
 {
     Solution solution;
-    std::vector<int> vec{ 1,2,3 };
+    /*std::vector<int> vec{ 1,2,3 };
     std::vector<std::string> strVec{ "flow", "fly", "fleet" };
     const auto result = solution.subsets(vec);
     QuickSort(vec, 0, vec.size()-1);
@@ -28,8 +28,16 @@ int main()
 
 
     Animal* animal = new Cat();
-    Cat* downCasted = dynamic_cast<Cat*>(animal);
+    Cat* downCasted = dynamic_cast<Cat*>(animal);*/
     
+    std::vector<std::vector<int>> vec
+    {
+        {1,4},
+        {3,6},
+        {2,8}
+    };
+
+    const auto result = solution.removeCoveredIntervals(vec);
 
     return 0;
 }

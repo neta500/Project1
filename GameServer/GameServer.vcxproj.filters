@@ -21,6 +21,9 @@
     <ClInclude Include="User.h">
       <Filter>Contents</Filter>
     </ClInclude>
+    <ClInclude Include="StoredProcedure.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">

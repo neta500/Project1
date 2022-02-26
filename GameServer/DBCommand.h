@@ -1,12 +1,14 @@
 #pragma once
-#include <DateTime.h>
 
 template <class T>
 class DBCommand
 {
 public:
 	template <class... Valty>
-	DBCommand(Valty&&... obj) {}
+	DBCommand(Valty&&... obj)
+	{
+		
+	}
 
 	bool Execute()
 	{
@@ -22,7 +24,7 @@ public:
 	{
 		return &mBindObj;
 	}
-
+	
 	T mBindObj;
 };
 
