@@ -44,12 +44,14 @@ namespace sort
 		{
 			int temp = vec[i];
 			int prevIndex = i - 1;
-
-			// 앞의 원소들을 밀고,
+						
+			// 대상 원소랑, 그 바로 앞(prevIndex)의 원소랑 비교한다
+			// 비교해서 대상  원소가 더 작으면, prev랑 교체한다. (버블소트처럼)
+			// 앞에 있던 원소들을 대상 원소 뒤로 미는 형태가 된다.
 			while (prevIndex >= 0 && vec[prevIndex] > temp)
 			{
 				vec[prevIndex + 1] = vec[prevIndex];
-				prevIndex--;
+				prevIndex--; // 교체 후, 그 앞의 원소랑 또 비교한다.
 			}
 
 			// 알맞은 위치에 삽입

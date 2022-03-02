@@ -31,7 +31,7 @@ public:
 			a = dist(gen);
 			b = dist(gen);
 			c = a * b;
-			//mLock.WriteUnLock();
+			mLock.WriteUnLock();
 		}
 
 		c = -1;
@@ -53,6 +53,12 @@ public:
 				failed++;
 			}
 		}
+	}
+
+	void Write2()
+	{
+		WRITE_LOCK;
+		write();
 	}
 
 	USE_LOCK;
@@ -112,6 +118,9 @@ void TestLock()
 int main()
 {
 	spdlog::info("init spdlog");
+
+	TestClass test;
+	test.Write2();
 
 	return 0;
 }

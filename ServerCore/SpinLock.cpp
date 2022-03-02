@@ -41,11 +41,14 @@ void SpinLock::WriteUnLock()
 		util::Crash("invalid lock order (WriteUnLock on ReadLock");
 	}
 
-	if (--mWriteLockCount == 0)
+	const int32 count = --mWriteLockCount;
+	if (count == 0)
 	{
 		mLockFlag.store(LockFlag::Empty);
+		return;
 	}
-	else
+
+	if (count < 0)
 	{
 		util::Crash("multiple write unlock");
 	}
