@@ -119,6 +119,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)Lib</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Algorithm\Graph.h" />
     <ClInclude Include="Algorithm\LeetCode\101_SymmetricTree.h" />
+    <ClInclude Include="Algorithm\LeetCode\1029_TwoCityScheduling.h" />
     <ClInclude Include="Algorithm\LeetCode\102_BinaryTreeLevelOrderTraversal.h" />
     <ClInclude Include="Algorithm\LeetCode\104_MaxDepthofBinaryTree.h" />
     <ClInclude Include="Algorithm\LeetCode\11_ContainerWithMostWater.h" />

@@ -26,7 +26,22 @@ public:
 	Cat(Cat&& other) noexcept
 		: mAge(other.mAge) { spdlog::info("Cat Move Constructor"); }
 
-	virtual void Test() {}
+	Cat& operator=(const Cat&)
+	{
+		spdlog::info("Cat copy assignment");
+		return *this;
+	}
+
+	Cat& operator=(Cat&&) noexcept
+	{
+		spdlog::info("Cat move assignment");
+		return *this;
+	}
+
+	virtual void Test()
+	{
+		spdlog::info("cattt");
+	}
 
 	int mAge = 5;
 };
@@ -34,10 +49,39 @@ public:
 class Dog : public Animal
 {
 public:
-	virtual void Test() {}
+	virtual void Test()
+	{
+		spdlog::info("doggg");
+	}
 	void DogFunc() { spdlog::info("{}", mTest); }
 
 	int mTest = 3;
 };
 
+class Test
+{
+public:
+	int Get() const
+	{
+		std::scoped_lock lock(mMutex);
+		spdlog::info("Get, mInt: {}", mInt);
+		return mInt;
+	}
 
+	void Plus()
+	{
+		std::scoped_lock lock(mMutex);
+		mInt++;
+		spdlog::info("Plus, mInt: {}", mInt);
+	}
+
+	void Set(const int expected)
+	{
+		std::scoped_lock lock(mMutex);
+		mInt = expected + 1;
+		spdlog::info("Set, mInt: {}", mInt);
+	}
+
+	mutable std::mutex mMutex;
+	int mInt = 0;
+};

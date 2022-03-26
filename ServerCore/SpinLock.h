@@ -4,7 +4,7 @@
 // forbidden : read -> write lock in same thread context
 // [WWWWWWWW][WWWWWWWW][RRRRRRRR][RRRRRRRR]
 // [     2 Bytes      ][     2 Bytes      ]
-// [  Write Thread Id ][    Read Count    ]              
+// [  Write Thread Id ][    Read Count    ]
 
 class SpinLock
 {
@@ -50,6 +50,8 @@ private:
 	uint32 WriteLockedFlag() const
 	{
 		// 앞의 2바이트는 writelock 잡은 스레드의 id가 차지한다.
+		// 여기서 맹점이 있는데, LThreadId가 2바이트 이상의 값이면 안된다.
+		// 16비트 시프트하기 때문에, 앞에 값이 날라간다.
 		return LThreadId << 16 & LockFlag::WriteLockFlag;
 	}
 	

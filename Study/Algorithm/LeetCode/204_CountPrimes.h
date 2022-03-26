@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <valarray>
 
 // 소수 세기
 // n = 10 -> 4개 (2,3,5,7)
