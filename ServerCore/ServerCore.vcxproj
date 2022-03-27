@@ -165,6 +165,8 @@
     <ClInclude Include="IoContext.h" />
     <ClInclude Include="CoreThreadLocal.h" />
     <ClInclude Include="Job.h" />
+    <ClInclude Include="Overlapped.h" />
+    <ClInclude Include="ServerService.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpinLock.h" />
     <ClInclude Include="pch.h" />

@@ -6,6 +6,7 @@
 #include <shared_mutex>
 #include "BattlePassSeasonManager.h"
 #include <stack>
+#include <boost/asio.hpp>
 
 class TestClass : public Async
 {
@@ -114,13 +115,15 @@ void TestLock()
 	spdlog::info("failed: {} elapsed: {}", testClass->failed, elapsed);
 }
 
+using namespace boost::asio::ip;
 
 int main()
 {
 	spdlog::info("init spdlog");
-	TestLock();
-	TestClass test;
-	test.Write2();
-
+	
+	boost::asio::io_context ioContext;
+	tcp::socket socket(ioContext);
+	tcp::endpoint endPoint(boost::asio::ip::address::from_string("127.0.0.1"), 712);
+	tcp::acceptor acceptor(ioContext, endPoint);
 	return 0;
 }
