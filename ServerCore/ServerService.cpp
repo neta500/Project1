@@ -3,5 +3,5 @@
 
 void ServerService::Start()
 {
-
+	mAcceptor.Accept();
 }

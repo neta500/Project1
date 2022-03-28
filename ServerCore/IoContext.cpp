@@ -7,9 +7,10 @@
 IoContext::IoContext()
 {
 	WSADATA wsaData{};
-	if (false == ::WSAStartup(MAKEWORD(2, 2), &wsaData))
+	if (0 != ::WSAStartup(MAKEWORD(2, 2), &wsaData))
 	{
-		spdlog::error("WSAStartup failed : {}", ::WSAGetLastError());
+		const int error = ::WSAGetLastError();
+		spdlog::error("WSAStartup failed : {}", error);
 		throw std::runtime_error("WSAStartup failed");
 	}
 
@@ -39,5 +40,10 @@ void IoContext::Run()
 		int error = ::WSAGetLastError();
 		spdlog::error("iocp error : {}", error);
 	}
+}
+
+bool IoContext::RegisterAcceptor(const HANDLE acceptorHandle)
+{
+	return ::CreateIoCompletionPort(acceptorHandle, mIocpHandle, 0, 0);
 }
 

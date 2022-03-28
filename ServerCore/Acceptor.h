@@ -3,6 +3,7 @@
 #include "IoContext.h"
 
 class ServerService;
+class IocpOperation;
 
 class Acceptor
 {
@@ -15,5 +16,7 @@ private:
 	IoContext& mIoContext;
 	SOCKET mListenSocket = 0;
 	EndPoint mEndPoint;
-	const ServerService* mServerService;	
+	const ServerService* mServerService;
+
+	std::shared_ptr<IocpOperation> mAcceptOperation = nullptr;
 };

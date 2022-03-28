@@ -23,7 +23,7 @@ public:
 	{
 		std::scoped_lock lock(mLock);
 
-		mThreads.emplace_back(std::jthread([=, this]()
+		mThreads.emplace_back(std::thread([=, this]()
 			{
 				InitThreadLocal(++mThreadCount);
 				func(args...);
@@ -47,5 +47,5 @@ private:
 
 	std::mutex mLock;
 	std::atomic<int> mThreadCount = 0;
-	std::vector<std::jthread> mThreads;
+	std::vector<std::thread> mThreads;
 };
