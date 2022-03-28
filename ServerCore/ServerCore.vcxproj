@@ -161,11 +161,12 @@
     <ClInclude Include="CoreTypeDefine.h" />
     <ClInclude Include="CoreUtils.h" />
     <ClInclude Include="DateTime.h" />
+    <ClInclude Include="EndPoint.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IoContext.h" />
     <ClInclude Include="CoreThreadLocal.h" />
     <ClInclude Include="Job.h" />
-    <ClInclude Include="Overlapped.h" />
+    <ClInclude Include="IocpOperation.h" />
     <ClInclude Include="ServerService.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpinLock.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="CorePch.cpp" />
     <ClCompile Include="CoreUtils.cpp" />
     <ClCompile Include="DateTime.cpp" />
+    <ClCompile Include="EndPoint.cpp" />
     <ClCompile Include="IoContext.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -188,6 +190,7 @@
     </ClCompile>
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="CoreThreadLocal.cpp" />
+    <ClCompile Include="ServerService.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SpinLock.cpp" />
     <ClCompile Include="ThreadManager.cpp" />

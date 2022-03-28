@@ -75,7 +75,10 @@
     <ClInclude Include="ServerService.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="Overlapped.h">
+    <ClInclude Include="IocpOperation.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="EndPoint.h">
       <Filter>Network</Filter>
     </ClInclude>
   </ItemGroup>
@@ -114,5 +117,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Job</Filter>
     </ClCompile>
+    <ClCompile Include="EndPoint.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerService.cpp" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,9 @@
 #include "CoreTypeDefine.h"
 #include "spdlog/spdlog.h"
 
+#include <WinSock2.h>
+#include <ws2tcpip.h>
+
 #include <vector>
 #include <string>
 #include <unordered_map>

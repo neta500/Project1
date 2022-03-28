@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "IoContext.h"
 
+#include "IocpOperation.h"
 #include "spdlog/spdlog.h"
 
 IoContext::IoContext()
@@ -26,6 +27,17 @@ void IoContext::Run()
 	DWORD_PTR completionKey = 0;
 	LPOVERLAPPED overlapped = nullptr;
 
-	//BOOL result = ::GetQueuedCompletionStatus()
+	if (::GetQueuedCompletionStatus(mIocpHandle, &bytesTransferred, &completionKey, &overlapped, INFINITE))
+	{
+		if (const auto operation = static_cast<IocpOperation*>(overlapped))
+		{
+			operation->Complete(bytesTransferred);
+		}
+	}
+	else
+	{
+		int error = ::WSAGetLastError();
+		spdlog::error("iocp error : {}", error);
+	}
 }
 
