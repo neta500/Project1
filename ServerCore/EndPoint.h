@@ -8,7 +8,7 @@ public:
 		mSocketAddress.sin_family = AF_INET;
 		// TODO : IPv4(ip) compile time value check (x.x.x.x)
 		::inet_pton(AF_INET, ip.c_str(), &mSocketAddress.sin_addr);
-		mSocketAddress.sin_port = port;
+		mSocketAddress.sin_port = ::htons(port);
 	}
 
 	explicit EndPoint(const SOCKADDR_IN& sockAddr)

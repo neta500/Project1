@@ -18,11 +18,12 @@ int main()
 	{
 		while(true)
 		{
+			//context->TestPushJob();
 			context->Run();			
 		}
 	}, &ioContext);
-
+		
 	thread.join();
-
+	
 	return 0;
 }

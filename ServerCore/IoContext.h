@@ -8,6 +8,8 @@ public:
 	
 	void Run();
 	bool RegisterAcceptor(const HANDLE acceptorHandle);
+
+	void TestPushJob();
 	
 private:
 	HANDLE mIocpHandle = nullptr;

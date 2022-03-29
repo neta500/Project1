@@ -35,8 +35,6 @@ Acceptor::Acceptor(IoContext& ioContext, const EndPoint& endPoint, const ServerS
 	{
 		throw std::runtime_error("register error");
 	}
-
-
 }
 
 void Acceptor::Accept()

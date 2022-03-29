@@ -25,7 +25,7 @@ public:
 
 private:
 	SOCKET mSocket;
-	EndPoint mEndPoint;
+	EndPoint mEndPoint = { "127.0.0.1", 712 };
 
 	std::atomic<bool> mConnected = false;
 };

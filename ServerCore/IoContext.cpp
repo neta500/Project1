@@ -47,3 +47,13 @@ bool IoContext::RegisterAcceptor(const HANDLE acceptorHandle)
 	return ::CreateIoCompletionPort(acceptorHandle, mIocpHandle, 0, 0);
 }
 
+void IoContext::TestPushJob()
+{
+	auto operation = new IocpOperation(IoType::Recv, [](IocpOperation* operation, const std::size_t bytesTransferred)
+		{
+			spdlog::info("pqcs test");
+		}, nullptr);
+
+	::PostQueuedCompletionStatus(mIocpHandle, 0, 0, operation);
+}
+

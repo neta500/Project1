@@ -44,3 +44,4 @@ private:
 	FuncType mFunc;
 	std::shared_ptr<Session> mSession;
 };
+
