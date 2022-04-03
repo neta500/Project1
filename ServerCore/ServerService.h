@@ -9,7 +9,7 @@ public:
 	ServerService(IoContext& ioContext, const EndPoint& endPoint)
 		: mIoContext(ioContext), mAcceptor(ioContext, endPoint, this)
 	{
-		mSession = std::make_shared<Session>();
+		mSession = std::make_shared<Session>(ioContext);
 	}
 
 	std::shared_ptr<Session> GetSession() const { return mSession; }

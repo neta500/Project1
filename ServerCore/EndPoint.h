@@ -17,7 +17,7 @@ public:
 		std::array<char, INET_ADDRSTRLEN> ip{};
 		::inet_ntop(AF_INET, &mSocketAddress.sin_addr, ip.data(), INET_ADDRSTRLEN);
 		mIp = ip.data();
-		mPort = mSocketAddress.sin_port;
+		mPort = ::ntohs(mSocketAddress.sin_port);
 	}
 
 	std::string GetIp() const { return mIp;	}

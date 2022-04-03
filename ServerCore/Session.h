@@ -2,12 +2,16 @@
 #include "EndPoint.h"
 
 class IocpOperation;
+class IoContext;
 
 class Session : std::enable_shared_from_this<Session>
 {
 public:
-	Session();
-	~Session() = default;
+	Session(const IoContext& ioContext);
+	~Session()
+	{
+		spdlog::info("Session desstructor");
+	}
 
 	void Receive();
 	void Send();
@@ -18,6 +22,7 @@ public:
 	bool IsConnected() const { return mConnected; }
 	SOCKET GetSocket() const { return mSocket; }
 
+	void SetConnected() { mConnected = true; }
 	void SetEndPoint(const EndPoint& endPoint) { mEndPoint = endPoint; }
 
 public:
@@ -25,7 +30,8 @@ public:
 
 private:
 	SOCKET mSocket;
-	EndPoint mEndPoint = { "127.0.0.1", 712 };
+	EndPoint mEndPoint;
 
 	std::atomic<bool> mConnected = false;
+	std::shared_ptr<IocpOperation> mRecvOperation = nullptr;
 };

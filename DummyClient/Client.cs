@@ -28,6 +28,7 @@ namespace DummyClient
             while (true)
             {
                 var sendMsg = GetRandomString(Random.Next(5, 15));
+                Console.WriteLine("Send: {0}", sendMsg);
                 Socket.Send(Encoding.ASCII.GetBytes(sendMsg));
                 Thread.Sleep(100);
             }

@@ -31,7 +31,7 @@ Acceptor::Acceptor(IoContext& ioContext, const EndPoint& endPoint, const ServerS
 		throw std::runtime_error("listen error");
 	}
 
-	if (false == ioContext.RegisterAcceptor(reinterpret_cast<HANDLE>(mListenSocket)))
+	if (false == ioContext.RegisterIocpHandle(reinterpret_cast<HANDLE>(mListenSocket)))
 	{
 		throw std::runtime_error("register error");
 	}
@@ -66,9 +66,11 @@ void Acceptor::Accept()
 					return;
 				}
 
-				session->SetEndPoint(EndPoint{ sockAddress });
-
 				spdlog::info("Session connected.");
+
+				session->SetEndPoint(EndPoint{ sockAddress });
+				session->SetConnected();
+				session->Receive();
 
 			}, session);
 	}	

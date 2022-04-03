@@ -42,9 +42,9 @@ void IoContext::Run()
 	}
 }
 
-bool IoContext::RegisterAcceptor(const HANDLE acceptorHandle)
+bool IoContext::RegisterIocpHandle(const HANDLE handle) const
 {
-	return ::CreateIoCompletionPort(acceptorHandle, mIocpHandle, 0, 0);
+	return ::CreateIoCompletionPort(handle, mIocpHandle, 0, 0);
 }
 
 void IoContext::TestPushJob()

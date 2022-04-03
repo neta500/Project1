@@ -19,6 +19,8 @@ public:
 	IocpOperation(const IoType ioType, const FuncType func, const std::shared_ptr<Session> session)
 		: _OVERLAPPED{}, mIoType(ioType), mFunc(func), mSession(session)
 	{
+		spdlog::info("IocpOperation constructor");
+
 		OVERLAPPED::hEvent = nullptr;
 		OVERLAPPED::Internal = 0;
 		OVERLAPPED::InternalHigh = 0;

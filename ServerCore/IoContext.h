@@ -7,7 +7,7 @@ public:
 	~IoContext() = default;
 	
 	void Run();
-	bool RegisterAcceptor(const HANDLE acceptorHandle);
+	bool RegisterIocpHandle(const HANDLE handle) const;
 
 	void TestPushJob();
 	
