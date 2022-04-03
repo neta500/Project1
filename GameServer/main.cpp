@@ -9,7 +9,9 @@ using namespace boost::asio::ip;
 int main()
 {
 	spdlog::info("init spdlog");
-	
+
+	std::this_thread::sleep_for(std::chrono::seconds(100));
+
 	IoContext ioContext;
 	ServerService serverService{ ioContext, EndPoint{"127.0.0.1", 712} };
 	serverService.Start();

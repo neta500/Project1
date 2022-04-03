@@ -20,9 +20,24 @@ namespace DummyClient
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
         }
 
+        public void Connect()
+        {
+            try
+            {
+                Socket.Connect(new IPEndPoint(IPAddress.Loopback, 712));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Thread.Sleep(1000);
+                Connect();
+            }
+        }
+
         public void Run()
         {
-            Socket.Connect(new IPEndPoint(IPAddress.Loopback, 712));
+            Connect();
+
             Socket.BeginReceive(RecvBuffer, 0, RecvBuffer.Length, SocketFlags.None, ReceiveCallback, Socket);
             
             while (true)
