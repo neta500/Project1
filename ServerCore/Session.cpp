@@ -32,25 +32,28 @@ Session::Session(const IoContext& ioContext)
 
 			spdlog::info("Recv: {} - {}", byteTransferred, mRecvBuffer.data());
 
+			Send("ECHO - " + std::string{ mRecvBuffer.data() });
+			mRecvBuffer.fill('\0');
+
 			Receive();
-		}, std::shared_ptr<Session>(this));
+		}, this);
 }
 
 void Session::Receive()
 {
-	if (false == mConnected)
+	if (false == mConnected.load())
 	{
 		return;
 	}	
 	
-	DWORD bytesTransferred = 0;
+	DWORD recvBytes = 0;
 	DWORD flags = 0;
 
 	WSABUF wsaBuf{};
 	wsaBuf.buf = mRecvBuffer.data();
 	wsaBuf.len = static_cast<ULONG>(mRecvBuffer.size());
 
-	if (SOCKET_ERROR == ::WSARecv(mSocket, &wsaBuf, 1, &bytesTransferred, &flags, mRecvOperation.get(), nullptr))
+	if (SOCKET_ERROR == ::WSARecv(mSocket, &wsaBuf, 1, &recvBytes, &flags, mRecvOperation.get(), nullptr))
 	{
 		const int error = ::WSAGetLastError();
 		if (error != WSA_IO_PENDING)
@@ -60,6 +63,55 @@ void Session::Receive()
 	}
 }
 
+void Session::Send(const std::string& str)
+{
+	if (false == mConnected.load())
+	{
+		return;
+	}
+
+	// TODO : 람다 IocpOperation을 shared_ptr로 바꿔서 생명유지?
+	auto operation = new IocpOperation(IoType::Send,
+		[this](IocpOperation* operation, const std::size_t byteTransferred)
+		{
+			if (byteTransferred == 0)
+			{
+				Disconnect();
+				return;				
+			}
+
+			delete operation;
+			
+		}, this);
+
+	std::ranges::copy(str, std::back_inserter(operation->mSendBuffer));
+	
+	DWORD sendBytes = 0;
+	WSABUF wsaBuf{};
+	wsaBuf.buf = operation->mSendBuffer.data();
+	wsaBuf.len = static_cast<ULONG>(operation->mSendBuffer.size());
+	
+	if (SOCKET_ERROR == ::WSASend(mSocket, &wsaBuf, 1, &sendBytes, 0, operation, nullptr))
+	{
+		const int error = ::WSAGetLastError();
+		if (error != WSA_IO_PENDING)
+		{
+			spdlog::error("WSASend error: {}", error);
+			delete operation;
+		}
+	}
+}
+
+void Session::Connect()
+{
+}
+
 void Session::Disconnect()
 {
+	if (false == mConnected.exchange(false))
+	{
+		return;
+	}
+
+
 }

@@ -4,17 +4,17 @@
 class IocpOperation;
 class IoContext;
 
-class Session : std::enable_shared_from_this<Session>
+class Session
 {
 public:
 	Session(const IoContext& ioContext);
 	~Session()
 	{
-		spdlog::info("Session desstructor");
+		spdlog::info("Session destructor : {}", static_cast<int>(mSocket));
 	}
 
 	void Receive();
-	void Send();
+	void Send(const std::string& str);
 
 	void Connect();
 	void Disconnect();

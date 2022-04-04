@@ -72,7 +72,7 @@ void Acceptor::Accept()
 				session->SetConnected();
 				session->Receive();
 
-			}, session);
+			}, session.get());
 	}	
 
 	DWORD bytesTransferred = 0;

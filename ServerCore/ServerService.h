@@ -12,6 +12,11 @@ public:
 		mSession = std::make_shared<Session>(ioContext);
 	}
 
+	~ServerService()
+	{
+		spdlog::info("ServerService destructor");
+	}
+
 	std::shared_ptr<Session> GetSession() const { return mSession; }
 
 	void Start();

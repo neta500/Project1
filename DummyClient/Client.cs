@@ -34,6 +34,11 @@ namespace DummyClient
             }
         }
 
+        public void Disconnect()
+        {
+            Socket.Disconnect(true);
+        }
+
         public void Run()
         {
             Connect();
@@ -42,10 +47,17 @@ namespace DummyClient
             
             while (true)
             {
-                var sendMsg = GetRandomString(Random.Next(5, 15));
-                Console.WriteLine("Send: {0}", sendMsg);
-                Socket.Send(Encoding.ASCII.GetBytes(sendMsg));
-                Thread.Sleep(100);
+                for (int count = 0; count <= 100; count++)
+                {
+                    var sendMsg = GetRandomString(Random.Next(5, 15));
+                    Console.WriteLine("Send: {0}", sendMsg);
+                    Socket.Send(Encoding.ASCII.GetBytes(sendMsg));
+                    Thread.Sleep(500);
+                }
+
+                //Disconnect();
+                //Thread.Sleep(1000);
+                //Connect();
             }
         }
 

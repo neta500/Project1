@@ -84,4 +84,5 @@ public:
 
 	mutable std::mutex mMutex;
 	int mInt = 0;
+	std::shared_ptr<Cat> mCat;
 };
