@@ -169,6 +169,7 @@
     <ClInclude Include="Job.h" />
     <ClInclude Include="IocpOperation.h" />
     <ClInclude Include="RecvBuffer.h" />
+    <ClInclude Include="SendBuffer.h" />
     <ClInclude Include="ServerService.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SocketUtils.h" />

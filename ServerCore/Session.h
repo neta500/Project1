@@ -4,6 +4,7 @@
 
 class IocpOperation;
 class IoContext;
+class SendBuffer;
 
 class Session
 {
@@ -21,7 +22,8 @@ public:
 	}
 
 	void BeginReceive();
-	void BeginSend(const std::string& str);
+	void BeginSend(std::shared_ptr<SendBuffer> sendBuffer);
+	void RegisterSend();
 
 	void BeginConnect();
 	void BeginDisconnect();
@@ -38,11 +40,17 @@ protected:
 public:
 	RecvBuffer mRecvBuffer{ BufferSize };
 
+	std::recursive_mutex mSendQueueMutex;
+	std::atomic<bool> mSendRegistered = false;
+	std::queue<std::shared_ptr<SendBuffer>> mSendQueue;
+
 private:
 	SOCKET mSocket;
 	EndPoint mEndPoint;
 
 	std::atomic<bool> mConnected = false;
+
+	std::shared_ptr<IocpOperation> mSendOperation = nullptr;
 	std::shared_ptr<IocpOperation> mRecvOperation = nullptr;
 	std::shared_ptr<IocpOperation> mDisconnectOperation = nullptr;
 };

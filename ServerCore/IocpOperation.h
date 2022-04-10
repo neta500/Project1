@@ -2,6 +2,7 @@
 #include <minwinbase.h>
 
 class Session;
+class SendBuffer;
 
 enum class IoType
 {
@@ -60,7 +61,7 @@ public:
 
 public:
 	// TODO : SendBufferQueue 작업. 지금은 임시로 버퍼를 따로 할당해서 데이터를 살려둠
-	std::vector<char> mSendBuffer{};
+	std::vector<std::shared_ptr<SendBuffer>> mSendBufferVec{};
 
 private:
 	IoType mIoType;
