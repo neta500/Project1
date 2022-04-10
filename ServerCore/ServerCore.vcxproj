@@ -171,6 +171,7 @@
     <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="ServerService.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SocketUtils.h" />
     <ClInclude Include="SpinLock.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Session.h" />

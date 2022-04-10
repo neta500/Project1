@@ -13,13 +13,18 @@ public:
 	~Session()
 	{
 		spdlog::info("Session destructor : {}", static_cast<int>(mSocket));
+		if (mSocket != INVALID_SOCKET)
+		{
+			::closesocket(mSocket);
+			mSocket = INVALID_SOCKET;
+		}
 	}
 
 	void BeginReceive();
 	void BeginSend(const std::string& str);
 
-	void Connect();
-	void Disconnect();
+	void BeginConnect();
+	void BeginDisconnect();
 	
 	bool IsConnected() const { return mConnected; }
 	SOCKET GetSocket() const { return mSocket; }
@@ -39,5 +44,5 @@ private:
 
 	std::atomic<bool> mConnected = false;
 	std::shared_ptr<IocpOperation> mRecvOperation = nullptr;
-
+	std::shared_ptr<IocpOperation> mDisconnectOperation = nullptr;
 };

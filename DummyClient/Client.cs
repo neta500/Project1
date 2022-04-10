@@ -77,7 +77,7 @@ namespace DummyClient
         public string GetRandomString(int len)
         {
             Random rand = new Random();
-            string input = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-";
+            string input = "abcdefghijklmnopqrstuvwxyz0123456789";
 
             var chars = Enumerable.Range(0, len)
                 .Select(x => input[rand.Next(0, input.Length)]);

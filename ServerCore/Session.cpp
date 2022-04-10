@@ -3,13 +3,14 @@
 
 #include "IoContext.h"
 #include "IocpOperation.h"
+#include "SocketUtils.h"
 
 Session::Session(const IoContext& ioContext)
 	: mSocket(WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, nullptr, 0, WSA_FLAG_OVERLAPPED)), mEndPoint()
 {
 	spdlog::info("Session constructor");
 
-	// TODO : 소켓세팅 공통함수로 빼기
+	// TODO : 소켓세팅 공통함수로 빼기 (Socket 클래스 제작, SocketUtils.h 참고)
 	constexpr int optVal = TRUE;
 	constexpr int optLen = sizeof(int);
 
@@ -20,20 +21,20 @@ Session::Session(const IoContext& ioContext)
 
 	ioContext.RegisterIocpHandle(reinterpret_cast<HANDLE>(mSocket));
 		
-	// TODO : 순환참조 제거
+	// TODO : 순환참조 제거, callback 함수 따로 정의
 	mRecvOperation = std::make_shared<IocpOperation>(IoType::Recv,
 		[this](IocpOperation* operation, const std::size_t byteTransferred)
 		{
 			if (byteTransferred == 0)
 			{
-				Disconnect();
+				BeginDisconnect();
 				return;
 			}
 
 			if (false == mRecvBuffer.OnWrite(static_cast<int>(byteTransferred)))
 			{
 				// log
-				Disconnect();
+				BeginDisconnect();
 				return;
 			}
 
@@ -48,20 +49,26 @@ Session::Session(const IoContext& ioContext)
 			if (processSize < 0 || dataSize < processSize)
 			{
 				// log
-				Disconnect();
+				BeginDisconnect();
 				return;
 			}
 
 			if (false == mRecvBuffer.OnRead(processSize))
 			{
 				// log
-				Disconnect();
+				BeginDisconnect();
 				return;
 			}			
 
 			mRecvBuffer.Clean();
 
 			BeginReceive();
+		}, this);
+
+	mDisconnectOperation = std::make_shared<IocpOperation>(IoType::Disconnect,
+		[this](IocpOperation* operation, const std::size_t byteTransferred)
+		{
+			spdlog::info("Session Disconnected: {}", mSocket);
 		}, this);
 }
 
@@ -102,7 +109,7 @@ void Session::BeginSend(const std::string& str)
 		{
 			if (byteTransferred == 0)
 			{
-				Disconnect();
+				BeginDisconnect();
 				return;				
 			}
 
@@ -128,16 +135,23 @@ void Session::BeginSend(const std::string& str)
 	}
 }
 
-void Session::Connect()
+void Session::BeginConnect()
 {
 }
 
-void Session::Disconnect()
+void Session::BeginDisconnect()
 {
 	if (false == mConnected.exchange(false))
 	{
 		return;
 	}
 
-
+	if (false == ::DisconnectEx(mSocket, mDisconnectOperation.get(), TF_REUSE_SOCKET, 0))
+	{
+		const int error = ::WSAGetLastError();
+		if (WSA_IO_PENDING != error)
+		{
+			spdlog::error("DisconnectEx error: {}", error);
+		}
+	}
 }
