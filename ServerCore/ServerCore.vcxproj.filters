@@ -84,6 +84,9 @@
     <ClInclude Include="IocpObject.h">
       <Filter>Network</Filter>
     </ClInclude>
+    <ClInclude Include="RecvBuffer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -119,9 +122,6 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Job</Filter>
-    </ClCompile>
-    <ClCompile Include="EndPoint.cpp">
-      <Filter>Network</Filter>
     </ClCompile>
     <ClCompile Include="ServerService.cpp" />
   </ItemGroup>

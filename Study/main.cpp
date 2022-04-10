@@ -27,12 +27,18 @@ int main()
     std::vector<std::vector<int>> costs{ {10,20}, {30,200}, {400,50}, {30,20} };
     const auto result = solution.twoCitySchedCost_greedy(costs);*/
 
-    auto cat = std::make_shared<Cat>(5);
-    auto test = new Test();
-    test->mCat = cat;
+    std::vector<std::byte> vec;
+    vec.emplace_back(static_cast<std::byte>('1'));
+    vec.emplace_back(static_cast<std::byte>('2'));
+    vec.emplace_back(static_cast<std::byte>('3'));
+    vec.emplace_back(static_cast<std::byte>('4'));
+    vec.emplace_back(static_cast<std::byte>('5'));
+    vec.emplace_back(static_cast<std::byte>('6'));
+    vec.emplace_back(static_cast<std::byte>('7'));
 
-    delete test;
+    std::string str(reinterpret_cast<const char*>(&vec[0]), vec.size());
 
     return 0;
 }
+
 

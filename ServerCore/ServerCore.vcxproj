@@ -168,6 +168,7 @@
     <ClInclude Include="IocpObject.h" />
     <ClInclude Include="Job.h" />
     <ClInclude Include="IocpOperation.h" />
+    <ClInclude Include="RecvBuffer.h" />
     <ClInclude Include="ServerService.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SpinLock.h" />
@@ -181,7 +182,6 @@
     <ClCompile Include="CorePch.cpp" />
     <ClCompile Include="CoreUtils.cpp" />
     <ClCompile Include="DateTime.cpp" />
-    <ClCompile Include="EndPoint.cpp" />
     <ClCompile Include="IoContext.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

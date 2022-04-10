@@ -49,8 +49,8 @@ namespace DummyClient
             {
                 for (int count = 0; count <= 100; count++)
                 {
-                    var sendMsg = GetRandomString(Random.Next(5, 15));
-                    Console.WriteLine("Send: {0}", sendMsg);
+                    var sendMsg = GetRandomString(Random.Next(5, 50));
+                    Console.WriteLine("Send {0} - {1}", sendMsg.Length, sendMsg);
                     Socket.Send(Encoding.ASCII.GetBytes(sendMsg));
                     Thread.Sleep(500);
                 }
@@ -65,7 +65,11 @@ namespace DummyClient
         {
             if (Socket.Connected)
             {
-                Console.WriteLine(Encoding.ASCII.GetString(RecvBuffer));
+                var str = Encoding.ASCII.GetString(RecvBuffer);
+                var length = Socket.EndReceive(result);
+
+                Console.WriteLine("Recv {0} - {1}", length, str);
+                Array.Clear(RecvBuffer);
                 Socket.BeginReceive(RecvBuffer, 0, RecvBuffer.Length, SocketFlags.None, ReceiveCallback, Socket);
             }
         }
@@ -73,7 +77,7 @@ namespace DummyClient
         public string GetRandomString(int len)
         {
             Random rand = new Random();
-            string input = "abcdefghijklmnopqrstuvwxyz0123456789";
+            string input = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=-";
 
             var chars = Enumerable.Range(0, len)
                 .Select(x => input[rand.Next(0, input.Length)]);

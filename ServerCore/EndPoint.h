@@ -1,4 +1,5 @@
 #pragma once
+
 class EndPoint
 {
 public:
@@ -28,7 +29,7 @@ public:
 
 private:
 	std::string mIp;
-	uint16 mPort;
+	uint16 mPort = 0;
 
 	SOCKADDR_IN mSocketAddress{};
 };

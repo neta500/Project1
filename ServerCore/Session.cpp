@@ -30,16 +30,42 @@ Session::Session(const IoContext& ioContext)
 				return;
 			}
 
-			spdlog::info("Recv: {} - {}", byteTransferred, mRecvBuffer.data());
+			if (false == mRecvBuffer.OnWrite(static_cast<int>(byteTransferred)))
+			{
+				// log
+				Disconnect();
+				return;
+			}
 
-			Send("ECHO - " + std::string{ mRecvBuffer.data() });
-			mRecvBuffer.fill('\0');
+			// echo test
+			const std::string str = mRecvBuffer.GetRecvString(byteTransferred);
+			spdlog::info("Recv {} - {}", byteTransferred, str);
+			BeginSend(str);
 
-			Receive();
+			const int dataSize = mRecvBuffer.DataSize();
+			const int processSize = OnRecv(mRecvBuffer.ReadPos(), dataSize);
+
+			if (processSize < 0 || dataSize < processSize)
+			{
+				// log
+				Disconnect();
+				return;
+			}
+
+			if (false == mRecvBuffer.OnRead(processSize))
+			{
+				// log
+				Disconnect();
+				return;
+			}			
+
+			mRecvBuffer.Clean();
+
+			BeginReceive();
 		}, this);
 }
 
-void Session::Receive()
+void Session::BeginReceive()
 {
 	if (false == mConnected.load())
 	{
@@ -50,8 +76,8 @@ void Session::Receive()
 	DWORD flags = 0;
 
 	WSABUF wsaBuf{};
-	wsaBuf.buf = mRecvBuffer.data();
-	wsaBuf.len = static_cast<ULONG>(mRecvBuffer.size());
+	wsaBuf.buf = reinterpret_cast<char*>(mRecvBuffer.WritePos());
+	wsaBuf.len = static_cast<ULONG>(mRecvBuffer.FreeSize());
 
 	if (SOCKET_ERROR == ::WSARecv(mSocket, &wsaBuf, 1, &recvBytes, &flags, mRecvOperation.get(), nullptr))
 	{
@@ -63,7 +89,7 @@ void Session::Receive()
 	}
 }
 
-void Session::Send(const std::string& str)
+void Session::BeginSend(const std::string& str)
 {
 	if (false == mConnected.load())
 	{

@@ -12,7 +12,6 @@ public:
 
 	void Accept();
 
-
 	IoContext& mIoContext;
 	SOCKET mListenSocket = 0;
 	EndPoint mEndPoint;

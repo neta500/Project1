@@ -21,7 +21,7 @@ public:
                 return a[1] - a[0] > b[1] - b[0];
             });
 
-        int size = costs.size();
+        auto size = costs.size();
         int minCost = 0;
                 
         for (int i = 0; i < costs.size(); ++i)

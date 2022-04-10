@@ -70,14 +70,14 @@ void Acceptor::Accept()
 
 				session->SetEndPoint(EndPoint{ sockAddress });
 				session->SetConnected();
-				session->Receive();
+				session->BeginReceive();
 
 			}, session.get());
 	}	
 
 	DWORD bytesTransferred = 0;
 
-	if (false == ::AcceptEx(mListenSocket, session->GetSocket(), session->mRecvBuffer.data(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytesTransferred, mAcceptOperation.get()))
+	if (false == ::AcceptEx(mListenSocket, session->GetSocket(), session->mRecvBuffer.WritePos(), 0, sizeof(SOCKADDR_IN) + 16, sizeof(SOCKADDR_IN) + 16, &bytesTransferred, mAcceptOperation.get()))
 	{
 		const int error = ::WSAGetLastError();
 		if (error != WSA_IO_PENDING)
