@@ -11,7 +11,7 @@ class Session
 	constexpr static int BufferSize = 65536;
 public:
 	explicit Session(const IoContext& ioContext);
-	~Session()
+	virtual ~Session()
 	{
 		spdlog::info("Session destructor : {}", static_cast<int>(mSocket));
 		if (mSocket != INVALID_SOCKET)
@@ -53,4 +53,49 @@ private:
 	std::shared_ptr<IocpOperation> mSendOperation = nullptr;
 	std::shared_ptr<IocpOperation> mRecvOperation = nullptr;
 	std::shared_ptr<IocpOperation> mDisconnectOperation = nullptr;
+};
+
+struct PacketHeader
+{
+	int16 mSize = 0;
+	int16 mId = 0;
+};
+
+class PacketSession : public Session
+{
+public:
+	explicit PacketSession(const IoContext& ioContext)
+		: Session(ioContext)
+	{		
+	}
+
+	~PacketSession() override = default;
+
+	int OnRecv(const std::byte* recvBuffer, const int len) override
+	{
+		int processLength = 0;
+
+		while (true)
+		{
+			const int dataSize = len - processLength;
+
+			if (dataSize < sizeof PacketHeader)
+			{
+				break;
+			}
+
+			const auto [size, id] = *reinterpret_cast<const PacketHeader*>(&recvBuffer[processLength]);
+
+			if (dataSize < size)
+			{
+				break;
+			}
+
+			processLength += size;
+
+			// TODO : Process Packet
+		}
+
+		return 0;
+	}
 };
