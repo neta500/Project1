@@ -39,13 +39,6 @@ Session::Session(const IoContext& ioContext)
 				return;
 			}
 
-			// echo test
-			const std::string str = mRecvBuffer.GetRecvString(static_cast<int>(byteTransferred));
-			spdlog::info("Recv {} - {}", byteTransferred, str);
-			const auto sendBuffer = std::make_shared<SendBuffer>(static_cast<int>(str.size() + 1));
-			sendBuffer->CopyData(str.data(), static_cast<int>(str.size()));
-			BeginSend(sendBuffer);
-
 			const int dataSize = mRecvBuffer.DataSize();
 			const int processSize = OnRecv(mRecvBuffer.ReadPos(), dataSize);
 

@@ -129,6 +129,5 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Job</Filter>
     </ClCompile>
-    <ClCompile Include="ServerService.cpp" />
   </ItemGroup>
 </Project>

@@ -78,7 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)ServerCoreLib\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)StaticLibrary\ServerCore\$(Configuration)\</OutDir>
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,7 +126,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)Lib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)HeaderLibrary</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -193,7 +193,6 @@
     </ClCompile>
     <ClCompile Include="ServerCore.cpp" />
     <ClCompile Include="CoreThreadLocal.cpp" />
-    <ClCompile Include="ServerService.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SpinLock.cpp" />
     <ClCompile Include="ThreadManager.cpp" />

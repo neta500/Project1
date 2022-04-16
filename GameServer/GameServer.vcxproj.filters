@@ -6,6 +6,9 @@
     <ClCompile Include="BattlePassSeasonManager.cpp">
       <Filter>Contents</Filter>
     </ClCompile>
+    <ClCompile Include="Protocol.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -24,6 +27,12 @@
     <ClInclude Include="StoredProcedure.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="Protocol.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientSession.h">
+      <Filter>Session</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -31,6 +40,15 @@
     </Filter>
     <Filter Include="Database">
       <UniqueIdentifier>{a1f109f2-e20c-4be3-a8e5-14ed06386a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{a3f37a2b-06b5-499e-8f0d-97799d272945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Session">
+      <UniqueIdentifier>{a2081b72-29ee-4aae-8379-ebd98490755c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PacketHandler">
+      <UniqueIdentifier>{d575f1e3-f146-46cb-b77f-d16b7fe27646}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
