@@ -33,6 +33,9 @@
     <ClInclude Include="ClientSession.h">
       <Filter>Session</Filter>
     </ClInclude>
+    <ClInclude Include="ClientPacketHandler.h">
+      <Filter>PacketHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -50,5 +53,13 @@
     <Filter Include="PacketHandler">
       <UniqueIdentifier>{d575f1e3-f146-46cb-b77f-d16b7fe27646}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Protobuf\Protocol.proto">
+      <Filter>Protocol</Filter>
+    </None>
+    <None Include="..\Protobuf\GenPackets.bat">
+      <Filter>Protocol</Filter>
+    </None>
   </ItemGroup>
 </Project>

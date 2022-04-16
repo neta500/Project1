@@ -91,11 +91,13 @@ public:
 				break;
 			}
 
-			processLength += size;
+			OnRecvPacket(&recvBuffer[processLength], size);
 
-			// TODO : Process Packet
+			processLength += size;
 		}
 
-		return 0;
+		return processLength;
 	}
+
+	virtual int OnRecvPacket(const std::byte* recvBuffer, const int len) abstract;
 };

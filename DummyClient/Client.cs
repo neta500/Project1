@@ -4,16 +4,25 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf.Collections;
 using Protocol;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 using Google.Protobuf;
 
 namespace DummyClient
 {
+    class PacketHeader
+    {
+        public Int16 Size = 0;
+        public Int16 Id = 0;
+    }
+
     internal class Client
     {
         private readonly Socket Socket;
@@ -57,8 +66,19 @@ namespace DummyClient
                     var packet = GetTestPacket();
                     var str = packet.ToString();
                     var serialized = packet.ToByteArray();
+
+                    var header = new PacketHeader
+                    {
+                        Size = (Int16)serialized.Length,
+                        Id = 1
+                    };
+                    
+                    var headerSizeByte = BitConverter.GetBytes(header.Size);
+                    var headerIdByte = BitConverter.GetBytes(header.Id);
+                    var sendBuffer = headerSizeByte.Concat(headerIdByte).Concat(serialized).ToArray();
+
                     Console.WriteLine("Send {0} - {1}", packet.CalculateSize(), str);
-                    Socket.Send(serialized);
+                    Socket.Send(sendBuffer);
                     Thread.Sleep(500);
                 }
 
