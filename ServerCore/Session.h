@@ -1,12 +1,13 @@
 #pragma once
 #include "EndPoint.h"
 #include "RecvBuffer.h"
+#include <memory>
 
 class IocpOperation;
 class IoContext;
 class SendBuffer;
 
-class Session
+class Session : public std::enable_shared_from_this<Session>
 {
 	constexpr static int BufferSize = 65536;
 public:
@@ -35,7 +36,7 @@ public:
 	void SetEndPoint(const EndPoint& endPoint) { mEndPoint = endPoint; }
 
 protected:
-	virtual int OnRecv(const std::byte* recvBuffer, const int len) { return len; }
+	virtual int OnRecv(std::byte* recvBuffer, const int len) { return len; }
 
 public:
 	RecvBuffer mRecvBuffer{ BufferSize };
@@ -57,8 +58,8 @@ private:
 
 struct PacketHeader
 {
-	int16 mSize = 0;
-	int16 mId = 0;
+	uint16 mSize = 0;
+	uint16 mId = 0;
 };
 
 class PacketSession : public Session
@@ -71,7 +72,7 @@ public:
 
 	~PacketSession() override = default;
 
-	int OnRecv(const std::byte* recvBuffer, const int len) override
+	int OnRecv(std::byte* recvBuffer, const int len) override
 	{
 		int processLength = 0;
 
@@ -99,5 +100,5 @@ public:
 		return processLength;
 	}
 
-	virtual int OnRecvPacket(const std::byte* recvBuffer, const int len) abstract;
+	virtual int OnRecvPacket(std::byte* recvBuffer, const int len) abstract;
 };

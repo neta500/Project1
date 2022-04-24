@@ -8,6 +8,11 @@ message BuffData
 	repeated uint64 victims = 3;
 }
 
+message C_TEST
+{
+	uint64 id = 1;
+}
+
 message S_TEST
 {
 	uint64 id = 1;
