@@ -16,7 +16,6 @@ public:
 
 	void OnRecvPacket(std::byte* recvBuffer, const int len) override
 	{
-		const PacketHeader* header = reinterpret_cast<const PacketHeader*>(recvBuffer);
 		ClientPacketHandler::HandlePacket(std::static_pointer_cast<ClientSession>(shared_from_this()), recvBuffer, len);		
 	}
 

@@ -1,7 +1,7 @@
 :: 경로 설정
 pushd %~dp0
 
-:: protobuf 파일 생성
+:: protobuf 파일 생성 (proto파일이 변화가 없으면 안해도될듯?)
 protoc --proto_path=./ --cpp_out=./ --csharp_out=./ ./Protocol.proto
 
 GenPackets.exe --path=./Protocol.proto --output=ClientPacketHandler --recv=C_ --send=S_

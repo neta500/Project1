@@ -115,7 +115,7 @@ namespace DummyClient
         {
             var packet = new Protocol.C_TEST
             {
-                Id = (uint) Random.Next(10)
+                Id = (uint) Random.Next(1, 20)
             };
 
             return packet;

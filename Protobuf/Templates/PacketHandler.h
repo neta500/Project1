@@ -34,9 +34,8 @@ public:
 
 
 {%- for pkt in parser.recv_pkt %}
-		GPacketHandler[static_cast<int>(PKT_{{pkt.name}})] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::{{pkt.name}} >(Handle_{{pkt.name}}, session, buffer, len); };
-{%- endfor %}
-		
+		GPacketHandler[static_cast<int>(PKT_{{pkt.name}})] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::{{pkt.name}}>(Handle_{{pkt.name}}, session, buffer, len); };
+{%- endfor %}		
 	}
 
 	static void HandlePacket(std::shared_ptr<ClientSession> session, std::byte* buffer, int len)
@@ -45,8 +44,9 @@ public:
 		GPacketHandler[header->mId](session, buffer, len);
 	}
 
+
 {%- for pkt in parser.send_pkt %}
-		static std::shared_ptr<SendBuffer> MakeSendBuffer(Protocol::{{pkt.name}}& pkt) { return MakeSendBuffer(pkt, PKT_{{pkt.name}}); }
+	static std::shared_ptr<SendBuffer> MakeSendBuffer(Protocol::{{pkt.name}}& pkt) { return MakeSendBuffer(pkt, PKT_{{pkt.name}}); }
 {%- endfor %}
 
 private:
