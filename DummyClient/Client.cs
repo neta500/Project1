@@ -69,15 +69,15 @@ namespace DummyClient
 
                     var header = new PacketHeader
                     {
-                        Size = (Int16)serialized.Length,
-                        Id = 1
+                        Size = (Int16)(serialized.Length + 4),
+                        Id = 1000
                     };
-                    
+
                     var headerSizeByte = BitConverter.GetBytes(header.Size);
                     var headerIdByte = BitConverter.GetBytes(header.Id);
                     var sendBuffer = headerSizeByte.Concat(headerIdByte).Concat(serialized).ToArray();
 
-                    Console.WriteLine("Send {0} - {1}", packet.CalculateSize(), str);
+                    Console.WriteLine("Send {0} - {1}", header.Size, str);
                     Socket.Send(sendBuffer);
                     Thread.Sleep(500);
                 }
@@ -111,32 +111,12 @@ namespace DummyClient
             return new string(chars.ToArray());
         }
 
-        public Protocol.S_TEST GetTestPacket()
+        public Protocol.C_TEST GetTestPacket()
         {
-            var packet = new Protocol.S_TEST
+            var packet = new Protocol.C_TEST
             {
-                Attack = (uint) Random.Next(100),
-                Hp = (uint) Random.Next(1000),
                 Id = (uint) Random.Next(10)
             };
-
-            var buffDataList = new List<BuffData>();
-
-            for (int i = 0; i < 3; ++i)
-            {
-                var buffData = new BuffData
-                {
-                    BuffId = Random.NextInt64(500),
-                    RemainTime = Random.NextInt64(400000, 500000)
-                };
-
-                buffData.Victims.Add((ulong) Random.NextInt64(100));
-                buffData.Victims.Add((ulong)Random.NextInt64(100));
-                buffData.Victims.Add((ulong)Random.NextInt64(100));
-                buffDataList.Add(buffData);
-            }
-
-            packet.Buffs.AddRange(buffDataList);
 
             return packet;
         }

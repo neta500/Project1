@@ -100,5 +100,5 @@ public:
 		return processLength;
 	}
 
-	virtual int OnRecvPacket(std::byte* recvBuffer, const int len) abstract;
+	virtual void OnRecvPacket(std::byte* recvBuffer, const int len) abstract;
 };

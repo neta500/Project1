@@ -11,6 +11,8 @@ using namespace boost::asio::ip;
 int main()
 {
 	spdlog::info("init spdlog");
+
+	ClientPacketHandler::Init();
 		
 	IoContext ioContext;
 	ServerService serverService{ ioContext, EndPoint{"127.0.0.1", 712} };

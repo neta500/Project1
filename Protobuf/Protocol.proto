@@ -13,6 +13,12 @@ message C_TEST
 	uint64 id = 1;
 }
 
+message C_MOVE
+{
+	uint64 id = 1;
+	uint32 xPos = 2;
+}
+
 message S_TEST
 {
 	uint64 id = 1;
