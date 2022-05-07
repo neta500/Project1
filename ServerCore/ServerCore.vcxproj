@@ -161,6 +161,8 @@
     <ClInclude Include="CoreTypeDefine.h" />
     <ClInclude Include="CoreUtils.h" />
     <ClInclude Include="DateTime.h" />
+    <ClInclude Include="DBConnection.h" />
+    <ClInclude Include="DBConnectionPool.h" />
     <ClInclude Include="EndPoint.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="IoContext.h" />

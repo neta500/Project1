@@ -22,6 +22,9 @@
     <Filter Include="Job">
       <UniqueIdentifier>{b59418c1-604e-4c95-9a77-3628229d52f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{ae17e971-c6bf-4e64-8f89-bc23f7362843}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -92,6 +95,12 @@
     </ClInclude>
     <ClInclude Include="SendBuffer.h">
       <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="DBConnection.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="DBConnectionPool.h">
+      <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
