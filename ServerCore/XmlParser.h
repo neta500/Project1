@@ -26,7 +26,7 @@ public:
 	{
 		if (const auto attr = mNode->first_attribute(key))
 		{
-			return ::_wcsicmp(attr->value(), L"true");
+			return ::_wcsicmp(attr->value(), L"true") == 0;
 		}
 		
 		return defaultValue;

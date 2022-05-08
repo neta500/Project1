@@ -1,6 +1,7 @@
 #pragma once
 #include <sql.h>
 #include <sqlext.h>
+#include <iostream>
 
 class DBConnection
 {
@@ -265,6 +266,13 @@ private:
 			{
 				break;
 			}
+
+			std::wcout.imbue(std::locale("kor"));
+			std::wcout << errMsg << std::endl;
+
+			index++;
+
+			std::this_thread::sleep_for(std::chrono::seconds(1));
 		}
 	}
 

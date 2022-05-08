@@ -111,6 +111,12 @@
     <ClInclude Include="FileUtils.h">
       <Filter>CoreUtils</Filter>
     </ClInclude>
+    <ClInclude Include="XmlDb.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="DBSynchronizer.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

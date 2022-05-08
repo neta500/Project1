@@ -164,6 +164,7 @@
     <ClInclude Include="DBBind.h" />
     <ClInclude Include="DBConnection.h" />
     <ClInclude Include="DBConnectionPool.h" />
+    <ClInclude Include="DBSynchronizer.h" />
     <ClInclude Include="EndPoint.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="framework.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Session.h" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="XmlDb.h" />
     <ClInclude Include="XmlParser.h" />
   </ItemGroup>
   <ItemGroup>
