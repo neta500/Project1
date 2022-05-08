@@ -105,6 +105,12 @@
     <ClInclude Include="DBBind.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="XmlParser.h">
+      <Filter>CoreUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="FileUtils.h">
+      <Filter>CoreUtils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

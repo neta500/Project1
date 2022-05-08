@@ -92,7 +92,7 @@ protected:
 	DBConnection& mDBConnection;
 	const WCHAR* mQuery{};
 	SQLLEN mParamIndex[ParamCount > 0 ? ParamCount : 1] = {};
-	SQLLEN mColumnIndex[ParamCount > 0 ? ParamCount : 1] = {};
+	SQLLEN mColumnIndex[ColumnCount > 0 ? ColumnCount : 1] = {};
 
 	// param 개수를 잘 넣었는지 체크하는 비트 플래그
 	__int64 mParamFlag = 0;

@@ -165,10 +165,8 @@
     <ClInclude Include="BattlePassSeasonManager.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="ClientSession.h" />
-    <ClInclude Include="DBCommand.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Protocol.pb.h" />
-    <ClInclude Include="StoredProcedure.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +175,9 @@
   </ItemGroup>
   <ItemGroup>
     <UpToDateCheckInput Include="..\Protobuf\Protocol.proto" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="GameDatabaseDefinition.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

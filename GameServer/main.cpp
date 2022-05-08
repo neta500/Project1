@@ -6,6 +6,7 @@
 #include <DBConnectionPool.h>
 #include "ClientSession.h"
 #include "DBBind.h"
+#include "XmlParser.h"
 
 using namespace boost::asio::ip;
 
@@ -25,6 +26,62 @@ int main()
 	else
 	{
 		spdlog::info("db connected");
+	}
+
+	// test xml parse
+	{
+		XmlNode root;
+		XmlParser parser;
+		if (false == parser.ParseFromFile(L"GameDatabaseDefinition.xml", root))
+		{
+			spdlog::critical("GameDatabaseDefinition.xml parse failed");
+			return 0;
+		}
+
+		std::vector<XmlNode> tables = root.FindChildren(L"Table");
+		for (const XmlNode& table : tables)
+		{
+			const auto name = table.GetStringAttr(L"name");
+			const auto desc = table.GetStringAttr(L"desc");
+
+			const auto columns = table.FindChildren(L"Column");
+			for (const auto& column : columns)
+			{
+				const auto colName = column.GetStringAttr(L"name");
+				const auto colType = column.GetStringAttr(L"type");
+				const bool nullable = !column.GetBoolAttr(L"notnull", false);
+				const auto identity = column.GetStringAttr(L"identity");
+				const auto colDefault = column.GetStringAttr(L"default");
+			}
+
+			const auto indices = table.FindChildren(L"Index");
+			for (const auto& index : indices)
+			{
+				const auto indexType = index.GetStringAttr(L"type");
+				bool primaryKey = index.FindChild(L"PrimaryKey").IsValid();
+				bool uniqueConstraint = index.FindChild(L"UniqueKey").IsValid();
+
+				const auto indexColumns = index.FindChildren(L"Column");
+				for (const auto& column : indexColumns)
+				{
+					const auto colName = column.GetStringAttr(L"name");
+				}
+			}
+		}
+
+		std::vector<XmlNode> procedures = root.FindChildren(L"Procedure");
+		for (const XmlNode& procedure : procedures)
+		{
+			const auto name = procedure.GetStringAttr(L"name");
+			const auto bode = procedure.GetStringAttr(L"body");
+
+			std::vector<XmlNode> params = procedure.FindChildren(L"Param");
+			for (const auto& param : params)
+			{
+				const auto paramName = param.GetStringAttr(L"name");
+				const auto paramType = param.GetStringAttr(L"type");
+			}
+		}
 	}
 
 	// test query

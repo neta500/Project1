@@ -21,14 +21,8 @@
     <ClInclude Include="BattlePassData.h">
       <Filter>Contents</Filter>
     </ClInclude>
-    <ClInclude Include="DBCommand.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="User.h">
       <Filter>Contents</Filter>
-    </ClInclude>
-    <ClInclude Include="StoredProcedure.h">
-      <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="Protocol.pb.h">
       <Filter>Protocol</Filter>
@@ -64,5 +58,10 @@
     <None Include="..\Protobuf\GenPackets.bat">
       <Filter>Protocol</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="GameDatabaseDefinition.xml">
+      <Filter>Database</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

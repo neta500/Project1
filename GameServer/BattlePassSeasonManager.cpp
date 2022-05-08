@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "BattlePassSeasonManager.h"
-#include "DBCommand.h"
 
 void BattlePassSeasonManager::LoadManager()
 {
@@ -84,19 +83,19 @@ bool BattlePassSeasonManager::InsertSeasonData(const BattlePassSeasonData& seaso
 		return false;
 	}
 
-	DBCommand<SP::InsertBattlePassSeason> dbCommand
-	{
-		seasonData.mSeasonId,
-		seasonData.mBeginDate,
-		seasonData.mEndDate,
-		seasonData.mRewardId
-	};
+	//DBCommand<SP::InsertBattlePassSeason> dbCommand
+	//{
+	//	seasonData.mSeasonId,
+	//	seasonData.mBeginDate,
+	//	seasonData.mEndDate,
+	//	seasonData.mRewardId
+	//};
 
-	if (dbCommand.Execute())
-	{
-		mSeasonMap.emplace(seasonData.mSeasonId, seasonData);
-		return true;
-	}
+	//if (dbCommand.Execute())
+	//{
+	//	mSeasonMap.emplace(seasonData.mSeasonId, seasonData);
+	//	return true;
+	//}
 
 	return false;
 }
@@ -111,21 +110,21 @@ bool BattlePassSeasonManager::DeleteSeasonData(const int seasonId)
 		return false;
 	}
 
-	DBCommand<SP::DeleteBattlePassSeason> dbCommand{ seasonId };
+	//DBCommand<SP::DeleteBattlePassSeason> dbCommand{ seasonId };
 
-	if (dbCommand.Execute())
-	{
-		mSeasonMap.erase(seasonId);
+	//if (dbCommand.Execute())
+	//{
+	//	mSeasonMap.erase(seasonId);
 
-		spdlog::info("BattlePassSeason deleted. SeasonId: {}", seasonId);
+	//	spdlog::info("BattlePassSeason deleted. SeasonId: {}", seasonId);
 
-		if (mCurrentSeasonData.mSeasonId == seasonId)
-		{
-			EndBattlePassSeason();
-		}
+	//	if (mCurrentSeasonData.mSeasonId == seasonId)
+	//	{
+	//		EndBattlePassSeason();
+	//	}
 
-		return true;
-	}
+	//	return true;
+	//}
 
 	return false;
 }
@@ -140,34 +139,34 @@ bool BattlePassSeasonManager::UpdateSeasonData(const int prevSeasonId, const Bat
 		return false;
 	}
 
-	DBCommand<SP::UpdateBattlePassSeason> dbCommand
-	{
-		prevSeasonId,
-		seasonData.mSeasonId,
-		seasonData.mBeginDate,
-		seasonData.mEndDate,
-		seasonData.mRewardId
-	};
+	//DBCommand<SP::UpdateBattlePassSeason> dbCommand
+	//{
+	//	prevSeasonId,
+	//	seasonData.mSeasonId,
+	//	seasonData.mBeginDate,
+	//	seasonData.mEndDate,
+	//	seasonData.mRewardId
+	//};
 
-	if (dbCommand.Execute())
-	{
-		if (mCurrentSeasonData.mSeasonId == prevSeasonId && seasonData.mSeasonId == prevSeasonId)
-		{
-			mCurrentSeasonData.mEndDate = seasonData.mEndDate;
-		}
+	//if (dbCommand.Execute())
+	//{
+	//	if (mCurrentSeasonData.mSeasonId == prevSeasonId && seasonData.mSeasonId == prevSeasonId)
+	//	{
+	//		mCurrentSeasonData.mEndDate = seasonData.mEndDate;
+	//	}
 
-		if (const auto& foundSeason = mSeasonMap.find(prevSeasonId); foundSeason != mSeasonMap.cend())
-		{
-			foundSeason->second.mEndDate = seasonData.mEndDate;
-		}
-		else
-		{
-			mSeasonMap.erase(prevSeasonId);
-			mSeasonMap.emplace(seasonData.mSeasonId, seasonData);
-		}
+	//	if (const auto& foundSeason = mSeasonMap.find(prevSeasonId); foundSeason != mSeasonMap.cend())
+	//	{
+	//		foundSeason->second.mEndDate = seasonData.mEndDate;
+	//	}
+	//	else
+	//	{
+	//		mSeasonMap.erase(prevSeasonId);
+	//		mSeasonMap.emplace(seasonData.mSeasonId, seasonData);
+	//	}
 
-		return true;
-	}
+	//	return true;
+	//}
 
 	return false;
 }
@@ -182,24 +181,24 @@ bool BattlePassSeasonManager::InsertRewardData(const BattlePassRewardData& rewar
 		return false;
 	}
 
-	for (const auto& reward : rewardData.mRewardMap | std::views::values)
-	{
-		DBCommand<SP::InsertBattlePassReward> dbCommand
-		{
-			rewardData.mRewardId,
-			static_cast<int>(reward.mType),
-			reward.mLevel,
-			reward.mItemId,
-			reward.mItemAmount
-		};
+	//for (const auto& reward : rewardData.mRewardMap | std::views::values)
+	//{
+	//	DBCommand<SP::InsertBattlePassReward> dbCommand
+	//	{
+	//		rewardData.mRewardId,
+	//		static_cast<int>(reward.mType),
+	//		reward.mLevel,
+	//		reward.mItemId,
+	//		reward.mItemAmount
+	//	};
 
-		if (false == dbCommand.Execute())
-		{
-			return false;
-		}
-	}
+	//	if (false == dbCommand.Execute())
+	//	{
+	//		return false;
+	//	}
+	//}
 
-	mRewardMap.emplace(rewardData.mRewardId, rewardData);	
+	//mRewardMap.emplace(rewardData.mRewardId, rewardData);	
 
 	return true;
 }
@@ -214,13 +213,13 @@ bool BattlePassSeasonManager::DeleteRewardData(const std::string& rewardId)
 		return false;
 	}
 
-	DBCommand<SP::DeleteBattlePassReward> dbCommand{ rewardId };
+	//DBCommand<SP::DeleteBattlePassReward> dbCommand{ rewardId };
 
-	if (dbCommand.Execute())
-	{
-		mRewardMap.erase(rewardId);
-		return true;
-	}
+	//if (dbCommand.Execute())
+	//{
+	//	mRewardMap.erase(rewardId);
+	//	return true;
+	//}
 
 	return false;
 }
@@ -263,30 +262,30 @@ void BattlePassSeasonManager::OnTick()
 
 bool BattlePassSeasonManager::LoadSeasonData()
 {
-	int seasonId;
+	/*int seasonId;
 	DateTime beginDate;
 	DateTime endDate;
 	std::string rewardId;
 
-	WRITE_LOCK;
+	WRITE_LOCK;*/
 
-	DBCommand<SP::LoadBattlePassSeason> dbCommand
-	{
-		seasonId,
-		beginDate,
-		endDate,
-		rewardId
-	};
+	//DBCommand<SP::LoadBattlePassSeason> dbCommand
+	//{
+	//	seasonId,
+	//	beginDate,
+	//	endDate,
+	//	rewardId
+	//};
 
-	if (dbCommand.Execute())
-	{
-		while (dbCommand.Fetch())
-		{
-			mSeasonMap.emplace(seasonId, BattlePassSeasonData{ seasonId, beginDate, endDate, rewardId });
-		}
+	//if (dbCommand.Execute())
+	//{
+	//	while (dbCommand.Fetch())
+	//	{
+	//		mSeasonMap.emplace(seasonId, BattlePassSeasonData{ seasonId, beginDate, endDate, rewardId });
+	//	}
 
-		return true;
-	}
+	//	return true;
+	//}
 
 	return false;
 }
@@ -311,36 +310,36 @@ bool BattlePassSeasonManager::LoadRewardData()
 
 	WRITE_LOCK;
 
-	DBCommand<SP::LoadBattlePassReward> dbCommand
-	{
-		rewardId,
-		rewardType,
-		rewardLevel,
-		itemId,
-		itemAmount
-	};
+	//DBCommand<SP::LoadBattlePassReward> dbCommand
+	//{
+	//	rewardId,
+	//	rewardType,
+	//	rewardLevel,
+	//	itemId,
+	//	itemAmount
+	//};
 
-	if (dbCommand.Execute())
-	{
-		while (dbCommand.Fetch())
-		{
-			if (const auto& rewardData = mRewardMap.find(rewardId); rewardData != mRewardMap.cend())
-			{
-				rewardData->second.mRewardMap.emplace(emplacePair);
-			}
-			else
-			{
-				const auto& [newRewardData, success] = mRewardMap.emplace(rewardId, BattlePassRewardData{});
-				if (success)
-				{
-					newRewardData->second.mRewardId = rewardId;
-					newRewardData->second.mRewardMap.emplace(emplacePair);
-				}
-			}
-		}
+	//if (dbCommand.Execute())
+	//{
+	//	while (dbCommand.Fetch())
+	//	{
+	//		if (const auto& rewardData = mRewardMap.find(rewardId); rewardData != mRewardMap.cend())
+	//		{
+	//			rewardData->second.mRewardMap.emplace(emplacePair);
+	//		}
+	//		else
+	//		{
+	//			const auto& [newRewardData, success] = mRewardMap.emplace(rewardId, BattlePassRewardData{});
+	//			if (success)
+	//			{
+	//				newRewardData->second.mRewardId = rewardId;
+	//				newRewardData->second.mRewardMap.emplace(emplacePair);
+	//			}
+	//		}
+	//	}
 
-		return true;
-	}
+	//	return true;
+	//}
 
 	return false;
 }
