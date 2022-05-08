@@ -1,13 +1,15 @@
 #pragma once
 #include <sql.h>
 #include <sqlext.h>
-#include <string>
-#include <xstring>
-#include "spdlog/spdlog.h"
-#pragma warning(disable:4244)
 
 class DBConnection
 {
+	enum
+	{
+		WVARCHAR_MAX = 4000,
+		BINARY_MAX = 8000
+	};
+
 public:
 	bool Connect(SQLHENV henv, const wchar_t* connectionString)
 	{
@@ -103,6 +105,106 @@ public:
 	}
 
 public:
+	bool BindParam(int paramIndex, bool* value, SQLLEN* index)
+	{
+		return BindCol(paramIndex, SQL_C_TINYINT, static_cast<int>(sizeof(bool)), value, index);
+	}
+	bool BindParam(int paramIndex, float* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_FLOAT, SQL_REAL, 0, value, index);
+	}
+	bool BindParam(int paramIndex, double* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_DOUBLE, SQL_DOUBLE, 0, value, index);
+	}
+	bool BindParam(int paramIndex, signed char* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_TINYINT, SQL_TINYINT, static_cast<int>(sizeof(signed char)), value, index);
+	}
+	bool BindParam(int paramIndex, short* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_SHORT, SQL_SMALLINT, static_cast<int>(sizeof(short)), value, index);
+	}
+	bool BindParam(int paramIndex, int* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_LONG, SQL_INTEGER, static_cast<int>(sizeof(int)), value, index);
+	}
+	bool BindParam(int paramIndex, long long* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_SBIGINT, SQL_BIGINT, static_cast<int>(sizeof(long long)), value, index);
+	}
+	bool BindParam(int paramIndex, TIMESTAMP_STRUCT* value, SQLLEN* index)
+	{
+		return BindParam(paramIndex, SQL_C_TYPE_TIMESTAMP, SQL_TYPE_TIMESTAMP, static_cast<int>(sizeof(TIMESTAMP_STRUCT)), value, index);
+	}
+	bool BindParam(int paramIndex, const wchar_t* str, SQLLEN* index)
+	{
+		SQLULEN size = (::wcslen(str) + 1) * 2;
+		*index = SQL_NTSL;
+
+		if (size > WVARCHAR_MAX)
+			return BindParam(paramIndex, SQL_C_WCHAR, SQL_WLONGVARCHAR, size, (SQLPOINTER)str, index);
+		else
+			return BindParam(paramIndex, SQL_C_WCHAR, SQL_WVARCHAR, size, (SQLPOINTER)str, index);
+	}
+	bool BindParam(int paramIndex, const std::byte* bin, int size, SQLLEN* index)
+	{
+		if (bin == nullptr)
+		{
+			*index = SQL_NULL_DATA;
+			size = 1;
+		}
+		else
+			*index = size;
+
+		if (size > BINARY_MAX)
+			return BindParam(paramIndex, SQL_C_BINARY, SQL_LONGVARBINARY, size, (BYTE*)bin, index);
+		else
+			return BindParam(paramIndex, SQL_C_BINARY, SQL_BINARY, size, (BYTE*)bin, index);
+	}
+
+	bool BindCol(int columnIndex, bool* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_TINYINT, static_cast<int>(sizeof(bool)), value, index);
+	}
+	bool BindCol(int columnIndex, float* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_TINYINT, static_cast<int>(sizeof(bool)), value, index);
+	}
+	bool BindCol(int columnIndex, double* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_DOUBLE, static_cast<int>(sizeof(double)), value, index);
+	}
+	bool BindCol(int columnIndex, signed char* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_TINYINT, static_cast<int>(sizeof(signed char)), value, index);
+	}
+	bool BindCol(int columnIndex, short* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_SHORT, static_cast<int>(sizeof(short)), value, index);
+	}
+	bool BindCol(int columnIndex, int* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_LONG, static_cast<int>(sizeof(int)), value, index);
+	}
+	bool BindCol(int columnIndex, long long* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_SBIGINT, static_cast<int>(sizeof(long long)), value, index);
+	}
+	bool BindCol(int columnIndex, TIMESTAMP_STRUCT* value, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_TYPE_TIMESTAMP, static_cast<int>(sizeof(TIMESTAMP_STRUCT)), value, index);
+	}
+	bool BindCol(int columnIndex, wchar_t* str, const int size, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_C_WCHAR, size, str, index);
+	}
+	bool BindCol(int columnIndex, std::byte* bin, const int size, SQLLEN* index)
+	{
+		return BindCol(columnIndex, SQL_BINARY, size, bin, index);
+	}
+
+private:
 	bool BindParam(SQLUSMALLINT paramIndex, SQLSMALLINT cType, SQLSMALLINT sqlType, SQLULEN len, SQLPOINTER ptr, SQLLEN* index)
 	{
 		auto ret = ::SQLBindParameter(mStatement, paramIndex, SQL_PARAM_INPUT, cType, sqlType, len, 0, ptr, 0, index);
@@ -163,10 +265,6 @@ public:
 			{
 				break;
 			}
-
-			const std::wstring wstr(errMsg);
-			const std::string str(wstr.cbegin(), wstr.cend());
-			spdlog::error("SQL Error: {}", str);
 		}
 	}
 

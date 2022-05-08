@@ -5,6 +5,7 @@
 #include <boost/asio.hpp>
 #include <DBConnectionPool.h>
 #include "ClientSession.h"
+#include "DBBind.h"
 
 using namespace boost::asio::ip;
 
@@ -33,7 +34,9 @@ int main()
 		CREATE TABLE [dbo].[Gold]	\
 		(	\
 			[id] INT NOT NULL PRIMARY KEY IDENTITY, \
-			[gold] INT NULL	\
+			[gold] INT NULL,	\
+			[name] NVARCHAR(50) NULL, \
+			[createDate] DATETIME NULL \
 		);";
 
 		auto connection = GDBConnectionPool->Pop();
@@ -49,12 +52,17 @@ int main()
 		{
 			auto connection = GDBConnectionPool->Pop();
 			connection->UnBind();
+			auto query = L"INSERT INTO [dbo].[Gold]([gold], [name], [createDate]) VALUES(?, ?, ?)";
 
 			int gold = 100;
-			SQLLEN len = 0;
-			connection->BindParam(1, SQL_C_LONG, SQL_INTEGER, sizeof(gold), &gold, &len);
+			WCHAR name[100] = L"neta500";
+			TIMESTAMP_STRUCT ts = { 2000,1,1 };
 
-			auto query = L"INSERT INTO [dbo].[Gold]([gold]) VALUES(?)";
+			DBBind<3, 0> dbBind(*connection, query);
+			dbBind.BindParam(0, gold);
+			dbBind.BindParam(1, name);
+			dbBind.BindParam(2, ts);
+
 			connection->Execute(query);
 			GDBConnectionPool->Push(connection);
 		}
@@ -64,18 +72,23 @@ int main()
 		auto connection = GDBConnectionPool->Pop();
 		connection->UnBind();
 
+		auto query = L"SELECT id, gold, name, createDate FROM [dbo].[Gold] WHERE gold = (?)";
+		DBBind<1, 4> dbBind(*connection, query);
+
 		int gold = 100;
-		SQLLEN len = 0;
-		connection->BindParam(1, SQL_C_LONG, SQL_INTEGER, sizeof(gold), &gold, &len);
-		auto query = L"SELECT id, gold FROM [dbo].[Gold] WHERE gold = (?)";
+		dbBind.BindParam(0, gold);
 
 		int outId = 0;
-		SQLLEN outIdLen = 0;
-		connection->BindCol(1, SQL_C_LONG, sizeof(outId), &outId, &outIdLen);
-
 		int outGold = 0;
-		SQLLEN outGoldLen = 0;
-		connection->BindCol(2, SQL_C_LONG, sizeof(outGold), &outGold, &outGoldLen);
+		constexpr auto outNameSize = 50;
+		wchar_t outName[outNameSize]{};
+		TIMESTAMP_STRUCT outDate = {};
+
+		dbBind.BindCol(0, outId);
+		dbBind.BindCol(1, outGold);
+		dbBind.BindCol(2, outName);
+		dbBind.BindCol(3, outDate);
+
 		connection->Execute(query);
 
 		while (connection->Fetch())

@@ -1,6 +1,6 @@
 #pragma once
-#include "SpinLock.h"
 #include "DBConnection.h"
+#include <mutex>
 #include <vector>
 
 class DBConnectionPool
@@ -8,7 +8,7 @@ class DBConnectionPool
 public:
 	bool Connect(const int count, const wchar_t* connectionString)
 	{
-		WRITE_LOCK;
+		std::scoped_lock lock;
 
 		if (::SQLAllocHandle(SQL_HANDLE_ENV, nullptr, &mSqlEnv) != SQL_SUCCESS)
 		{
@@ -36,7 +36,7 @@ public:
 
 	void Clear()
 	{
-		WRITE_LOCK;
+		std::scoped_lock lock;
 
 		if (mSqlEnv != nullptr)
 		{
@@ -54,7 +54,7 @@ public:
 
 	DBConnection* Pop()
 	{
-		WRITE_LOCK;
+		std::scoped_lock lock;
 
 		if (mConnections.empty())
 		{
@@ -69,12 +69,12 @@ public:
 
 	void Push(DBConnection* connection)
 	{
-		WRITE_LOCK;
+		std::scoped_lock lock;
 		mConnections.emplace_back(connection);
 	}
 
 private:
-	USE_LOCK;
+	std::mutex mLock{};
 	SQLHENV mSqlEnv = nullptr;
 	std::vector<DBConnection*> mConnections{};
 };

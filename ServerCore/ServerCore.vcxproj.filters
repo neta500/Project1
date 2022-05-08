@@ -102,6 +102,9 @@
     <ClInclude Include="DBConnectionPool.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="DBBind.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
