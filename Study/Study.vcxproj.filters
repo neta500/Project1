@@ -301,6 +301,12 @@
     <ClInclude Include="Algorithm\LeetCode\1029_TwoCityScheduling.h">
       <Filter>Algorithm\LeetCode</Filter>
     </ClInclude>
+    <ClInclude Include="TestClass\TestClass2.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TestClass\Random.h">
+      <Filter>TestClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

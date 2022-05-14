@@ -238,7 +238,9 @@
     <ClInclude Include="Algorithm\Sorting.h" />
     <ClInclude Include="TestClass\EmplaceBack.h" />
     <ClInclude Include="TestClass\Optional.h" />
+    <ClInclude Include="TestClass\Random.h" />
     <ClInclude Include="TestClass\TestClass.h" />
+    <ClInclude Include="TestClass\TestClass2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
