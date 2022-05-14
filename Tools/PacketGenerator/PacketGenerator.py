@@ -13,7 +13,7 @@ def main():
 
 	parser = ProtoParser.ProtoParser(1000, args.recv, args.send)
 	parser.parse_proto(args.path)
-	file_loader = jinja2.FileSystemLoader('Templates')
+	file_loader = jinja2.FileSystemLoader('../Tools/PacketGenerator/Templates')
 	env = jinja2.Environment(loader=file_loader)
 
 	template = env.get_template('PacketHandler.h')
@@ -22,6 +22,8 @@ def main():
 	f = open(args.output+'.h', 'w+')
 	f.write(output)
 	f.close()
+
+	#print(output)
 	
 	return
 

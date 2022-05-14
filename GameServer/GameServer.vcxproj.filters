@@ -33,6 +33,9 @@
     <ClInclude Include="ClientPacketHandler.h">
       <Filter>PacketHandler</Filter>
     </ClInclude>
+    <ClInclude Include="GenProcedures.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -58,9 +61,12 @@
     <None Include="..\Protobuf\GenPackets.bat">
       <Filter>Protocol</Filter>
     </None>
+    <None Include="..\Database\GenProcs.bat">
+      <Filter>Database</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="GameDatabaseDefinition.xml">
+    <Xml Include="..\Database\GameDatabaseDefinition.xml">
       <Filter>Database</Filter>
     </Xml>
   </ItemGroup>

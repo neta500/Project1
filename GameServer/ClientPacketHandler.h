@@ -29,8 +29,9 @@ public:
 		{
 			GPacketHandler[i] = Handle_INVALID;
 		}
-		GPacketHandler[static_cast<int>(PKT_C_TEST)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_TEST>(Handle_C_TEST, session, buffer, len); };
-		GPacketHandler[static_cast<int>(PKT_C_MOVE)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_MOVE>(Handle_C_MOVE, session, buffer, len); };		
+		GPacketHandler[static_cast<int>(PKT_C_TEST)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_TEST >(Handle_C_TEST, session, buffer, len); };
+		GPacketHandler[static_cast<int>(PKT_C_MOVE)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_MOVE >(Handle_C_MOVE, session, buffer, len); };
+		
 	}
 
 	static void HandlePacket(std::shared_ptr<ClientSession> session, std::byte* buffer, int len)
@@ -38,7 +39,7 @@ public:
 		const PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 		GPacketHandler[header->mId](session, buffer, len);
 	}
-	static std::shared_ptr<SendBuffer> MakeSendBuffer(Protocol::S_TEST& pkt) { return MakeSendBuffer(pkt, PKT_S_TEST); }
+		static std::shared_ptr<SendBuffer> MakeSendBuffer(Protocol::S_TEST& pkt) { return MakeSendBuffer(pkt, PKT_S_TEST); }
 
 private:
 	template <typename PacketType, typename ProcessFunc>

@@ -130,7 +130,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>CALL $(SolutionDir)Protobuf\GenPackets.bat</Command>
+      <Command>CALL $(SolutionDir)Protobuf\GenPackets.bat
+CALL $(SolutionDir)Database\GenProcs.bat</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -165,19 +166,26 @@
     <ClInclude Include="BattlePassSeasonManager.h" />
     <ClInclude Include="ClientPacketHandler.h" />
     <ClInclude Include="ClientSession.h" />
+    <ClInclude Include="GenProcedures.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Protocol.pb.h" />
     <ClInclude Include="User.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Database\GenProcs.bat" />
     <None Include="..\Protobuf\GenPackets.bat" />
     <None Include="..\Protobuf\Protocol.proto" />
   </ItemGroup>
   <ItemGroup>
+    <!-- check file updated -->
     <UpToDateCheckInput Include="..\Protobuf\Protocol.proto" />
+    <UpToDateCheckInput Include="..\Database\GameDatabaseDefinition.xml" />
+    <UpToDateCheckInput Include="..\Tools\PacketGenerator\Templates\PacketHandler.h" />
+    <UpToDateCheckInput Include="..\Tools\ProcedureGenerator\Templates\GenProcedures.h" />
+    <UpToDateCheckInput Include="..\Tools\ProcedureGenerator\Templates\Procedure.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="GameDatabaseDefinition.xml" />
+    <Xml Include="..\Database\GameDatabaseDefinition.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
