@@ -12,20 +12,20 @@ namespace DummyClient
 {
     internal class SocketContext
     {
-        public bool Connected;
-        private Socket Socket;
+        public bool Connected => Socket?.Connected ?? false;
+        private volatile Socket? Socket;
         private readonly Client Client;
 
-        private readonly Byte[] SendBuffer;
-        private readonly Byte[] RecvBuffer;
+        private readonly byte[] SendBuffer;
+        private readonly byte[] RecvBuffer;
         private readonly BinaryWriter BinaryWriter;
         private readonly BinaryReader BinaryReader;
 
         public SocketContext(Client owner)
         {
             Client = owner;
-            SendBuffer = new Byte[65536];
-            RecvBuffer = new Byte[65536];
+            SendBuffer = new byte[65536];
+            RecvBuffer = new byte[65536];
         }
 
         public bool Connect(string addr, int port)
@@ -73,27 +73,49 @@ namespace DummyClient
 
         public void SendPacket(Google.Protobuf.IMessage packet)
         {
-            Socket copySocket = Socket;
-            if (copySocket == null)
+            if (Socket == null)
             {
                 return;
             }
 
             try
             {
-                if (copySocket == null)
+                // MakePacket
+                string packetEnumStr = packet.Descriptor.Name;
+                var packetId = (Protocol.ProtocolEnum) Enum.Parse(typeof(Protocol.ProtocolEnum), packetEnumStr);
+
+                var size = (short) packet.CalculateSize();
+                byte[] sendBuffer = new byte[size + 4];
+                Array.Copy(BitConverter.GetBytes(size + 4), 0, sendBuffer, 0, sizeof(ushort));
+                Array.Copy(BitConverter.GetBytes((ushort)packetId), 0, sendBuffer, 2, sizeof(ushort));
+                Array.Copy(packet.ToByteArray(), 0, sendBuffer, 4, size);
+                
+                SocketError errorCode;
+
+                try
                 {
-                    Console.WriteLine($"Socket {copySocket.Handle} not connected");
+                    Socket.Send(sendBuffer, 0, sendBuffer.Length, SocketFlags.None, out errorCode);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Console.WriteLine("Socket has already disposed. failed to send packet.");
                     return;
                 }
 
-                
-            }
+                if (errorCode != SocketError.Success)
+                {
+                    Console.WriteLine($"SendPacket failed: errorCode: {errorCode}");
+                }
+            } 
             catch (Exception e)
             {
                 Console.WriteLine($"SendPacket::Unexpected exception: {e}");
                 throw;
             }
+        }
+
+        public void StartReceive()
+        {
         }
     }
 }

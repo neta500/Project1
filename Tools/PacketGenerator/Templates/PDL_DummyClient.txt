@@ -1,0 +1,11 @@
+// [Auto Generated File]
+
+namespace DummyClient.Protocol
+{
+	public enum ProtocolEnum : ushort
+	{
+	{%- for pkt in parser.total_pkt %}
+		{{pkt.name}} = {{pkt.id}},
+	{%- endfor %}
+	}
+}

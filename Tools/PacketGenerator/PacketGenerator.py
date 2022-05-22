@@ -6,22 +6,36 @@ def main():
 
 	arg_parser = argparse.ArgumentParser(description = 'PacketGenerator')
 	arg_parser.add_argument('--path', type=str, default='C:/Neta500/Project1/Protobuf/Protocol.proto', help='proto path')
-	arg_parser.add_argument('--output', type=str, default='TestPacketHandler', help='output file')
-	arg_parser.add_argument('--recv', type=str, default='C_', help='recv convention')
-	arg_parser.add_argument('--send', type=str, default='S_', help='send convention')
 	args = arg_parser.parse_args()
 
-	parser = ProtoParser.ProtoParser(1000, args.recv, args.send)
+	parser = ProtoParser.ProtoParser(1000, 'C_', 'S_')
 	parser.parse_proto(args.path)
 	file_loader = jinja2.FileSystemLoader('../Tools/PacketGenerator/Templates')
 	env = jinja2.Environment(loader=file_loader)
 
-	template = env.get_template('PacketHandler.h')
-	output = template.render(parser=parser, output=args.output)
+	# ClientPacketHandler
+	template = env.get_template('ClientPacketHandler.txt')
+	output = template.render(parser=parser, output='ClientPacketHandler.h')
 
-	f = open(args.output+'.h', 'w+')
+	# ProtocolEnum.h
+	template_enum = env.get_template('PDL.txt')
+	output_enum = template_enum.render(parser=parser, output='PDL.h')
+
+	# ProtocolEnum.cs
+	template_enum_dummyclient = env.get_template('PDL_DummyClient.txt')
+	output_enum_dummyclient = template_enum_dummyclient.render(parser=parser, output='PDL_DummyClient.cs')
+
+	f = open('ClientPacketHandler.h', 'w+')
 	f.write(output)
 	f.close()
+
+	f_enum = open('PDL.h', 'w+')
+	f_enum.write(output_enum)
+	f_enum.close()
+
+	f_enum_dc = open('PDL_DummyClient.cs', 'w+')
+	f_enum_dc.write(output_enum_dummyclient)
+	f_enum_dc.close()
 
 	#print(output)
 	

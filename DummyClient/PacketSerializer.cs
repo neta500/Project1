@@ -8,6 +8,5 @@ namespace DummyClient
 {
     internal class PacketSerializer
     {
-
     }
 }

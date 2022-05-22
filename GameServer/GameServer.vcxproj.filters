@@ -36,6 +36,9 @@
     <ClInclude Include="GenProcedures.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="PDL.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">

@@ -30,9 +30,11 @@
     <Folder Include="Templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Templates\PacketHandler.h">
+    <Content Include="Templates\ClientPacketHandler.txt">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Templates\PDL.txt" />
+    <Content Include="Templates\PDL_DummyClient.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

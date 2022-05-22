@@ -1,6 +1,7 @@
 // [Auto Generated File]
 
 #pragma once
+#include "PDL.h"
 #include "Protocol.pb.h"
 #include "Session.h"
 #include "SendBuffer.h"
@@ -8,13 +9,6 @@
 class ClientSession;
 using PacketHandlerFunc = std::function<bool(std::shared_ptr<ClientSession>, std::byte*, int)>;
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX];
-
-enum : uint16
-{
-	PKT_C_TEST = 1000,
-	PKT_C_MOVE = 1001,
-	PKT_S_TEST = 1002,
-};
 
 bool Handle_INVALID(std::shared_ptr<ClientSession> session, std::byte* buffer, int len);
 bool Handle_C_TEST(std::shared_ptr<ClientSession> session, Protocol::C_TEST& pkt);
@@ -29,8 +23,8 @@ public:
 		{
 			GPacketHandler[i] = Handle_INVALID;
 		}
-		GPacketHandler[static_cast<int>(PKT_C_TEST)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_TEST >(Handle_C_TEST, session, buffer, len); };
-		GPacketHandler[static_cast<int>(PKT_C_MOVE)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_MOVE >(Handle_C_MOVE, session, buffer, len); };
+		GPacketHandler[static_cast<int>(ProtocolEnum::C_TEST)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_TEST >(Handle_C_TEST, session, buffer, len); };
+		GPacketHandler[static_cast<int>(ProtocolEnum::C_MOVE)] = [](std::shared_ptr<ClientSession> session, std::byte* buffer, int len) { return HandlePacket<Protocol::C_MOVE >(Handle_C_MOVE, session, buffer, len); };
 		
 	}
 
@@ -39,7 +33,7 @@ public:
 		const PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
 		GPacketHandler[header->mId](session, buffer, len);
 	}
-		static std::shared_ptr<SendBuffer> MakeSendBuffer(Protocol::S_TEST& pkt) { return MakeSendBuffer(pkt, PKT_S_TEST); }
+		static std::shared_ptr<SendBuffer> MakeSendBuffer(Protocol::S_TEST& pkt) { return MakeSendBuffer(pkt, ProtocolEnum::S_TEST); }
 
 private:
 	template <typename PacketType, typename ProcessFunc>

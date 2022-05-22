@@ -1,0 +1,12 @@
+// [Auto Generated File]
+#pragma once
+
+namespace ProtocolEnum
+{
+enum : uint16
+{
+{%- for pkt in parser.total_pkt %}
+	{{pkt.name}} = {{pkt.id}},
+{%- endfor %}
+};
+}
