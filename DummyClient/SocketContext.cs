@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf;
+using Protocol;
 
 namespace DummyClient
 {
@@ -21,11 +22,25 @@ namespace DummyClient
         private readonly BinaryWriter BinaryWriter;
         private readonly BinaryReader BinaryReader;
 
+        private volatile bool IsReceiving;
+        private volatile bool IsDisconnecting;
+
+        private int ReceiveCount;
+
         public SocketContext(Client owner)
         {
             Client = owner;
             SendBuffer = new byte[65536];
             RecvBuffer = new byte[65536];
+
+            IsReceiving = false;
+            IsDisconnecting = false;
+
+            ReceiveCount = 0;
+            BinaryWriter = new BinaryWriter(new MemoryStream(SendBuffer, 0, SendBuffer.Length, true, true),
+                Encoding.Unicode, true);
+            BinaryReader = new BinaryReader(new MemoryStream(RecvBuffer, 0, RecvBuffer.Length, true, true),
+                Encoding.Unicode, true);
         }
 
         public bool Connect(string addr, int port)
@@ -73,38 +88,40 @@ namespace DummyClient
 
         public void SendPacket(Google.Protobuf.IMessage packet)
         {
-            if (Socket == null)
-            {
+            Socket copiedSocket = Socket;
+            if (copiedSocket == null)
                 return;
-            }
 
             try
             {
                 // MakePacket
                 string packetEnumStr = packet.Descriptor.Name;
-                var packetId = (Protocol.ProtocolEnum) Enum.Parse(typeof(Protocol.ProtocolEnum), packetEnumStr);
 
-                var size = (short) packet.CalculateSize();
-                byte[] sendBuffer = new byte[size + 4];
-                Array.Copy(BitConverter.GetBytes(size + 4), 0, sendBuffer, 0, sizeof(ushort));
-                Array.Copy(BitConverter.GetBytes((ushort)packetId), 0, sendBuffer, 2, sizeof(ushort));
-                Array.Copy(packet.ToByteArray(), 0, sendBuffer, 4, size);
-                
-                SocketError errorCode;
+                var packetId = (Protocol.ProtocolEnum)Enum.Parse(typeof(Protocol.ProtocolEnum), packetEnumStr);
+                var size = (short)packet.CalculateSize();
 
-                try
+                lock (SendBuffer)
                 {
-                    Socket.Send(sendBuffer, 0, sendBuffer.Length, SocketFlags.None, out errorCode);
-                }
-                catch (ObjectDisposedException)
-                {
-                    Console.WriteLine("Socket has already disposed. failed to send packet.");
-                    return;
-                }
+                    Array.Copy(BitConverter.GetBytes(size + 4), 0, SendBuffer, 0, sizeof(ushort));
+                    Array.Copy(BitConverter.GetBytes((ushort)packetId), 0, SendBuffer, 2, sizeof(ushort));
+                    Array.Copy(packet.ToByteArray(), 0, SendBuffer, 4, size);
 
-                if (errorCode != SocketError.Success)
-                {
-                    Console.WriteLine($"SendPacket failed: errorCode: {errorCode}");
+                    SocketError errorCode;
+
+                    try
+                    {
+                        copiedSocket.Send(SendBuffer, 0, size, SocketFlags.None, out errorCode);
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        Console.WriteLine("Socket has already disposed. failed to send packet.");
+                        return;
+                    }
+
+                    if (errorCode != SocketError.Success)
+                    {
+                        Console.WriteLine($"SendPacket failed: errorCode: {errorCode}");
+                    }
                 }
             } 
             catch (Exception e)
@@ -114,8 +131,100 @@ namespace DummyClient
             }
         }
 
-        public void StartReceive()
+        public Google.Protobuf.IMessage TryReceivePacket()
         {
+            Socket copiedSocket = Socket;
+            if (copiedSocket == null)
+            {
+                return null;
+            }
+
+            SocketError errorCode;
+
+            while (ReceiveCount < 2)
+            {
+                int recv;
+                try
+                {
+                    recv = copiedSocket.Receive(RecvBuffer, ReceiveCount, 2 - ReceiveCount, SocketFlags.None, out errorCode);
+                }
+                catch (ObjectDisposedException)
+                {
+                    return null;
+                }
+
+                switch (errorCode)
+                {
+                    case SocketError.Success:
+                        break;
+
+                    case SocketError.WouldBlock:
+                    case SocketError.TimedOut:
+                    {
+                        return null;
+                    }
+                    default:
+                        if (IsDisconnecting == false)
+                            throw new Exception($"Failed to receive packet. Error code is {errorCode}.");
+                        return null;
+                }
+
+                // cipher
+
+                ReceiveCount += recv;
+            }
+
+            // 나머지 read
+            int packetLength = BitConverter.ToUInt16(RecvBuffer, 0);
+            while (ReceiveCount != packetLength)
+            {
+                int recv;
+                try
+                {
+                    recv = copiedSocket.Receive(RecvBuffer, ReceiveCount, packetLength - ReceiveCount, SocketFlags.None,
+                        out errorCode);
+                }
+                catch (ObjectDisposedException)
+                {
+                    return null;
+                }
+
+                switch (errorCode)
+                {
+                    case SocketError.Success:
+                        break;
+
+                    case SocketError.WouldBlock:
+                    case SocketError.TimedOut:
+                    {
+                        return null;
+                    }
+                    default:
+                        if (IsDisconnecting == false)
+                            throw new Exception($"Failed to receive packet. Error code is {errorCode}.");
+                        return null;
+                }
+
+                // cipher
+
+                ReceiveCount += recv;
+            }
+
+            ReceiveCount = 0;
+            BinaryReader.BaseStream.Seek(0, SeekOrigin.Begin);
+            
+            BinaryReader.ReadUInt16();
+            UInt16 packetId = BinaryReader.ReadUInt16();
+
+            var packetEnum = (Protocol.ProtocolEnum)packetId;
+
+            var packetType = ProtocolHelper.GetPacketType(packetEnum);
+            if (packetType == null)
+            {
+                throw new KeyNotFoundException($"Invalid Packet Id: {packetId}");
+            }
+
+            return new C_MOVE();
         }
     }
 }

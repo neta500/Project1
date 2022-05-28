@@ -55,37 +55,37 @@ namespace DummyClient
 
         public void Run()
         {
-            Connect();
+            //Connect();
 
-            Socket.BeginReceive(RecvBuffer, 0, RecvBuffer.Length, SocketFlags.None, ReceiveCallback, Socket);
+            //Socket.BeginReceive(RecvBuffer, 0, RecvBuffer.Length, SocketFlags.None, ReceiveCallback, Socket);
             
-            while (true)
-            {
-                for (int count = 0; count <= 100; count++)
-                {
-                    var packet = GetTestPacket();
-                    var str = packet.ToString();
-                    var serialized = packet.ToByteArray();
+            //while (true)
+            //{
+            //    for (int count = 0; count <= 100; count++)
+            //    {
+            //        var packet = GetTestPacket();
+            //        var str = packet.ToString();
+            //        var serialized = packet.ToByteArray();
 
-                    var header = new PacketHeader
-                    {
-                        Size = (Int16)(serialized.Length + 4),
-                        Id = 1000
-                    };
+            //        var header = new PacketHeader
+            //        {
+            //            Size = (Int16)(serialized.Length + 4),
+            //            Id = 1000
+            //        };
 
-                    var headerSizeByte = BitConverter.GetBytes(header.Size);
-                    var headerIdByte = BitConverter.GetBytes(header.Id);
-                    var sendBuffer = headerSizeByte.Concat(headerIdByte).Concat(serialized).ToArray();
+            //        var headerSizeByte = BitConverter.GetBytes(header.Size);
+            //        var headerIdByte = BitConverter.GetBytes(header.Id);
+            //        var sendBuffer = headerSizeByte.Concat(headerIdByte).Concat(serialized).ToArray();
 
-                    Console.WriteLine("Send {0} - {1}", header.Size, str);
-                    Socket.Send(sendBuffer);
-                    Thread.Sleep(500);
-                }
+            //        Console.WriteLine("Send {0} - {1}", header.Size, str);
+            //        Socket.Send(sendBuffer);
+            //        Thread.Sleep(500);
+            //    }
 
-                //Disconnect();
-                //Thread.Sleep(1000);
-                //Connect();
-            }
+            //    //Disconnect();
+            //    //Thread.Sleep(1000);
+            //    //Connect();
+            //}
         }
 
         private void ReceiveCallback(IAsyncResult result)
@@ -109,16 +109,6 @@ namespace DummyClient
             var chars = Enumerable.Range(0, len)
                 .Select(x => input[rand.Next(0, input.Length)]);
             return new string(chars.ToArray());
-        }
-
-        public Protocol.C_TEST GetTestPacket()
-        {
-            var packet = new Protocol.C_TEST
-            {
-                Id = (uint) Random.Next(1, 20)
-            };
-
-            return packet;
         }
     }
 }
