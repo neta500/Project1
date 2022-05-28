@@ -15,7 +15,7 @@ namespace DummyClient
     {
         public bool Connected => Socket?.Connected ?? false;
         private volatile Socket? Socket;
-        private readonly Client Client;
+        private readonly Bot Client;
 
         private readonly byte[] SendBuffer;
         private readonly byte[] RecvBuffer;
@@ -27,7 +27,7 @@ namespace DummyClient
 
         private int ReceiveCount;
 
-        public SocketContext(Client owner)
+        public SocketContext(Bot owner)
         {
             Client = owner;
             SendBuffer = new byte[65536];
