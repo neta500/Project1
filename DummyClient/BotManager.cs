@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DummyClient
 {
-    internal class BotManager
+    public class BotManager
     {
     }
 }

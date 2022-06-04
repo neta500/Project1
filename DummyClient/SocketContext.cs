@@ -8,11 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Protocol;
+using System.Collections.Concurrent;
 
 namespace DummyClient
 {
     internal class SocketContext
     {
+        private static readonly Thread[] ReceiveThreadList;
+        private static readonly ConcurrentQueue<SocketContext> WaitingQueue;
+
         public bool Connected => Socket?.Connected ?? false;
         private volatile Socket? Socket;
         private readonly Bot Client;
@@ -26,6 +30,25 @@ namespace DummyClient
         private volatile bool IsDisconnecting;
 
         private int ReceiveCount;
+
+        private Action<Google.Protobuf.IMessage> Callback;
+
+        static SocketContext()
+        {
+            int threadCount = 2 * Environment.ProcessorCount;
+
+            ReceiveThreadList = new Thread[threadCount];
+            for (int threadIndex = 0; threadIndex < threadCount; threadIndex++)
+            {
+                Thread thread = new Thread(GlobalReceiveLoop);
+                thread.Start();
+                thread.Priority = ThreadPriority.AboveNormal;
+                thread.Name = $"Receiving Thread #{threadIndex + 1}";
+                ReceiveThreadList[threadIndex] = thread;
+            }
+
+            WaitingQueue = new ConcurrentQueue<SocketContext>();
+        }
 
         public SocketContext(Bot owner)
         {
@@ -41,6 +64,11 @@ namespace DummyClient
                 Encoding.Unicode, true);
             BinaryReader = new BinaryReader(new MemoryStream(RecvBuffer, 0, RecvBuffer.Length, true, true),
                 Encoding.Unicode, true);
+        }
+
+        private static void GlobalReceiveLoop()
+        {
+
         }
 
         public bool Connect(string addr, int port)
@@ -129,6 +157,12 @@ namespace DummyClient
                 Console.WriteLine($"SendPacket::Unexpected exception: {e}");
                 throw;
             }
+        }
+
+        public void StartReceive(Action<Google.Protobuf.IMessage> callback)
+        {
+            this.Callback = callback;
+
         }
 
         public Google.Protobuf.IMessage TryReceivePacket()
