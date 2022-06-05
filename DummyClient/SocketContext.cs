@@ -22,16 +22,13 @@ namespace DummyClient
         private readonly Bot Client;
 
         private readonly byte[] SendBuffer;
-        private readonly byte[] RecvBuffer;
-        private readonly BinaryWriter BinaryWriter;
-        private readonly BinaryReader BinaryReader;
 
         private volatile bool IsReceiving;
         private volatile bool IsDisconnecting;
 
-        private int ReceiveCount;
+        private readonly RecvBuffer RecvBuffer = new RecvBuffer(65535);
 
-        private Action<Google.Protobuf.IMessage> Callback;
+        public Action<Google.Protobuf.IMessage> Callback;
 
         static SocketContext()
         {
@@ -54,16 +51,9 @@ namespace DummyClient
         {
             Client = owner;
             SendBuffer = new byte[65536];
-            RecvBuffer = new byte[65536];
 
             IsReceiving = false;
             IsDisconnecting = false;
-
-            ReceiveCount = 0;
-            BinaryWriter = new BinaryWriter(new MemoryStream(SendBuffer, 0, SendBuffer.Length, true, true),
-                Encoding.Unicode, true);
-            BinaryReader = new BinaryReader(new MemoryStream(RecvBuffer, 0, RecvBuffer.Length, true, true),
-                Encoding.Unicode, true);
         }
 
         // 모든 봇의 Receive 처리 (static queue)
@@ -71,23 +61,14 @@ namespace DummyClient
         {
             var socketList = new List<SocketContext>();
             var removeCandidate = new List<SocketContext>();
-            var stopWatch = new Stopwatch();
-            SocketContext newContext;
 
             lock (socketList)
             {
-                bool skipSleep = false;
-
                 while (true)
                 {
-                    if (skipSleep == false)
-                    {
-                        Thread.Sleep(TimeSpan.FromMilliseconds(10));
-                    }
+                    Thread.Sleep(TimeSpan.FromMilliseconds(10));
 
-                    skipSleep = false;
-                    
-                    while (WaitingQueue.TryDequeue(out newContext))
+                    while (WaitingQueue.TryDequeue(out var newContext))
                     {
                         socketList.Add(newContext);
                         newContext.IsReceiving = true;
@@ -100,30 +81,22 @@ namespace DummyClient
 
                     foreach (SocketContext context in socketList)
                     {
-                        Google.Protobuf.IMessage packet;
-                        int callbackCount = 0;
-
                         if (context.Socket == null || context.IsDisconnecting)
                         {
                             removeCandidate.Add(context);
                             continue;
                         }
-
-                        stopWatch.Restart();
-
-                        do
-                        {
-                            try
-                            {
-                                packet = context.TryReceivePacket();
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e);
-                                throw;
-                            }
-                        } while (packet != null);
+                        
+                        context.TryReceivePacket();
                     }
+
+                    foreach (SocketContext context in removeCandidate)
+                    {
+                        socketList.Remove(context);
+                        context.IsReceiving = false;
+                    }
+
+                    removeCandidate.Clear();
                 }
             }
         }
@@ -175,7 +148,9 @@ namespace DummyClient
         {
             Socket copiedSocket = Socket;
             if (copiedSocket == null)
+            {
                 return;
+            }
 
             try
             {
@@ -218,7 +193,7 @@ namespace DummyClient
 
         public void StartReceive(Action<Google.Protobuf.IMessage> callback)
         {
-            this.Callback = callback;
+            Callback = callback;
             WaitingQueue.Enqueue(this);
 
             if (SpinWait.SpinUntil(() => IsReceiving, TimeSpan.FromSeconds(10)) == false)
@@ -227,100 +202,98 @@ namespace DummyClient
             }
         }
 
-        public Google.Protobuf.IMessage TryReceivePacket()
+        public void TryReceivePacket()
         {
             Socket copiedSocket = Socket;
             if (copiedSocket == null)
             {
-                return null;
+                return;
             }
 
             SocketError errorCode;
 
-            while (ReceiveCount < 2)
+            int recvBytes;
+            try
             {
-                int recv;
+                var segment = RecvBuffer.WriteSegment;
+                recvBytes = copiedSocket.Receive(segment.Array, segment.Offset, segment.Count, SocketFlags.None, out errorCode);
+            }
+            catch (ObjectDisposedException)
+            {
+                return;
+            }
+
+            switch (errorCode)
+            {
+                case SocketError.Success:
+                    break;
+
+                case SocketError.WouldBlock:
+                case SocketError.TimedOut:
+                {
+                    return;
+                }
+                default:
+                    if (IsDisconnecting == false)
+                        throw new Exception($"Failed to receive packet. Error code is {errorCode}.");
+                    return;
+            }
+
+            if (recvBytes > 0)
+            {
                 try
                 {
-                    recv = copiedSocket.Receive(RecvBuffer, ReceiveCount, 2 - ReceiveCount, SocketFlags.None, out errorCode);
-                }
-                catch (ObjectDisposedException)
-                {
-                    return null;
-                }
-
-                switch (errorCode)
-                {
-                    case SocketError.Success:
-                        break;
-
-                    case SocketError.WouldBlock:
-                    case SocketError.TimedOut:
+                    if (RecvBuffer.OnWrite(recvBytes) == false)
                     {
-                        return null;
+                        Disconnect();
+                        return;
                     }
-                    default:
-                        if (IsDisconnecting == false)
-                            throw new Exception($"Failed to receive packet. Error code is {errorCode}.");
-                        return null;
-                }
 
-                // cipher
+                    var buffer = RecvBuffer.ReadSegment;
 
-                ReceiveCount += recv;
-            }
+                    int processLen = 0;
 
-            // 나머지 read
-            int packetLength = BitConverter.ToUInt16(RecvBuffer, 0);
-            while (ReceiveCount != packetLength)
-            {
-                int recv;
-                try
-                {
-                    recv = copiedSocket.Receive(RecvBuffer, ReceiveCount, packetLength - ReceiveCount, SocketFlags.None,
-                        out errorCode);
-                }
-                catch (ObjectDisposedException)
-                {
-                    return null;
-                }
-
-                switch (errorCode)
-                {
-                    case SocketError.Success:
-                        break;
-
-                    case SocketError.WouldBlock:
-                    case SocketError.TimedOut:
+                    while (true)
                     {
-                        return null;
+                        // 헤더 사이즈 체크
+                        if (buffer.Count < 2)
+                        {
+                            break;
+                        }
+
+                        ushort dataSize = BitConverter.ToUInt16(buffer.Array!, buffer.Offset);
+                        if (buffer.Count < dataSize)
+                        {
+                            break;
+                        }
+
+                        ServerPacketHandler.Instance.OnRecvPacket(this, new ArraySegment<byte>(buffer.Array!, buffer.Offset, dataSize));
+
+                        processLen += dataSize;
+                        buffer = new ArraySegment<byte>(buffer.Array!, buffer.Offset + dataSize, buffer.Count - dataSize);
                     }
-                    default:
-                        if (IsDisconnecting == false)
-                            throw new Exception($"Failed to receive packet. Error code is {errorCode}.");
-                        return null;
+
+                    if (processLen == 0 || RecvBuffer.DataSize < processLen)
+                    {
+                        Disconnect();
+                        return;
+                    }
+
+                    if (RecvBuffer.OnRead(processLen) == false)
+                    {
+                        Disconnect();
+                    }
                 }
-
-                // cipher
-
-                ReceiveCount += recv;
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
-
-            ReceiveCount = 0;
-            BinaryReader.BaseStream.Seek(0, SeekOrigin.Begin);
-            
-            BinaryReader.ReadUInt16();
-            UInt16 packetId = BinaryReader.ReadUInt16();
-
-            var packetEnum = (Protocol.ProtocolEnum)packetId;
-
-            var packetType = ProtocolHelper.GetPacketType(packetEnum);
-            if (packetType == null)
+            else
             {
-                throw new KeyNotFoundException($"Invalid Packet Id: {packetId}");
+                Disconnect();
             }
-
-            return new C_MOVE();
         }
     }
 }

@@ -13,16 +13,11 @@ namespace DummyClient
         public static ServerPacketHandler Instance { get; } = new();
 
         private readonly Dictionary<ushort, Action<SocketContext, ArraySegment<byte>, ushort>> OnRecv = new();
-        private readonly Dictionary<ushort, Action<SocketContext, Google.Protobuf.IMessage>> Handler = new();
         
-        public void Register()
+        public void Initialize()
         {
+            // TODO: 아 이거 어떡하지 
             OnRecv.Add((ushort)Protocol.ProtocolEnum.S_TEST, MakePacket<S_TEST>);
-        }
-
-        public void RegisterHandler(ushort packetId, Action<SocketContext, Google.Protobuf.IMessage> action)
-        {
-            Handler.Add(packetId, action);
         }
 
         public void OnRecvPacket(SocketContext context, ArraySegment<byte> buffer)
@@ -46,10 +41,7 @@ namespace DummyClient
         {
             T packet = new();
             packet.MergeFrom(new Google.Protobuf.CodedInputStream(buffer.Array, buffer.Offset + 4, buffer.Count - 4));
-            if (Handler.TryGetValue(id, out var action))
-            {
-                action.Invoke(context, packet);
-            }
+            context.Callback.Invoke(packet);
         }
     }
 }
