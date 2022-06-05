@@ -66,9 +66,66 @@ namespace DummyClient
                 Encoding.Unicode, true);
         }
 
+        // 모든 봇의 Receive 처리 (static queue)
         private static void GlobalReceiveLoop()
         {
+            var socketList = new List<SocketContext>();
+            var removeCandidate = new List<SocketContext>();
+            var stopWatch = new Stopwatch();
+            SocketContext newContext;
 
+            lock (socketList)
+            {
+                bool skipSleep = false;
+
+                while (true)
+                {
+                    if (skipSleep == false)
+                    {
+                        Thread.Sleep(TimeSpan.FromMilliseconds(10));
+                    }
+
+                    skipSleep = false;
+                    
+                    while (WaitingQueue.TryDequeue(out newContext))
+                    {
+                        socketList.Add(newContext);
+                        newContext.IsReceiving = true;
+                    }
+
+                    if (socketList.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    foreach (SocketContext context in socketList)
+                    {
+                        Google.Protobuf.IMessage packet;
+                        int callbackCount = 0;
+
+                        if (context.Socket == null || context.IsDisconnecting)
+                        {
+                            removeCandidate.Add(context);
+                            continue;
+                        }
+
+                        stopWatch.Restart();
+
+                        do
+                        {
+                            try
+                            {
+                                packet = context.TryReceivePacket();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine(e);
+                                throw;
+                            }
+                        } while (packet != null);
+                    }
+                }
+            }
         }
 
         public bool Connect(string addr, int port)
@@ -162,7 +219,12 @@ namespace DummyClient
         public void StartReceive(Action<Google.Protobuf.IMessage> callback)
         {
             this.Callback = callback;
+            WaitingQueue.Enqueue(this);
 
+            if (SpinWait.SpinUntil(() => IsReceiving, TimeSpan.FromSeconds(10)) == false)
+            {
+                throw new Exception("Failed to enqueue to IO thread!");
+            }
         }
 
         public Google.Protobuf.IMessage TryReceivePacket()

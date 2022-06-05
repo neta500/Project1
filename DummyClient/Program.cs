@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Text;
+using Protocol;
 
 namespace DummyClient;
 
@@ -12,7 +15,7 @@ public class Program
         //Client client = new Client();
         //client.Run();
 
-        ProtocolHelper.Initialize();
+        //ProtocolHelper.Initialize();
     }
 }
 
