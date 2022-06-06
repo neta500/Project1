@@ -1,249 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using Google.Protobuf;
-using Protocol;
-using System.Collections.Concurrent;
 
 namespace DummyClient
 {
     internal class SocketContext
     {
-        private static readonly Thread[] ReceiveThreadList;
-        private static readonly ConcurrentQueue<SocketContext> WaitingQueue;
-
-        public bool Connected => Socket?.Connected ?? false;
-        private volatile Socket? Socket;
+        public bool Connected => Socket.Connected;
+        private volatile Socket Socket;
         private readonly Bot Client;
 
-        private readonly byte[] SendBuffer;
-
-        private volatile bool IsReceiving;
-        private volatile bool IsDisconnecting;
-
-        private readonly RecvBuffer RecvBuffer = new RecvBuffer(65535);
+        private readonly RecvBuffer RecvBuffer = new(65535);
+        private readonly SocketAsyncEventArgs RecvArgs = new();
 
         public Action<Google.Protobuf.IMessage> Callback;
-
-        static SocketContext()
-        {
-            int threadCount = 2 * Environment.ProcessorCount;
-
-            ReceiveThreadList = new Thread[threadCount];
-            for (int threadIndex = 0; threadIndex < threadCount; threadIndex++)
-            {
-                Thread thread = new Thread(GlobalReceiveLoop);
-                thread.Start();
-                thread.Priority = ThreadPriority.AboveNormal;
-                thread.Name = $"Receiving Thread #{threadIndex + 1}";
-                ReceiveThreadList[threadIndex] = thread;
-            }
-
-            WaitingQueue = new ConcurrentQueue<SocketContext>();
-        }
 
         public SocketContext(Bot owner)
         {
             Client = owner;
-            SendBuffer = new byte[65536];
-
-            IsReceiving = false;
-            IsDisconnecting = false;
         }
 
-        // 모든 봇의 Receive 처리 (static queue)
-        private static void GlobalReceiveLoop()
+        private void RegisterRecv()
         {
-            var socketList = new List<SocketContext>();
-            var removeCandidate = new List<SocketContext>();
-
-            lock (socketList)
+            if (Connected == false)
             {
-                while (true)
+                return;
+            }
+
+            RecvBuffer.Clean();
+            var segment = RecvBuffer.WriteSegment;
+            RecvArgs.SetBuffer(segment.Array, segment.Offset, segment.Count);
+
+            try
+            {
+                var pending = Socket.ReceiveAsync(RecvArgs);
+                if (pending == false)
                 {
-                    Thread.Sleep(TimeSpan.FromMilliseconds(10));
-
-                    while (WaitingQueue.TryDequeue(out var newContext))
-                    {
-                        socketList.Add(newContext);
-                        newContext.IsReceiving = true;
-                    }
-
-                    if (socketList.Count == 0)
-                    {
-                        continue;
-                    }
-
-                    foreach (SocketContext context in socketList)
-                    {
-                        if (context.Socket == null || context.IsDisconnecting)
-                        {
-                            removeCandidate.Add(context);
-                            continue;
-                        }
-                        
-                        context.TryReceivePacket();
-                    }
-
-                    foreach (SocketContext context in removeCandidate)
-                    {
-                        socketList.Remove(context);
-                        context.IsReceiving = false;
-                    }
-
-                    removeCandidate.Clear();
+                    RecvCompleted(null, RecvArgs);
                 }
             }
-        }
-
-        public bool Connect(string addr, int port)
-        {
-            Debug.Assert(Socket == null);
-
-            IPAddress address = Dns.GetHostAddresses(addr)[0];
-            IPEndPoint endPoint = new IPEndPoint(address, port);
-
-            Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            Socket.NoDelay = true;
-
-            try
+            catch (Exception ex)
             {
-                Socket.Connect(endPoint);
-                Socket.Blocking = false;
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Socket connect failed: {e} {addr} {port}");
-                return false;
+                Console.WriteLine($"RegisterRecv failed: {ex}");
             }
         }
 
-        public void Disconnect()
+        private void RecvCompleted(object sender, SocketAsyncEventArgs args)
         {
-            if (Socket == null)
-            {
-                return;
-            }
-
-            try
-            {
-                Socket.Shutdown(SocketShutdown.Both);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Socket shutdown failed: {e}");
-            }
-
-            Socket.Dispose();
-            Socket = null;
-        }
-
-        public void SendPacket(Google.Protobuf.IMessage packet)
-        {
-            Socket copiedSocket = Socket;
-            if (copiedSocket == null)
-            {
-                return;
-            }
-
-            try
-            {
-                // MakePacket
-                string packetEnumStr = packet.Descriptor.Name;
-
-                var packetId = (Protocol.ProtocolEnum)Enum.Parse(typeof(Protocol.ProtocolEnum), packetEnumStr);
-                var size = (short)packet.CalculateSize();
-
-                lock (SendBuffer)
-                {
-                    Array.Copy(BitConverter.GetBytes(size + 4), 0, SendBuffer, 0, sizeof(ushort));
-                    Array.Copy(BitConverter.GetBytes((ushort)packetId), 0, SendBuffer, 2, sizeof(ushort));
-                    Array.Copy(packet.ToByteArray(), 0, SendBuffer, 4, size);
-
-                    SocketError errorCode;
-
-                    try
-                    {
-                        copiedSocket.Send(SendBuffer, 0, size, SocketFlags.None, out errorCode);
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        Console.WriteLine("Socket has already disposed. failed to send packet.");
-                        return;
-                    }
-
-                    if (errorCode != SocketError.Success)
-                    {
-                        Console.WriteLine($"SendPacket failed: errorCode: {errorCode}");
-                    }
-                }
-            } 
-            catch (Exception e)
-            {
-                Console.WriteLine($"SendPacket::Unexpected exception: {e}");
-                throw;
-            }
-        }
-
-        public void StartReceive(Action<Google.Protobuf.IMessage> callback)
-        {
-            Callback = callback;
-            WaitingQueue.Enqueue(this);
-
-            if (SpinWait.SpinUntil(() => IsReceiving, TimeSpan.FromSeconds(10)) == false)
-            {
-                throw new Exception("Failed to enqueue to IO thread!");
-            }
-        }
-
-        public void TryReceivePacket()
-        {
-            Socket copiedSocket = Socket;
-            if (copiedSocket == null)
-            {
-                return;
-            }
-
-            SocketError errorCode;
-
-            int recvBytes;
-            try
-            {
-                var segment = RecvBuffer.WriteSegment;
-                recvBytes = copiedSocket.Receive(segment.Array, segment.Offset, segment.Count, SocketFlags.None, out errorCode);
-            }
-            catch (ObjectDisposedException)
-            {
-                return;
-            }
-
-            switch (errorCode)
-            {
-                case SocketError.Success:
-                    break;
-
-                case SocketError.WouldBlock:
-                case SocketError.TimedOut:
-                {
-                    return;
-                }
-                default:
-                    if (IsDisconnecting == false)
-                        throw new Exception($"Failed to receive packet. Error code is {errorCode}.");
-                    return;
-            }
-
-            if (recvBytes > 0)
+            if (args.BytesTransferred > 0 && args.SocketError == SocketError.Success)
             {
                 try
                 {
-                    if (RecvBuffer.OnWrite(recvBytes) == false)
+                    if (RecvBuffer.OnWrite(args.BytesTransferred) == false)
                     {
                         Disconnect();
                         return;
@@ -282,7 +90,10 @@ namespace DummyClient
                     if (RecvBuffer.OnRead(processLen) == false)
                     {
                         Disconnect();
+                        return;
                     }
+
+                    RegisterRecv();
                 }
                 catch (Exception e)
                 {
@@ -293,6 +104,104 @@ namespace DummyClient
             else
             {
                 Disconnect();
+            }
+        }
+
+        public void Connect(string addr, int port)
+        {
+            IPAddress address = Dns.GetHostAddresses(addr)[0];
+            IPEndPoint endPoint = new IPEndPoint(address, port);
+
+            Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            Socket.NoDelay = true;
+
+            var args = new SocketAsyncEventArgs();
+            args.Completed += ConnectCompleted;
+            args.RemoteEndPoint = endPoint;
+            args.UserToken = Socket;
+
+            var pending = Socket.ConnectAsync(args);
+            if (pending == false)
+            {
+                ConnectCompleted(null, args);
+            }
+        }
+
+        void ConnectCompleted(object sender, SocketAsyncEventArgs args)
+        {
+            if (args.SocketError == SocketError.Success)
+            {
+                RecvArgs.Completed += RecvCompleted;
+                RegisterRecv();
+            }
+            else
+            {
+                Console.WriteLine($"Connect failed : {args.SocketError}");
+            }
+        }
+
+        public void Disconnect()
+        {
+            if (Socket == null)
+            {
+                return;
+            }
+
+            try
+            {
+                Socket.Shutdown(SocketShutdown.Both);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Socket shutdown failed: {e}");
+            }
+
+            Socket.Dispose();
+            Socket = null;
+            Console.WriteLine($"Disconnected");
+        }
+
+        public void SendPacket(Google.Protobuf.IMessage packet)
+        {
+            Socket copiedSocket = Socket;
+            if (copiedSocket == null)
+            {
+                return;
+            }
+
+            try
+            {
+                // MakePacket
+                string packetEnumStr = packet.Descriptor.Name;
+
+                var packetId = (ushort)(Protocol.ProtocolEnum)Enum.Parse(typeof(Protocol.ProtocolEnum), packetEnumStr);
+                var size = (ushort)packet.CalculateSize();
+                byte[] sendBuffer = new byte[size + 4];
+                Array.Copy(BitConverter.GetBytes(size + 4), 0, sendBuffer, 0, sizeof(ushort));
+                Array.Copy(BitConverter.GetBytes(packetId), 0, sendBuffer, 2, sizeof(ushort));
+                Array.Copy(packet.ToByteArray(), 0, sendBuffer, 4, size);
+                
+                SocketError errorCode;
+
+                try
+                {
+                    copiedSocket.Send(sendBuffer, 0, sendBuffer.Length, SocketFlags.None, out errorCode);
+                }
+                catch (ObjectDisposedException)
+                {
+                    Console.WriteLine("Socket has already disposed. failed to send packet.");
+                    return;
+                }
+
+                if (errorCode != SocketError.Success)
+                {
+                    Console.WriteLine($"SendPacket failed: errorCode: {errorCode}");
+                }
+            } 
+            catch (Exception e)
+            {
+                Console.WriteLine($"SendPacket::Unexpected exception: {e}");
+                throw;
             }
         }
     }

@@ -31,38 +31,38 @@ int main()
 		spdlog::info("db connected");
 	}	
 
-	auto dbConnection = GDBConnectionPool->Pop();
-	DBSynchronizer dbSync(*dbConnection);
-	dbSync.Synchronize(L"../Database/GameDatabaseDefinition.xml");
+	//auto dbConnection = GDBConnectionPool->Pop();
+	//DBSynchronizer dbSync(*dbConnection);
+	//dbSync.Synchronize(L"../Database/GameDatabaseDefinition.xml");
 
-	{
-		// TODO : dbConnection을 자동으로 넣어주도록 DBCommand wrapper class 자동생성
-		SP::InsertGold dbCommand(*dbConnection);
-		dbCommand.In_Gold(999);
-		dbCommand.In_Name(L"ASDF");
-		dbCommand.In_CreateDate(TIMESTAMP_STRUCT{ 1999,5,15,2 });
-		dbCommand.Execute();
-	}
+	//{
+	//	// TODO : dbConnection을 자동으로 넣어주도록 DBCommand wrapper class 자동생성
+	//	SP::InsertGold dbCommand(*dbConnection);
+	//	dbCommand.In_Gold(999);
+	//	dbCommand.In_Name(L"ASDF");
+	//	dbCommand.In_CreateDate(TIMESTAMP_STRUCT{ 1999,5,15,2 });
+	//	dbCommand.Execute();
+	//}
 
-	{
-		int gold = 0;
-		wchar_t name[100]{};
-		TIMESTAMP_STRUCT time{};
+	//{
+	//	int gold = 0;
+	//	wchar_t name[100]{};
+	//	TIMESTAMP_STRUCT time{};
 
-		SP::SelectGold dbCommand(*dbConnection);
-		dbCommand.In_Gold(999);
-		dbCommand.Out_Gold(gold);
-		dbCommand.Out_Name(name);
-		dbCommand.Out_CreateDate(time);
+	//	SP::SelectGold dbCommand(*dbConnection);
+	//	dbCommand.In_Gold(999);
+	//	dbCommand.Out_Gold(gold);
+	//	dbCommand.Out_Name(name);
+	//	dbCommand.Out_CreateDate(time);
 
-		if (dbCommand.Execute())
-		{
-			while (dbCommand.Fetch())
-			{
-				spdlog::info("select gold:{}, name:{}");
-			}
-		}
-	}
+	//	if (dbCommand.Execute())
+	//	{
+	//		while (dbCommand.Fetch())
+	//		{
+	//			spdlog::info("select gold:{}, name:{}");
+	//		}
+	//	}
+	//}
 
 	ClientPacketHandler::Init();
 		

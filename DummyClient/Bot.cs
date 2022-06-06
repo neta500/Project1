@@ -11,6 +11,7 @@ namespace DummyClient
 
     public class Bot
     {
+        public bool Connected => ServerContext.Connected;
         private readonly SocketContext ServerContext;
         public readonly BotManager BotManager;
 
@@ -20,6 +21,7 @@ namespace DummyClient
         {
             ServerContext = new SocketContext(this);
             PacketHandler += Bot_PacketReceiveHandler;
+            ServerContext.Callback = PacketCallback;
         }
 
         private void Bot_PacketReceiveHandler(Bot sender, Google.Protobuf.IMessage recvPacket)
@@ -35,17 +37,9 @@ namespace DummyClient
             PacketHandler.Invoke(this, packet);
         }
 
-        public bool ConnectToServer()
+        public void ConnectToServer()
         {
-            bool result = ServerContext.Connect("127.0.0.1", 712);
-            if (result == false)
-            {
-                ServerContext.Disconnect();
-                return false;
-            }
-
-            ServerContext.StartReceive(PacketCallback);
-            return true;
+            ServerContext.Connect("127.0.0.1", 712);
         }
 
         public void Disconnect()
