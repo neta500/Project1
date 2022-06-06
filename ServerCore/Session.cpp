@@ -65,6 +65,7 @@ Session::Session(const IoContext& ioContext)
 		[this](IocpOperation* operation, const std::size_t byteTransferred)
 		{
 			spdlog::info("Session Disconnected: {}", mSocket);
+			OnDisconnected();
 		}, this);
 
 	mSendOperation = std::make_shared<IocpOperation>(IoType::Send,

@@ -19,6 +19,9 @@ public:
 		ClientPacketHandler::HandlePacket(std::static_pointer_cast<ClientSession>(shared_from_this()), recvBuffer, len);		
 	}
 
+	void OnDisconnected() override {}
+	void OnConnected() override {}
+
 	template <typename PacketType>
 	void Send(PacketType&& packet)
 	{

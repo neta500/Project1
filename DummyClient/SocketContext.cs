@@ -24,6 +24,7 @@ namespace DummyClient
         {
             if (Connected == false)
             {
+                Console.WriteLine("RegisterRecv failed. not connected");
                 return;
             }
 
@@ -131,6 +132,7 @@ namespace DummyClient
         {
             if (args.SocketError == SocketError.Success)
             {
+                Console.Write("Server Connected");
                 RecvArgs.Completed += RecvCompleted;
                 RegisterRecv();
             }

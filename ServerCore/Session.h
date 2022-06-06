@@ -34,9 +34,11 @@ public:
 
 	void SetConnected() { mConnected = true; }
 	void SetEndPoint(const EndPoint& endPoint) { mEndPoint = endPoint; }
-
+	
 protected:
-	virtual int OnRecv(std::byte* recvBuffer, const int len) { return len; }
+	virtual void OnDisconnected() = 0;
+	virtual void OnConnected() = 0;
+	virtual int OnRecv(std::byte* recvBuffer, const int len) = 0;
 
 public:
 	RecvBuffer mRecvBuffer{ BufferSize };
