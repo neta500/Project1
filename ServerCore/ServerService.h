@@ -2,12 +2,15 @@
 #include "Acceptor.h"
 #include "IoContext.h"
 #include "Session.h"
+#include "SessionManager.h"
 
 class ServerService
 {
 public:
 	ServerService(IoContext& ioContext, const EndPoint& endPoint)
-		: mIoContext(ioContext), mAcceptor(ioContext, endPoint, this)
+		: _ioContext(ioContext),
+		  _acceptor(ioContext, endPoint, this),
+		  _sessionManager(ioContext, *this, SessionManager::DefaultSessionCount)
 	{		
 	}
 
@@ -15,20 +18,23 @@ public:
 	{
 		spdlog::info("ServerService destructor");
 	}
-
-	void SetSession(std::shared_ptr<Session> session)
+	
+	std::shared_ptr<Session> AcquireSession()
 	{
-		mSession = session;
+		return _sessionManager.AcquireSession();
 	}
 
-	std::shared_ptr<Session> GetSession() const { return mSession; }
+	void ReleaseSession(const std::shared_ptr<Session>& session)
+	{
+		_sessionManager.ReleaseSession(session);
+	}
 
 	void Start()
 	{
-		mAcceptor.Accept();
+		_acceptor.Accept();
 	}
 	
-	IoContext& mIoContext;
-	Acceptor mAcceptor;
-	std::shared_ptr<Session> mSession = nullptr;
+	IoContext& _ioContext;
+	Acceptor _acceptor;
+	SessionManager _sessionManager;
 };

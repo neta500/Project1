@@ -3,6 +3,7 @@
 #include "RecvBuffer.h"
 #include <memory>
 
+class ServerService;
 class IocpOperation;
 class IoContext;
 class SendBuffer;
@@ -11,7 +12,7 @@ class Session : public std::enable_shared_from_this<Session>
 {
 	constexpr static int BufferSize = 65536;
 public:
-	explicit Session(const IoContext& ioContext);
+	explicit Session(const IoContext& ioContext, ServerService& serverService);
 	virtual ~Session()
 	{
 		spdlog::info("Session destructor : {}", static_cast<int>(mSocket));
@@ -56,6 +57,8 @@ private:
 	std::shared_ptr<IocpOperation> mSendOperation = nullptr;
 	std::shared_ptr<IocpOperation> mRecvOperation = nullptr;
 	std::shared_ptr<IocpOperation> mDisconnectOperation = nullptr;
+
+	ServerService& _serverService;
 };
 
 struct PacketHeader
@@ -67,8 +70,8 @@ struct PacketHeader
 class PacketSession : public Session
 {
 public:
-	explicit PacketSession(const IoContext& ioContext)
-		: Session(ioContext)
+	explicit PacketSession(const IoContext& ioContext, ServerService& serverService)
+		: Session(ioContext, serverService)
 	{		
 	}
 

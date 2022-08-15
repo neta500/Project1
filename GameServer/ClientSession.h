@@ -8,8 +8,8 @@
 class ClientSession : public PacketSession
 {
 public:
-	explicit ClientSession(const IoContext& ioContext)
-		: PacketSession(ioContext)
+	explicit ClientSession(const IoContext& ioContext, ServerService& serverService)
+		: PacketSession(ioContext, serverService)
 	{		
 	}
 	~ClientSession() override = default;

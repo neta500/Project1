@@ -1,20 +1,22 @@
 #pragma once
 #include <set>
-
 #include "Session.h"
 #include "SpinLock.h"
 
 class SessionManager
 {
 public:
-	SessionManager(const IoContext& ioContext, const int sessionCount)
+	static constexpr int DefaultSessionCount = 5000;
+
+public:
+	SessionManager(const IoContext& ioContext, ServerService& serverService, const int sessionCount)
 		: _poolCount(sessionCount)
 	{
 		_sessionList.reserve(sessionCount);
 
 		for (int i = 0; i < sessionCount; ++i)
 		{
-			_sessionList.emplace_back(std::make_shared<Session>(ioContext));
+			_sessionList.emplace_back(std::make_shared<Session>(ioContext, serverService));
 		}
 	}
 
@@ -47,6 +49,6 @@ public:
 	int _pushIndex = 0;
 	int _popIndex = 0;
 
-	std::vector<std::shared_ptr<Session>> _sessionList;
-	std::set<std::shared_ptr<Session>> _aliveSessionList;
+	std::vector<std::shared_ptr<Session>> _sessionList{};
+	std::set<std::shared_ptr<Session>> _aliveSessionList{};
 };

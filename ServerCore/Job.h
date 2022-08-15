@@ -4,7 +4,7 @@
 class Job
 {
 public:
-	template <class T, class... Args>
+	template <typename T, typename... Args>
 	Job(T* obj, void (T::* memFunc)(Args...), Args&&... args)
 	{
 		mFunc = [obj, memFunc, args...]

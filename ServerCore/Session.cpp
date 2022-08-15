@@ -5,9 +5,11 @@
 #include "IocpOperation.h"
 #include "SocketUtils.h"
 #include "SendBuffer.h"
+#include "ServerService.h"
 
-Session::Session(const IoContext& ioContext)
+Session::Session(const IoContext& ioContext, ServerService& serverService)
 	: mSocket(WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, nullptr, 0, WSA_FLAG_OVERLAPPED)), mEndPoint()
+	, _serverService(serverService)
 {
 	spdlog::info("Session constructor");
 
@@ -66,6 +68,7 @@ Session::Session(const IoContext& ioContext)
 		{
 			spdlog::info("Session Disconnected: {}", mSocket);
 			OnDisconnected();
+			_serverService.ReleaseSession(shared_from_this());
 		}, this);
 
 	mSendOperation = std::make_shared<IocpOperation>(IoType::Send,
@@ -190,5 +193,9 @@ void Session::BeginDisconnect()
 		{
 			spdlog::error("DisconnectEx error: {}", error);
 		}
+	}
+	else
+	{
+		_serverService.ReleaseSession(shared_from_this());
 	}
 }
